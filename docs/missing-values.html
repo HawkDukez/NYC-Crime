@@ -230,7 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="missing-values.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(extracat)</span>
 <span id="cb11-2"><a href="missing-values.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#visna(tidycovid, sort = &quot;b&quot;)</span></span>
 <span id="cb11-3"><a href="missing-values.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#visna does not take data without missing value</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="missing-values.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(covid, <span class="at">percent =</span> <span class="cn">TRUE</span>,<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="missing-values.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(covid, <span class="at">percent =</span> <span class="cn">TRUE</span>,<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="dv">1</span>,<span class="at">title=</span><span class="st">&#39;Missing patterns for COVID_19 Data in NYC&#39;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
 <p>Insights:</p>
 <ol style="list-style-type: lower-alpha">
@@ -244,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="missing-values.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(extracat)</span>
 <span id="cb14-2"><a href="missing-values.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visna</span>(mental, <span class="at">sort =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="missing-values.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(mental, <span class="at">percent =</span> <span class="cn">TRUE</span>,<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="missing-values.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(mental, <span class="at">percent =</span> <span class="cn">TRUE</span>,<span class="at">angle=</span><span class="dv">90</span>,<span class="at">hjust=</span><span class="dv">1</span>,<span class="at">title=</span><span class="st">&#39;Missing patterns for Mental Health Data in NYC&#39;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
 <p>Insights:</p>
 <ol style="list-style-type: lower-alpha">

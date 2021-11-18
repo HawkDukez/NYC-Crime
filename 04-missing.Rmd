@@ -84,7 +84,7 @@ library(extracat)
 ```
 
 ```{r fig.width=10,fig.height=10}
-plot_missing(covid, percent = TRUE,angle=90,hjust=1)
+plot_missing(covid, percent = TRUE,angle=90,hjust=1,title='Missing patterns for COVID_19 Data in NYC')
 ```
 
 
@@ -104,7 +104,7 @@ visna(mental, sort = "b")
 ```
 
 ```{r fig.width=10,fig.height=10}
-plot_missing(mental, percent = TRUE,angle=90,hjust=1)
+plot_missing(mental, percent = TRUE,angle=90,hjust=1,title='Missing patterns for Mental Health Data in NYC')
 ```
 
 Insights:
