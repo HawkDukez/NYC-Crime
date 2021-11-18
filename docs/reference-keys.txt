@@ -3,6 +3,10 @@ data-sources
 data-transformation
 missing-values
 data-1-arrest-historic-data
+missing-patterns-for-year-before-2010
+missing-patterns-for-year-between-2010-2014
+missing-patterns-for-year-between-2015-2019
+missing-patterns-for-year-after-2020
 data-2-covid-19-data
 data-3-mental-health-data
 results
