@@ -218,9 +218,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="missing-values.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(data4,<span class="at">angle=</span><span class="dv">90</span>,<span class="at">title=</span><span class="st">&#39;missing patterns for year after 2020&#39;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <p>Insights:</p>
+<p>Due to the large time interval of the data, we split the dataset by time and analyze missing value for different periods.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>We can conclude that KY_CD and PD_CD have the highest percentage of missing value. Besides, X_COORD_CD, Y_COORD_CD, Latitude and Longitude belong to geographic location information and tend to miss together.</p></li>
-<li><p>Since the proportion of missing value for all column is small in total, so our dataset has good quality. We may just remove the rows which has missing value when we do the following analysis.</p></li>
+<li><p>Compared to the total data size, the proportion of missing value for all column is small in total, so our dataset has good quality. We may just remove the rows which has missing value when we do the following analysis.</p></li>
+<li><p>In all time periods, LAW_CAT_CD has the highest proportion of missing values. Besides, LAW_CAT_CD, PD_DESC, KY_CD, PD_CD, LAW_CODE and OFNS_DESC often miss together before 2020. After 2020, the pattern changed slightly, LAW_CODE column has no value any more. Maybe we will do further discussion about this.</p></li>
+<li><p>Also we can find the missing pattern in data before 2010: Geographic location information(X_COORD_CD, Y_COORD_CD, Latitude and Longitude and Lon_Lat) tend to miss together.</p></li>
 </ol>
 </div>
 </div>
