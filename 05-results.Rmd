@@ -1,1 +1,83 @@
 # Results
+```{r}
+library(tidyverse)
+library(patchwork)
+library(reshape2)
+library(mi)
+library(readr)
+library(lubridate)
+library(extracat)
+library(ggplot2)
+library(dplyr)
+```
+
+## Arrest data analysis of NYC from 2013
+
+```{r }
+nyc<-read_csv('NYPD_Arrests_Data__Historic_.csv')
+
+nyc<- nyc%>%mutate(ARREST_DATE=as.Date(nyc$ARREST_DATE,format='%m/%d/%Y'))
+
+```
+
+### Classification of crime
+```{r}
+data10 <- nyc %>% filter(year(ARREST_DATE)<2010)
+data15 <- nyc %>% filter(year(ARREST_DATE)<2015&year(ARREST_DATE)>=2010)
+data20 <- nyc %>% filter(year(ARREST_DATE)<2020&year(ARREST_DATE)>=2015)
+data21 <- nyc %>% filter(year(ARREST_DATE)>=2020)
+
+pd_desc10 <- count(data10,PD_DESC)
+pd_desc10_top <- top_n(pd_desc10,30)
+
+pd_desc15 <- count(data15,PD_DESC)
+pd_desc15_top <- top_n(pd_desc15,30)
+
+pd_desc20 <- count(data20,PD_DESC)
+pd_desc20_top <- top_n(pd_desc20,30)
+
+pd_desc21 <- count(data21,PD_DESC)
+pd_desc21_top <- top_n(pd_desc21,30)
+
+```
+
+```{r}
+ggplot(pd_desc10_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 most frequent crimes before 2010")
+
+ggplot(pd_desc15_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 most frequent crimes from 2010 to 2015")
+
+ggplot(pd_desc20_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 most frequent crimes from 2015 to 2020")
+
+ggplot(pd_desc21_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 most frequent crimes after 2020")
+```
+```{r}
+common<-merge(pd_desc10_top,pd_desc15_top,by = "PD_DESC") %>% merge(pd_desc20_top,by = "PD_DESC") %>% merge(pd_desc21_top,by = "PD_DESC")
+
+names(common) <- list("PD_DESC","2010","2015","2020","2021")
+
+common <- melt(common, id.vars=c("PD_DESC"))
+
+common
+
+x <- common$variable
+typeof(x)
+
+ggplot(common, aes(x=as.numeric(variable), y=value, colour=PD_DESC)) + geom_line()
+
+```

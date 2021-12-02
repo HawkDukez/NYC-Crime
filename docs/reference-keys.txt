@@ -10,5 +10,7 @@ missing-patterns-for-year-after-2020
 data-2-covid-19-data
 data-3-mental-health-data
 results
+arrest-data-analysis-of-nyc-from-2013
+classification-of-crime
 interactive-component
 conclusion
