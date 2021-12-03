@@ -9,6 +9,8 @@ library(lubridate)
 library(extracat)
 library(ggplot2)
 library(dplyr)
+library(vcd)
+library(RColorBrewer)
 ```
 
 ## Arrest data analysis of NYC from 2013
@@ -81,3 +83,101 @@ typeof(x)
 ggplot(common, aes(x=as.numeric(variable), y=value, colour=PD_DESC)) + geom_line()
 
 ```
+
+
+
+
+
+
+
+
+
+### District Analysis in Various Regions
+
+In our dataset, there are some columns includes information about geographic information: \n
+
+1) ARREST_BORO: Borough of arrest. B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)
+
+2) ARREST_PRECINCT: Precinct where the arrest occurred
+
+3) Latitude + Longitude : coordinates for Global Coordinate System, WGS
+
+
+#### Borough Level Analysis
+
+```{r}
+nyc<-read_csv('NYPD_Arrests_Data__Historic_.csv')
+nyc<- nyc%>%mutate(ARREST_DATE=as.Date(nyc$ARREST_DATE,format='%m/%d/%Y'))
+nyc<- nyc%>%mutate(ARREST_YEAR= year(nyc$ARREST_DATE))
+```
+
+```{r}
+temp_tbl_0 <- nyc %>% 
+  filter(!is.na(ARREST_BORO)) %>%
+  group_by(ARREST_BORO) %>%
+  summarise(Count = length(ARREST_BORO)) %>%
+  mutate(perc = `Count` / sum(`Count`)) %>%
+  mutate(labels = scales::percent(perc))
+
+
+ggplot(temp_tbl_0, aes(x = "", y = perc, fill = ARREST_BORO)) +
+  geom_col() +
+  coord_polar(theta = "y")+
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5)) +
+   ylab("Crimes Percentage") +
+  xlab("borough") +
+  ggtitle("Crimes Percentage for Different Boroughs") 
+  
+```
+
+
+
+```{r}
+temp_tbl_1 <- nyc %>% 
+             group_by(ARREST_YEAR, ARREST_BORO) %>%
+             summarise(Freq = length(ARREST_YEAR))
+
+vcd::mosaic(ARREST_BORO ~ ARREST_YEAR, temp_tbl_1, 
+       direction = c("h", "v"), 
+       highlighting_fill = rev(brewer.pal(5, 'RdBu')),
+       main = "crimes of different year and arrest_boro ")
+```
+From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.
+
+
+#### Precinct Level Analysis
+
+```{r}
+temp_tbl_2 <- nyc %>% 
+             filter(!is.na(ARREST_BORO)) %>%
+             group_by(ARREST_BORO, ARREST_PRECINCT) %>%
+             summarise(Freq = length(ARREST_BORO))
+
+temp_tbl_2$area_mix <- paste(temp_tbl_2$ARREST_BORO,temp_tbl_2$ARREST_PRECINCT)
+temp_tbl_2 <- temp_tbl_2[order(temp_tbl_2$Freq, decreasing = TRUE), ]
+top_area_20 <- temp_tbl_2[1:20,]
+
+ggplot(top_area_20, aes(x = reorder(area_mix, Freq), y = Freq)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Top 20 Percints with most crimes") +
+  coord_flip()
+
+```
+
+
+We pick out the top 20 precincts with the most criminal records and found that 9 of them are in Bronx. Although the number of criminals in Bronx is not the largest, but it is relatively concentrated.
+
+#### NYC crime maps
+
+```{r}
+library(ggmap)
+library(ggplot2)
+library(tidyr)
+
+nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
+nyc_21 <- nyc %>% filter(year(ARREST_DATE)>=2020)
+ggmap(nyc_map) + 
+  geom_point(data=nyc_21,aes(x=Longitude,y=Latitude),size=.15,alpha=.3) 
+```
+

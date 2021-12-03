@@ -24,7 +24,7 @@
 <meta name="author" content="Pengyu Zou, Siyu Li, Nuanyu Shou" />
 
 
-<meta name="date" content="2021-12-02" />
+<meta name="date" content="2021-12-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="missing-values.html"/>
 <link rel="next" href="interactive-component.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -93,6 +93,7 @@
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#arrest-data-analysis-of-nyc-from-2013"><i class="fa fa-check"></i><b>5.1</b> Arrest data analysis of NYC from 2013</a>
 <ul>
 <li class="chapter" data-level="5.1.1" data-path="results.html"><a href="results.html#classification-of-crime"><i class="fa fa-check"></i><b>5.1.1</b> Classification of crime</a></li>
+<li class="chapter" data-level="5.1.2" data-path="results.html"><a href="results.html#district-analysis-in-various-regions"><i class="fa fa-check"></i><b>5.1.2</b> District Analysis in Various Regions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -158,7 +159,31 @@
 ## 32    WEAPONS, POSSESSION, ETC     2021   1495</code></pre>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="district-analysis-in-various-regions" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> District Analysis in Various Regions</h3>
+<p>In our dataset, there are some columns includes information about geographic information: </p>
+<ol style="list-style-type: decimal">
+<li><p>ARREST_BORO: Borough of arrest. B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)</p></li>
+<li><p>ARREST_PRECINCT: Precinct where the arrest occurred</p></li>
+<li><p>Latitude + Longitude : coordinates for Global Coordinate System, WGS</p></li>
+</ol>
+<div id="borough-level-analysis" class="section level4" number="5.1.2.1">
+<h4><span class="header-section-number">5.1.2.1</span> Borough Level Analysis</h4>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.</p>
+</div>
+<div id="precinct-level-analysis" class="section level4" number="5.1.2.2">
+<h4><span class="header-section-number">5.1.2.2</span> Precinct Level Analysis</h4>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>We pick out the top 20 precincts with the most criminal records and found that 9 of them are in Bronx. Although the number of criminals in Bronx is not the largest, but it is relatively concentrated.</p>
+</div>
+<div id="nyc-crime-maps" class="section level4" number="5.1.2.3">
+<h4><span class="header-section-number">5.1.2.3</span> NYC crime maps</h4>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 
+</div>
 </div>
 </div>
 </div>
