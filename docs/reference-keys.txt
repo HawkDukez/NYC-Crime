@@ -12,7 +12,7 @@ data-3-mental-health-data
 results
 arrest-data-analysis-of-nyc-from-2013
 classification-of-crime
-district-analysis-in-various-regions
+crime-geographical-analysis
 borough-level-analysis
 precinct-level-analysis
 nyc-crime-maps
