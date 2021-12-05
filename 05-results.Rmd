@@ -11,6 +11,7 @@ library(ggplot2)
 library(dplyr)
 library(vcd)
 library(RColorBrewer)
+options(dplyr.summarise.inform=FALSE)
 ```
 
 ## Arrest data analysis of NYC from 2013
@@ -84,9 +85,152 @@ ggplot(common, aes(x=as.numeric(variable), y=value, colour=PD_DESC)) + geom_line
 
 ```
 
+```{r}
+nyc2021<-read_csv('NYPD_Arrest_Data__Year_to_Date_.csv')
+nyc2021<-nyc2021%>%mutate(ARREST_DATE=as.Date(nyc2021$ARREST_DATE,format='%m/%d/%Y'))
+colnames(nyc2021)[19]<- "Lon_Lat" 
+nyc<-rbind(nyc,nyc2021)
+```
+
+```{r}
+knitr::kable(data.frame(column = names(nyc), count = colSums(is.na(nyc)),row.names = NULL) %>% arrange(desc(count)) %>% filter(count>0), caption = "Missing values",align = "l",full_width = F,table.attr = "style='width:30%;'")
+
+```
+```{r}
+df1<-nyc%>%select(ARREST_DATE,JURISDICTION_CODE,AGE_GROUP,PERP_SEX)%>%mutate(year=year(ARREST_DATE))
+
+```
+
+#### JURISDICTION_CODE
+
+```{r}
+attach(df1)
+```
+
+```{r}
+df1$JURISDICTION_CODE<-as.factor(JURISDICTION_CODE)
+levels(df1$JURISDICTION_CODE)[!(levels(df1$JURISDICTION_CODE)%in% c("0","1","2"))] <- "other"
+```
+```{r}
+df1%>%
+   group_by(JURISDICTION_CODE) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   knitr::kable(caption = "JURISDICTION_CODE of NYC-Crime",align = "l",full_width = F,table.attr = "style='width:30%;'")
+```
+```{r}
+ggplot(df1,aes(fct_infreq(as.factor(JURISDICTION_CODE))))+
+  geom_bar(fill='lightblue')+
+  labs(x='JURISDICTION_CODE')+
+  ggtitle('Frequency bar chart for the JURISDICTION_CODE')+
+  theme(plot.title = element_text(hjust = 0.5))
+```
 
 
+Jurisdiction responsible for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions. Thus, we can see majority of the criminals were arrested by Patrol. 
 
+```{r fig.width=20,fig.height=12}
+
+df1<-df1%>%filter(!is.na(JURISDICTION_CODE))
+mosaic(JURISDICTION_CODE~year,direction = c("v", "h"),df1,highlighting_fill=brewer.pal(4,'Blues'))
+```
+```{r}
+df1%>%
+   group_by(JURISDICTION_CODE,year) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   ggplot(aes(x=year, y=count, group=JURISDICTION_CODE,color=JURISDICTION_CODE))+
+   geom_line()+
+   geom_point()
+```
+
+#### AGE_GROUP
+```{r}
+df1$AGE_GROUP<-as.factor(df1$AGE_GROUP)
+levels(df1$AGE_GROUP)[!(levels(df1$AGE_GROUP)%in% c("<18","18-24","25-44","45-64","65+"))] <- "unknown"
+df1$AGE_GROUP<-factor(df1$AGE_GROUP,levels=c("<18","18-24","25-44","45-64","65+","unknown"))
+```
+
+
+```{r}
+df1%>%
+   group_by(AGE_GROUP) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   knitr::kable(caption = "AGE_GROUP of NYC-Crime",align = "l",full_width = F,table.attr = "style='width:30%;'")
+```
+```{r}
+ggplot(df1,aes(factor(AGE_GROUP)))+
+  geom_bar(fill='lightblue')+
+  labs(x='AGE_GROUP')+
+  ggtitle('Frequency bar chart for the AGE_GROUP')+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+The majority of criminals' age_group is 25-44, followed by 18-24,45-64,<18, while the minority is 65+. This is rational as the olds and underages are less stronger and they are less likely to commit crime.
+
+```{r}
+df1<-df1%>%filter(!is.na(AGE_GROUP))%>%
+  mutate(AGE_GROUP=as.character(AGE_GROUP))%>%
+  filter(AGE_GROUP%in%c("<18","18-24","25-44","45-64","65+"))%>%
+  mutate(AGE_GROUP=as.factor(AGE_GROUP))
+```
+
+```{r fig.width=20,fig.height=12}
+df1<-df1%>%filter(!is.na(AGE_GROUP))%>%filter(as.character(AGE_GROUP)%in%c("<18","18-24","25-44","45-64","65+"))
+mosaic(AGE_GROUP~year,direction = c("v", "h"),df1,highlighting_fill=brewer.pal(5,'Blues'))
+```
+
+```{r}
+df1%>%
+   group_by(AGE_GROUP,year) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   ggplot(aes(x=year, y=count, group=AGE_GROUP,color=AGE_GROUP))+
+   geom_line()+
+   geom_point()
+```
+
+#### PERP_SEX
+```{r}
+df1%>%
+   group_by(PERP_SEX) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   knitr::kable(caption = "PERP_SEX of NYC-Crime",align = "l",full_width = F,table.attr = "style='width:30%;'")
+```
+```{r}
+ggplot(df1,aes(factor(PERP_SEX)))+
+  geom_bar(fill='lightblue')+
+  labs(x='PERP_SEX')+
+  ggtitle('Frequency bar chart for the PERP_SEX')+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+Numbers of male is about four times bigger than female. According to some research, due to physiological factors (primitive gender differences), Male and female body structures are different, and naturally there will be some differences in various aspects. In terms of endocrine, men will have more eandrogens, which makes men stronger and more aggressive.Women have more estrogen in their bodies, making them less aggressive than men. Of course, because women are generally less physically powerful than men, they are more difficult to commit crimes, which will also affect the crime rate.
+
+```{r fig.width=20,fig.height=12}
+mosaic(PERP_SEX~year,direction = c("v", "h"),df1,highlighting_fill=c(alpha("cornflowerblue",0.5),'cornflowerblue'))
+```
+
+```{r}
+df1%>%
+   group_by(PERP_SEX,year) %>%
+   summarise(count=n()) %>%
+   ungroup()%>%
+   ggplot(aes(x=year, y=count, group=PERP_SEX,color=PERP_SEX))+
+   geom_line()+
+   geom_point()
+```
+
+```{r}
+mosaic(PERP_SEX~AGE_GROUP ,
+            df1,direction = c("v","h"),highlighting_fill=c(alpha("cornflowerblue",0.5),'cornflowerblue'))
+```
+
+```{r}
+detach(df1)
+```
 
 
 
@@ -226,6 +370,7 @@ ggplot(temp_tbl_2[1:20,], aes(x = reorder(AREA_MIX, Freq), y = Freq)) +
 
 From the histogram of boroughs, we can find that crime will be concentrated in a few adjacent percints especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
 Besides, We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs. 
+
 
 
 ### NYC crime maps

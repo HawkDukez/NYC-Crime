@@ -24,7 +24,7 @@
 <meta name="author" content="Pengyu Zou, Siyu Li, Nuanyu Shou" />
 
 
-<meta name="date" content="2021-12-04" />
+<meta name="date" content="2021-12-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="missing-values.html"/>
 <link rel="next" href="interactive-component.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -164,6 +164,184 @@
 ## 32    WEAPONS, POSSESSION, ETC     2021   1495</code></pre>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<table>
+<caption><span id="tab:unnamed-chunk-23">Table 5.1: </span>Missing values</caption>
+<thead>
+<tr class="header">
+<th align="left">column</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LAW_CAT_CD</td>
+<td align="left">19939</td>
+</tr>
+<tr class="even">
+<td align="left">PD_DESC</td>
+<td align="left">9127</td>
+</tr>
+<tr class="odd">
+<td align="left">KY_CD</td>
+<td align="left">9127</td>
+</tr>
+<tr class="even">
+<td align="left">OFNS_DESC</td>
+<td align="left">9127</td>
+</tr>
+<tr class="odd">
+<td align="left">PD_CD</td>
+<td align="left">305</td>
+</tr>
+<tr class="even">
+<td align="left">LAW_CODE</td>
+<td align="left">196</td>
+</tr>
+<tr class="odd">
+<td align="left">AGE_GROUP</td>
+<td align="left">17</td>
+</tr>
+<tr class="even">
+<td align="left">JURISDICTION_CODE</td>
+<td align="left">10</td>
+</tr>
+<tr class="odd">
+<td align="left">ARREST_BORO</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">X_COORD_CD</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Y_COORD_CD</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Latitude</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Longitude</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Lon_Lat</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<div id="jurisdiction_code" class="section level4" number="5.1.1.1">
+<h4><span class="header-section-number">5.1.1.1</span> JURISDICTION_CODE</h4>
+<table>
+<caption><span id="tab:unnamed-chunk-27">Table 5.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">JURISDICTION_CODE</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="left">4393704</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">462933</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">272560</td>
+</tr>
+<tr class="even">
+<td align="left">other</td>
+<td align="left">139461</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">10</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Jurisdiction responsible for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions. Thus, we can see majority of the criminals were arrested by Patrol.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="1920" />
+<img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+<div id="age_group" class="section level4" number="5.1.1.2">
+<h4><span class="header-section-number">5.1.1.2</span> AGE_GROUP</h4>
+<table>
+<caption><span id="tab:unnamed-chunk-32">Table 5.3: </span>AGE_GROUP of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">AGE_GROUP</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">&lt;18</td>
+<td align="left">421539</td>
+</tr>
+<tr class="even">
+<td align="left">18-24</td>
+<td align="left">1368110</td>
+</tr>
+<tr class="odd">
+<td align="left">25-44</td>
+<td align="left">2459592</td>
+</tr>
+<tr class="even">
+<td align="left">45-64</td>
+<td align="left">973760</td>
+</tr>
+<tr class="odd">
+<td align="left">65+</td>
+<td align="left">45462</td>
+</tr>
+<tr class="even">
+<td align="left">unknown</td>
+<td align="left">178</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">17</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>The majority of criminals’ age_group is 25-44, followed by 18-24,45-64,&lt;18, while the minority is 65+. This is rational as the olds and underages are less stronger and they are less likely to commit crime.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-35-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="perp_sex" class="section level4" number="5.1.1.3">
+<h4><span class="header-section-number">5.1.1.3</span> PERP_SEX</h4>
+<table>
+<caption><span id="tab:unnamed-chunk-37">Table 5.4: </span>PERP_SEX of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">PERP_SEX</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">F</td>
+<td align="left">884283</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="left">4384180</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>Numbers of male is about four times bigger than female. According to some research, due to physiological factors (primitive gender differences), Male and female body structures are different, and naturally there will be some differences in various aspects. In terms of endocrine, men will have more eandrogens, which makes men stronger and more aggressive.Women have more estrogen in their bodies, making them less aggressive than men. Of course, because women are generally less physically powerful than men, they are more difficult to commit crimes, which will also affect the crime rate.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-39-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
 </div>
 </div>
 <div id="crime-geographical-analysis" class="section level2" number="5.2">
@@ -220,25 +398,25 @@
 ##     transform: function
 ##     transform_df: function
 ##     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 \
 \</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="768" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-45-1.png" width="768" />
 From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.</p>
 </div>
 <div id="precinct-level-analysis" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Precinct Level Analysis</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="960" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-48-1.png" width="960" />
 \
 \</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>From the histogram of boroughs, we can find that crime will be concentrated in a few adjacent percints especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
 Besides, We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs.</p>
 </div>
 <div id="nyc-crime-maps" class="section level3" number="5.2.3">
 <h3><span class="header-section-number">5.2.3</span> NYC crime maps</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-54-1.png" width="960" /></p>
 
 </div>
 </div>
