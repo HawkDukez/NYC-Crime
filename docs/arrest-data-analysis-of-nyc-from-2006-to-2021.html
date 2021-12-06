@@ -33,7 +33,7 @@
   
 <link rel="prev" href="results.html"/>
 <link rel="next" href="interactive-component.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -220,75 +220,32 @@
 <h2><span class="header-section-number">6.3</span> Crime Geographical Analysis</h2>
 <p>In our dataset, there are some columns includes information about geographic information: </p>
 <ol style="list-style-type: decimal">
-<li><p>ARREST_BORO: Borough of arrest. B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)</p></li>
+<li><p>ARREST_BORO: Borough of arres. There are five boroughs in NYC: B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)</p></li>
 <li><p>ARREST_PRECINCT: Precinct where the arrest occurred</p></li>
-<li><p>Latitude + Longitude : coordinates for Global Coordinate System, WGS</p></li>
+<li><p>Latitude + Longitude : coordinates for Global Coordinate System</p></li>
 </ol>
 <div id="borough-level-analysis" class="section level3" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> Borough Level Analysis</h3>
-<pre><code>## &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
-##     aesthetics: fill
-##     axis_order: function
-##     break_info: function
-##     break_positions: function
-##     breaks: waiver
-##     call: call
-##     clone: function
-##     dimension: function
-##     drop: TRUE
-##     expand: waiver
-##     get_breaks: function
-##     get_breaks_minor: function
-##     get_labels: function
-##     get_limits: function
-##     guide: legend
-##     is_discrete: function
-##     is_empty: function
-##     labels: waiver
-##     limits: NULL
-##     make_sec_title: function
-##     make_title: function
-##     map: function
-##     map_df: function
-##     n.breaks.cache: NULL
-##     na.translate: TRUE
-##     na.value: grey50
-##     name: waiver
-##     palette: function
-##     palette.cache: NULL
-##     position: left
-##     range: &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-##         range: NULL
-##         reset: function
-##         train: function
-##         super:  &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
-##     rescale: function
-##     reset: function
-##     scale_name: manual
-##     train: function
-##     train_df: function
-##     transform: function
-##     transform_df: function
-##     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;</code></pre>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="672" />
-\
-\</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="768" />
-From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="1440" />
+From the pie chart, we can know that the area with the most crime is Brooklyn, and Staten Island has least crime numbers. Besides, we draw mosaic maps reflecting the proportion of crimes in different regions in over years. We found that the proportion of crime in Queens and Staten Island is increasing, especially after 2015.</p>
 </div>
 <div id="precinct-level-analysis" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> Precinct Level Analysis</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-36-1.png" width="960" />
-\
+<p><img src="finalproj_files/figure-html/unnamed-chunk-35-1.png" width="768" />
 \</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<p>From the histogram of boroughs, we can find that crime will be concentrated in a few adjacent percints especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
-Besides, We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs.</p>
+<div class="figure">
+<img src="NYC-Precint.png" alt="" />
+<p class="caption">alt text here</p>
+</div>
+<p>From the histogram of boroughs and precinct map in NYC, we can find that crime will be concentrated in a few adjacent precinct especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens, which is. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs.</p>
 </div>
 <div id="jurisdiction_code" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> JURISDICTION_CODE</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-40">Table 6.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-39">Table 6.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">JURISDICTION_CODE</th>
@@ -318,15 +275,15 @@ Besides, We pick out the top 20 precincts with the most criminal records and fou
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>Jurisdiction responsible for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions. Thus, we can see majority of the criminals were arrested by Patrol.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-42-1.png" width="1920" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 </div>
 <div id="age_group" class="section level3" number="6.3.4">
 <h3><span class="header-section-number">6.3.4</span> AGE_GROUP</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-45">Table 6.3: </span>AGE_GROUP of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-44">Table 6.3: </span>AGE_GROUP of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">AGE_GROUP</th>
@@ -364,15 +321,15 @@ Besides, We pick out the top 20 precincts with the most criminal records and fou
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>The majority of criminals’ age_group is 25-44, followed by 18-24,45-64,&lt;18, while the minority is 65+. This is rational as the olds and underages are less stronger and they are less likely to commit crime.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-48-1.png" width="1920" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-47-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 </div>
 <div id="perp_sex" class="section level3" number="6.3.5">
 <h3><span class="header-section-number">6.3.5</span> PERP_SEX</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-50">Table 6.4: </span>PERP_SEX of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-49">Table 6.4: </span>PERP_SEX of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">PERP_SEX</th>
@@ -390,16 +347,22 @@ Besides, We pick out the top 20 precincts with the most criminal records and fou
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>Numbers of male is about four times bigger than female. According to some research, due to physiological factors (primitive gender differences), Male and female body structures are different, and naturally there will be some differences in various aspects. In terms of endocrine, men will have more eandrogens, which makes men stronger and more aggressive.Women have more estrogen in their bodies, making them less aggressive than men. Of course, because women are generally less physically powerful than men, they are more difficult to commit crimes, which will also affect the crime rate.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-51-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
 <div id="nyc-crime-maps" class="section level3" number="6.3.6">
 <h3><span class="header-section-number">6.3.6</span> NYC crime maps</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-58-1.png" width="960" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-60-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-58-1.png" width="1728" /></p>
+<p>Comparing the drug crime situation in 2018 and 2020, we can find the following two points:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>From 2018 to 2021, dangerous drug crimes have decreased a lot.</p></li>
+<li><p>Drug crimes are clustered on the map, we can find that the southern part of Bronx is an area with more serious drug crimes.</p></li>
+</ol>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-61-1.png" width="1728" /></p>
+<p>From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.</p>
 
 </div>
 </div>

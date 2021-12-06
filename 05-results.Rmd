@@ -12,6 +12,15 @@ library(dplyr)
 library(vcd)
 library(RColorBrewer)
 library(ggmosaic)
+library(ggmap)
+library(ggplot2)
+library(tidyr)
+library(cowplot)
+library(httr)
+library(rgdal)
+library(tigris)
+library(dplyr)
+library(broom)
 options(dplyr.summarise.inform=FALSE)
 ```
 
@@ -290,29 +299,16 @@ knitr::kable(data.frame(column = names(nyc), count = colSums(is.na(nyc)),row.nam
 df1<-nyc%>%select(ARREST_YEAR,JURISDICTION_CODE,AGE_GROUP,PERP_SEX)
 ```
 
-
-
 ## Crime Geographical Analysis
 
 In our dataset, there are some columns includes information about geographic information: \n
 
-1) ARREST_BORO: Borough of arrest. B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)
+1) ARREST_BORO: Borough of arres. There are five boroughs in NYC: B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)
 
 2) ARREST_PRECINCT: Precinct where the arrest occurred
 
-3) Latitude + Longitude : coordinates for Global Coordinate System, WGS
+3) Latitude + Longitude : coordinates for Global Coordinate System
 
-```{r}
-library(ggmap)
-library(ggplot2)
-library(tidyr)
-library(cowplot)
-library(httr)
-library(rgdal)
-library(tigris)
-library(dplyr)
-library(broom)
-```
 
 ### Borough Level Analysis
 
@@ -323,7 +319,6 @@ temp_tbl_0 <- nyc %>%
   summarise(Count = length(ARREST_BORO)) %>%
   mutate(perc = `Count` / sum(`Count`)) %>%
   mutate(labels = scales::percent(perc)) 
-scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 
 ggplot(temp_tbl_0, aes(x = "", y = perc, fill = ARREST_BORO)) +
   geom_col() +
@@ -335,11 +330,9 @@ ggplot(temp_tbl_0, aes(x = "", y = perc, fill = ARREST_BORO)) +
   scale_fill_manual(values=c( "#5499C7", "#1A5276", "#2471A3","#A9CCE3","#EAF2F8"))
   
 ```
-\\
-\\
 
 
-```{r,fig.width = 8, fig.height = 5}
+```{r,fig.width = 15, fig.height = 15}
 temp_tbl_1 <- nyc %>% 
              group_by(ARREST_YEAR, ARREST_BORO) %>%
              summarise(Freq = length(ARREST_YEAR))
@@ -348,8 +341,9 @@ vcd::mosaic(ARREST_BORO ~ ARREST_YEAR, temp_tbl_1,
        direction = c("h", "v"), 
        highlighting_fill = rev(brewer.pal(5, 'RdBu')),
        main = "Crimes of Different Boroughs over Year ")
+
 ```
-From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.
+From the pie chart, we can know that the area with the most crime is Brooklyn, and Staten Island has least crime numbers. Besides, we draw mosaic maps reflecting the proportion of crimes in different regions in over years. We found that the proportion of crime in Queens and Staten Island is increasing, especially after 2015.
 
 
 ### Precinct Level Analysis
@@ -371,58 +365,67 @@ b1 <- temp_tbl_2 %>% filter(ARREST_BORO == 'B') %>%
   geom_bar(stat = "identity",fill = '#A9CCE3', color = '#A9CCE3') +
   ggtitle("Bronx") +
   ylab("Crimes Counts") +
-  xlab("Percints")
+  xlab("Precinct")
 
 b2 <- temp_tbl_2 %>% filter(ARREST_BORO == 'K') %>%
   ggplot(aes(x = reorder(ARREST_PRECINCT_STR, ARREST_PRECINCT), y = Freq)) +
   geom_bar(stat = "identity",fill = '#A9CCE3', color = '#A9CCE3') +
   ggtitle("Brooklyn") +
   ylab("Crimes Counts") +
-  xlab("Percints")
+  xlab("Precinct")
 
 b3 <- temp_tbl_2 %>% filter(ARREST_BORO == 'M') %>%
   ggplot(aes(x = reorder(ARREST_PRECINCT_STR, ARREST_PRECINCT), y = Freq)) +
   geom_bar(stat = "identity",fill = '#A9CCE3', color = '#A9CCE3') +
   ggtitle("Manhattan") +
   ylab("Crimes Counts") +
-  xlab("Percints")
+  xlab("Precinct")
 
 b4 <- temp_tbl_2 %>% filter(ARREST_BORO == 'Q') %>%
   ggplot(aes(x = reorder(ARREST_PRECINCT_STR, ARREST_PRECINCT), y = Freq)) +
   geom_bar(stat = "identity",fill = '#A9CCE3', color = '#A9CCE3') +
   ggtitle("Queens") +
   ylab("Crimes Counts") +
-  xlab("Percints")
+  xlab("Precinct")
 
 b5 <- temp_tbl_2 %>% filter(ARREST_BORO == 'S') %>%
   ggplot(aes(x = reorder(ARREST_PRECINCT_STR, ARREST_PRECINCT), y = Freq)) +
   geom_bar(stat = "identity",fill = '#A9CCE3', color = '#A9CCE3') +
   ggtitle("Staten Island") +
   ylab("Crimes Counts") +
-  xlab("Percints")
+  xlab("Precinct")
 
 
 
 ```
 
-```{r,fig.width = 10, fig.height = 7}
-plot_grid(b1,b4,b3,b2,b5, nrow = 3, ncol = 2, align = "hv",axis = 'l' )
+```{r,fig.width = 8, fig.height = 15}
+plot_grid(b1,b4,b3,b2,b5, nrow = 5, ncol = 1, align = "hv",axis = 'l' )
 ```
 \\
-\\
+
+
+![alt text here](./NYC-Precint.png)
+
+
+
+From the histogram of boroughs and precinct map in NYC, we can find that crime will be concentrated in a few adjacent precinct especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens, which is. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
+
+
 
 ```{r}
 ggplot(temp_tbl_2[1:20,], aes(x = reorder(AREA_MIX, Freq), y = Freq)) +
   geom_bar(stat = "identity",fill = '#2471A3', color = 'white') +
   ggtitle("Top 20 Percints with most crimes") +
   ylab("Crimes Counts") +
-  xlab("Percints") +
+  xlab("Precinct") +
   coord_flip()
 ```
 
 
-From the histogram of boroughs, we can find that crime will be concentrated in a few adjacent percints especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
-Besides, We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs. 
+We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs. 
+
+
 
 ### JURISDICTION_CODE
 
@@ -578,6 +581,8 @@ detach(df1)
 
 
 
+
+
 ### NYC crime maps
 
 
@@ -591,34 +596,77 @@ nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
 
 
 ```{r}
-nyc_20 <- nyc %>% 
+nyc_20_drugs <- nyc %>% 
   filter(year(ARREST_DATE) == 2020) %>%
-  filter(OFNS_DESC %in% c('ASSAULT 3 & RELATED OFFENSES','FELONY ASSAULT','PETIT LARCENY',
-                     'DANGEROUS DRUGS')) 
+  filter(OFNS_DESC %in% c('DANGEROUS DRUGS')) 
 
-```
-
-```{r,fig.width = 10, fig.height = 10}
-ggmap(nyc_map) + 
-  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_20, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) + 
-  facet_wrap(~OFNS_DESC)
+nyc_18_drugs <- nyc %>% 
+  filter(year(ARREST_DATE) == 2018) %>%
+  filter(OFNS_DESC %in% c('DANGEROUS DRUGS')) 
 
 ```
 
 ```{r}
-nyc_18 <- nyc %>% 
-  filter(year(ARREST_DATE) == 2018) %>%
-  filter(OFNS_DESC %in% c('ASSAULT 3 & RELATED OFFENSES','FELONY ASSAULT','PETIT LARCENY',
-                     'DANGEROUS DRUGS')) 
-```
-
-```{r, fig.width = 10, fig.height = 10}
-ggmap(nyc_map) + 
+drug18 <- ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_18, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) + 
-  facet_wrap(~OFNS_DESC)
+  geom_point(data=nyc_18_drugs, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  ggtitle("DANGEROUS DRUGS in 2018")
+
+drug20 <- ggmap(nyc_map) + 
+  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
+  geom_point(data=nyc_20_drugs, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  ggtitle("DANGEROUS DRUGS in 2021")
 
 ```
+
+```{r,fig.width = 18, fig.height = 6}
+plot_grid(drug18,drug20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+```
+
+
+
+
+Comparing the drug crime situation in 2018 and 2020, we can find the following two points:
+
+a) From 2018 to 2021, dangerous drug crimes have decreased a lot.
+
+b) Drug crimes are clustered on the map, we can find that the southern part of Bronx is an area with more serious drug crimes. 
+
+
+
+```{r}
+nyc_20_larceny <- nyc %>% 
+  filter(year(ARREST_DATE) == 2020) %>%
+  filter(OFNS_DESC %in% c('PETIT LARCENY')) 
+
+nyc_18_larceny <- nyc %>% 
+  filter(year(ARREST_DATE) == 2018) %>%
+  filter(OFNS_DESC %in% c('PETIT LARCENY'))
+
+```
+
+```{r}
+larceny18 <- ggmap(nyc_map) + 
+  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
+  geom_point(data=nyc_18_larceny, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  ggtitle("PETIT LARCENY in 2018")+
+  theme(legend.title = element_blank())
+
+larceny20 <- ggmap(nyc_map) + 
+  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
+  geom_point(data=nyc_20_larceny, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  ggtitle("PETIT LARCENY in 2021")+
+  theme(legend.title = element_blank())
+
+```
+
+```{r,fig.width = 18, fig.height = 6}
+plot_grid(larceny18,larceny20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+```
+
+
+
+
+From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
 
 
