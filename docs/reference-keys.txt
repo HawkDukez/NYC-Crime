@@ -1,7 +1,7 @@
-tab:unnamed-chunk-24
-tab:unnamed-chunk-35
+tab:unnamed-chunk-29
 tab:unnamed-chunk-40
 tab:unnamed-chunk-45
+tab:unnamed-chunk-50
 introduction
 data-sources
 data-transformation
@@ -14,8 +14,11 @@ missing-patterns-for-year-after-2020
 data-2-covid-19-data
 data-3-mental-health-data
 results
-arrest-data-analysis-of-nyc-from-2013
-classification-of-crime
+arrest-data-analysis-of-nyc-from-2006-to-2021
+total-number-of-crimes
+classification-of-crimes
+general-categoryofns_desc
+granular-categorypd_desc
 crime-geographical-analysis
 borough-level-analysis
 precinct-level-analysis

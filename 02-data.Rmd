@@ -1,10 +1,10 @@
 # Data sources
 
-[Incident Level Arrest Data - 2013 through most recent full year](https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u)
+[Incident Level Arrest Data - 2006 through most recent full year](https://data.cityofnewyork.us/Public-Safety/NYPD-Arrests-Data-Historic-/8h9b-rp9u)
 
 The NYPD releases a number of incident level datasets related to police enforcement
 and criminal activity. By utilizing this information, we can analyze the connection among
-different factors and the trend in 8 year.
+different factors and the trend in 16 year.
 
 [COVID-19 Daily Counts of Cases, Hospitalizations, and Deaths](https://data.cityofnewyork.us/Health/COVID-19-Daily-Counts-of-Cases-Hospitalizations-an/rc75-m7u3)
 

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Arrest data analysis of NYC from 2006 to 2021 | EDAV of Crime in NYC from 2013 to 2021</title>
+  <meta name="description" content="Chapter 6 Arrest data analysis of NYC from 2006 to 2021 | EDAV of Crime in NYC from 2013 to 2021" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Arrest data analysis of NYC from 2006 to 2021 | EDAV of Crime in NYC from 2013 to 2021" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Arrest data analysis of NYC from 2006 to 2021 | EDAV of Crime in NYC from 2013 to 2021" />
+  
+  
+  
+
+<meta name="author" content="Pengyu Zou, Siyu Li, Nuanyu Shou" />
+
+
+<meta name="date" content="2021-12-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="results.html"/>
+<link rel="next" href="interactive-component.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">NYCCrime</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#data-1-arrest-historic-data"><i class="fa fa-check"></i><b>4.1</b> DATA-1 Arrest Historic Data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="missing-values.html"><a href="missing-values.html#missing-patterns-for-year-before-2010"><i class="fa fa-check"></i><b>4.1.1</b> Missing patterns for year before 2010</a></li>
+<li class="chapter" data-level="4.1.2" data-path="missing-values.html"><a href="missing-values.html#missing-patterns-for-year-between-2010-2014"><i class="fa fa-check"></i><b>4.1.2</b> Missing patterns for year between 2010-2014</a></li>
+<li class="chapter" data-level="4.1.3" data-path="missing-values.html"><a href="missing-values.html#missing-patterns-for-year-between-2015-2019"><i class="fa fa-check"></i><b>4.1.3</b> Missing patterns for year between 2015-2019</a></li>
+<li class="chapter" data-level="4.1.4" data-path="missing-values.html"><a href="missing-values.html#missing-patterns-for-year-after-2020"><i class="fa fa-check"></i><b>4.1.4</b> Missing patterns for year after 2020</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#data-2-covid-19-data"><i class="fa fa-check"></i><b>4.2</b> DATA-2 COVID-19 Data</a></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#data-3-mental-health-data"><i class="fa fa-check"></i><b>4.3</b> DATA-3 Mental Health Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="6" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><i class="fa fa-check"></i><b>6</b> Arrest data analysis of NYC from 2006 to 2021</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#total-number-of-crimes"><i class="fa fa-check"></i><b>6.1</b> Total Number of Crimes</a></li>
+<li class="chapter" data-level="6.2" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#classification-of-crimes"><i class="fa fa-check"></i><b>6.2</b> Classification of Crimes</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#general-categoryofns_desc"><i class="fa fa-check"></i><b>6.2.1</b> General Category(OFNS_DESC)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#granular-categorypd_desc"><i class="fa fa-check"></i><b>6.2.2</b> Granular Category(PD_DESC)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#crime-geographical-analysis"><i class="fa fa-check"></i><b>6.3</b> Crime Geographical Analysis</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#borough-level-analysis"><i class="fa fa-check"></i><b>6.3.1</b> Borough Level Analysis</a></li>
+<li class="chapter" data-level="6.3.2" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#precinct-level-analysis"><i class="fa fa-check"></i><b>6.3.2</b> Precinct Level Analysis</a></li>
+<li class="chapter" data-level="6.3.3" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#jurisdiction_code"><i class="fa fa-check"></i><b>6.3.3</b> JURISDICTION_CODE</a></li>
+<li class="chapter" data-level="6.3.4" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#age_group"><i class="fa fa-check"></i><b>6.3.4</b> AGE_GROUP</a></li>
+<li class="chapter" data-level="6.3.5" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#perp_sex"><i class="fa fa-check"></i><b>6.3.5</b> PERP_SEX</a></li>
+<li class="chapter" data-level="6.3.6" data-path="arrest-data-analysis-of-nyc-from-2006-to-2021.html"><a href="arrest-data-analysis-of-nyc-from-2006-to-2021.html#nyc-crime-maps"><i class="fa fa-check"></i><b>6.3.6</b> NYC crime maps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>7</b> Interactive component</a></li>
+<li class="chapter" data-level="8" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>8</b> Conclusion</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">EDAV of Crime in NYC from 2013 to 2021</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="arrest-data-analysis-of-nyc-from-2006-to-2021" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Arrest data analysis of NYC from 2006 to 2021</h1>
+<div id="total-number-of-crimes" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Total Number of Crimes</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
+</div>
+<div id="classification-of-crimes" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Classification of Crimes</h2>
+<div id="general-categoryofns_desc" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> General Category(OFNS_DESC)</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="768" />
+<img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="768" />
+<img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-24-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-24-3.png" width="672" /></p>
+</div>
+<div id="granular-categorypd_desc" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Granular Category(PD_DESC)</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="768" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-28-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-28-3.png" width="672" /></p>
+<table>
+<caption><span id="tab:unnamed-chunk-29">Table 6.1: </span>Missing values</caption>
+<thead>
+<tr class="header">
+<th align="left">column</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LAW_CAT_CD</td>
+<td align="left">19939</td>
+</tr>
+<tr class="even">
+<td align="left">PD_DESC</td>
+<td align="left">9127</td>
+</tr>
+<tr class="odd">
+<td align="left">KY_CD</td>
+<td align="left">9127</td>
+</tr>
+<tr class="even">
+<td align="left">OFNS_DESC</td>
+<td align="left">9127</td>
+</tr>
+<tr class="odd">
+<td align="left">PD_CD</td>
+<td align="left">305</td>
+</tr>
+<tr class="even">
+<td align="left">LAW_CODE</td>
+<td align="left">196</td>
+</tr>
+<tr class="odd">
+<td align="left">AGE_GROUP</td>
+<td align="left">17</td>
+</tr>
+<tr class="even">
+<td align="left">JURISDICTION_CODE</td>
+<td align="left">10</td>
+</tr>
+<tr class="odd">
+<td align="left">ARREST_BORO</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">X_COORD_CD</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Y_COORD_CD</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Latitude</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Longitude</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">Lon_Lat</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="crime-geographical-analysis" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Crime Geographical Analysis</h2>
+<p>In our dataset, there are some columns includes information about geographic information: </p>
+<ol style="list-style-type: decimal">
+<li><p>ARREST_BORO: Borough of arrest. B(Bronx), S(Staten Island), K(Brooklyn), M(Manhattan), Q(Queens)</p></li>
+<li><p>ARREST_PRECINCT: Precinct where the arrest occurred</p></li>
+<li><p>Latitude + Longitude : coordinates for Global Coordinate System, WGS</p></li>
+</ol>
+<div id="borough-level-analysis" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Borough Level Analysis</h3>
+<pre><code>## &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;
+##     aesthetics: fill
+##     axis_order: function
+##     break_info: function
+##     break_positions: function
+##     breaks: waiver
+##     call: call
+##     clone: function
+##     dimension: function
+##     drop: TRUE
+##     expand: waiver
+##     get_breaks: function
+##     get_breaks_minor: function
+##     get_labels: function
+##     get_limits: function
+##     guide: legend
+##     is_discrete: function
+##     is_empty: function
+##     labels: waiver
+##     limits: NULL
+##     make_sec_title: function
+##     make_title: function
+##     map: function
+##     map_df: function
+##     n.breaks.cache: NULL
+##     na.translate: TRUE
+##     na.value: grey50
+##     name: waiver
+##     palette: function
+##     palette.cache: NULL
+##     position: left
+##     range: &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
+##         range: NULL
+##         reset: function
+##         train: function
+##         super:  &lt;ggproto object: Class RangeDiscrete, Range, gg&gt;
+##     rescale: function
+##     reset: function
+##     scale_name: manual
+##     train: function
+##     train_df: function
+##     transform: function
+##     transform_df: function
+##     super:  &lt;ggproto object: Class ScaleDiscrete, Scale, gg&gt;</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+\
+\</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="768" />
+From the pie chart, we can know that the area with the most crime is Brooklyn and Staten Island has least crime numbers. Besides, we have ploted mosaic maps reflecting the proportion of crimes in different regions in different years. We found that the number of crimes in Queen is increasing, while the number of crimes in Manhattan has decreased, especially after 2015.</p>
+</div>
+<div id="precinct-level-analysis" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> Precinct Level Analysis</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-36-1.png" width="960" />
+\
+\</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>From the histogram of boroughs, we can find that crime will be concentrated in a few adjacent percints especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
+Besides, We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs.</p>
+</div>
+<div id="jurisdiction_code" class="section level3" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> JURISDICTION_CODE</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-40">Table 6.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">JURISDICTION_CODE</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0</td>
+<td align="left">4393704</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">462933</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">272560</td>
+</tr>
+<tr class="even">
+<td align="left">other</td>
+<td align="left">139461</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">10</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Jurisdiction responsible for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD whilst codes 3 and more represent non NYPD jurisdictions. Thus, we can see majority of the criminals were arrested by Patrol.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-42-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="age_group" class="section level3" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> AGE_GROUP</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-45">Table 6.3: </span>AGE_GROUP of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">AGE_GROUP</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">&lt;18</td>
+<td align="left">421539</td>
+</tr>
+<tr class="even">
+<td align="left">18-24</td>
+<td align="left">1368110</td>
+</tr>
+<tr class="odd">
+<td align="left">25-44</td>
+<td align="left">2459592</td>
+</tr>
+<tr class="even">
+<td align="left">45-64</td>
+<td align="left">973760</td>
+</tr>
+<tr class="odd">
+<td align="left">65+</td>
+<td align="left">45462</td>
+</tr>
+<tr class="even">
+<td align="left">unknown</td>
+<td align="left">178</td>
+</tr>
+<tr class="odd">
+<td align="left">NA</td>
+<td align="left">17</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p>The majority of criminals’ age_group is 25-44, followed by 18-24,45-64,&lt;18, while the minority is 65+. This is rational as the olds and underages are less stronger and they are less likely to commit crime.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-48-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</div>
+<div id="perp_sex" class="section level3" number="6.3.5">
+<h3><span class="header-section-number">6.3.5</span> PERP_SEX</h3>
+<table>
+<caption><span id="tab:unnamed-chunk-50">Table 6.4: </span>PERP_SEX of NYC-Crime</caption>
+<thead>
+<tr class="header">
+<th align="left">PERP_SEX</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">F</td>
+<td align="left">884283</td>
+</tr>
+<tr class="even">
+<td align="left">M</td>
+<td align="left">4384180</td>
+</tr>
+</tbody>
+</table>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Numbers of male is about four times bigger than female. According to some research, due to physiological factors (primitive gender differences), Male and female body structures are different, and naturally there will be some differences in various aspects. In terms of endocrine, men will have more eandrogens, which makes men stronger and more aggressive.Women have more estrogen in their bodies, making them less aggressive than men. Of course, because women are generally less physically powerful than men, they are more difficult to commit crimes, which will also affect the crime rate.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+</div>
+<div id="nyc-crime-maps" class="section level3" number="6.3.6">
+<h3><span class="header-section-number">6.3.6</span> NYC crime maps</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-58-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-60-1.png" width="960" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interactive-component.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/HawkDukez/NYC-Crime/edit/main/05-results.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/HawkDukez/NYC-Crime/blob/main/05-results.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

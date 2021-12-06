@@ -15,7 +15,7 @@ library(ggmosaic)
 options(dplyr.summarise.inform=FALSE)
 ```
 
-## Arrest data analysis of NYC from 2013
+# Arrest data analysis of NYC from 2006 to 2021
 
 ```{r }
 nyc<- read_csv('NYPD_Arrests_Data__Historic_.csv')
@@ -30,7 +30,25 @@ nyc<- nyc%>%mutate(ARREST_YEAR= year(nyc$ARREST_DATE))
 
 ```
 
-### Classification of crime
+## Total Number of Crimes
+
+```{r,fig.width = 8, fig.height = 5}
+options(scipen=10000)
+
+crime_total <- count(nyc,ARREST_YEAR)
+crime_total$Total <- crime_total$n
+
+crime_total$ARREST_YEAR <- as.Date(ISOdate(crime_total$ARREST_YEAR, 1, 1))
+
+ggplot(crime_total,aes(x=ARREST_YEAR,y=Total)) + 
+  geom_bar(stat = "identity") +
+  scale_x_date(limits = c(as.Date("2005-01-01"), as.Date("2022-01-01")),date_breaks = "1 year", date_labels = "%y") +
+  theme_grey(16) + 
+  ggtitle("Total number of Crimes in NYC over Years")
+```
+
+## Classification of Crimes
+
 ```{r}
 data10 <- nyc %>% filter(year(ARREST_DATE)<2011)
 data11 <- nyc %>% filter(year(ARREST_DATE)<2012&year(ARREST_DATE)>=2011)
@@ -43,24 +61,136 @@ data17 <- nyc %>% filter(year(ARREST_DATE)<2018&year(ARREST_DATE)>=2017)
 data18 <- nyc %>% filter(year(ARREST_DATE)<2019&year(ARREST_DATE)>=2018)
 data19 <- nyc %>% filter(year(ARREST_DATE)<2020&year(ARREST_DATE)>=2019)
 data20 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2020)
+data21 <- nyc %>% filter(year(ARREST_DATE)>=2021)
+```
 
+### General Category(OFNS_DESC)
+
+```{r}
+of_desc10 <- count(data10,OFNS_DESC)
+of_desc10_top <- top_n(of_desc10,16)
+
+of_desc11 <- count(data11,OFNS_DESC)
+of_desc11_top <- top_n(of_desc11,16)
+
+of_desc12 <- count(data12,OFNS_DESC)
+of_desc12_top <- top_n(of_desc12,16)
+
+of_desc13 <- count(data13,OFNS_DESC)
+of_desc13_top <- top_n(of_desc13,16)
+
+of_desc14 <- count(data14,OFNS_DESC)
+of_desc14_top <- top_n(of_desc14,16)
+
+of_desc15 <- count(data15,OFNS_DESC)
+of_desc15_top <- top_n(of_desc15,16)
+
+of_desc16 <- count(data16,OFNS_DESC)
+of_desc16_top <- top_n(of_desc16,16)
+
+of_desc17 <- count(data17,OFNS_DESC)
+of_desc17_top <- top_n(of_desc17,16)
+
+of_desc18 <- count(data18,OFNS_DESC)
+of_desc18_top <- top_n(of_desc18,16)
+
+of_desc19 <- count(data19,OFNS_DESC)
+of_desc19_top <- top_n(of_desc19,16)
+
+of_desc20 <- count(data20,OFNS_DESC)
+of_desc20_top <- top_n(of_desc20,16)
+
+of_desc21 <- count(data21,OFNS_DESC)
+of_desc21_top <- top_n(of_desc21,16)
+```
+
+```{r,fig.width = 8, fig.height = 5}
+most_crime2 <- intersect(of_desc10_top$OFNS_DESC, of_desc11_top$OFNS_DESC)  %>% intersect(of_desc12_top$OFNS_DESC) %>% intersect(of_desc13_top$OFNS_DESC)  %>% intersect(of_desc14_top$OFNS_DESC) %>% intersect(of_desc15_top$OFNS_DESC) %>% intersect(of_desc16_top$OFNS_DESC) %>% intersect(of_desc17_top$OFNS_DESC) %>% intersect(of_desc18_top$OFNS_DESC) %>% intersect(of_desc19_top$OFNS_DESC) %>% intersect(of_desc20_top$OFNS_DESC) %>% intersect(of_desc21_top$OFNS_DESC)
+
+most_crime_nyc2 <- nyc %>% filter(!is.na(OFNS_DESC)) %>% 
+                          filter(OFNS_DESC %in% most_crime2) %>%
+                          group_by(OFNS_DESC,ARREST_YEAR) %>% 
+                          summarise(Count = length(OFNS_DESC))
+
+most_crime_nyc2$ARREST_YEAR <- as.Date(ISOdate(most_crime_nyc2$ARREST_YEAR, 1, 1))
+
+ggplot(most_crime_nyc2, aes(ARREST_YEAR, Count, color = OFNS_DESC)) + geom_line() +
+    ggtitle("The 6 Most Numerous Crimes in NYC from 2006 to 2021") +
+    theme_grey(16) +
+    theme(legend.title = element_blank()) + 
+    labs (x = "Year", y = "Count") + 
+    theme(legend.key.size = unit(.5, 'cm'),  
+          legend.key.width = unit(.5, 'cm'), legend.text = element_text(size=8)) +
+    scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2021-01-01")),date_breaks = "1 year", date_labels = "%y")
+```
+```{r,fig.width = 8, fig.height = 8}
+group_year2 <- most_crime_nyc2 %>% 
+             group_by(ARREST_YEAR, OFNS_DESC)
+
+group_year2$ARREST_YEAR <- year(group_year2$ARREST_YEAR)
+
+
+ggplot(data = group_year2) +
+  geom_mosaic(aes(weight = Count, x = product(OFNS_DESC,ARREST_YEAR), fill=OFNS_DESC)) + 
+  coord_flip() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.6, hjust=.5)) + 
+  ggtitle("Percentage of Most Numerous Crimes over Years")
+
+```
+```{r}
+five_year1 <- nyc %>% filter(year(ARREST_DATE)<2011&year(ARREST_DATE)>=2006)
+five_year2 <- nyc %>% filter(year(ARREST_DATE)<2016&year(ARREST_DATE)>=2011)
+five_year3 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2016)
+
+five_year1 <- count(five_year1,OFNS_DESC)
+five_year1_top <- top_n(five_year1,30)
+
+five_year2 <- count(five_year2,OFNS_DESC)
+five_year2_top <- top_n(five_year2,30)
+
+five_year3 <- count(five_year3,OFNS_DESC)
+five_year3_top <- top_n(five_year3,30)
+
+ggplot(five_year1_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2006 to 2010")
+
+ggplot(five_year2_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2011 to 2015")
+
+ggplot(five_year3_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2016 to 2020")
+
+```
+
+### Granular Category(PD_DESC)
+
+```{r}
 pd_desc10 <- count(data10,PD_DESC)
-pd_desc10_top <- top_n(pd_desc10,16)
+pd_desc10_top <- top_n(pd_desc10,30)
 
 pd_desc11 <- count(data11,PD_DESC)
-pd_desc11_top <- top_n(pd_desc11,16)
+pd_desc11_top <- top_n(pd_desc11,30)
 
 pd_desc12 <- count(data12,PD_DESC)
-pd_desc12_top <- top_n(pd_desc12,16)
+pd_desc12_top <- top_n(pd_desc12,30)
 
 pd_desc13 <- count(data13,PD_DESC)
-pd_desc13_top <- top_n(pd_desc13,16)
+pd_desc13_top <- top_n(pd_desc13,30)
 
 pd_desc14 <- count(data14,PD_DESC)
-pd_desc14_top <- top_n(pd_desc14,16)
+pd_desc14_top <- top_n(pd_desc14,30)
 
 pd_desc15 <- count(data15,PD_DESC)
-pd_desc15_top <- top_n(pd_desc15,16)
+pd_desc15_top <- top_n(pd_desc15,30)
 
 pd_desc16 <- count(data16,PD_DESC)
 pd_desc16_top <- top_n(pd_desc16,30)
@@ -77,70 +207,77 @@ pd_desc19_top <- top_n(pd_desc19,30)
 pd_desc20 <- count(data20,PD_DESC)
 pd_desc20_top <- top_n(pd_desc20,30)
 
+pd_desc21 <- count(data21,PD_DESC)
+pd_desc21_top <- top_n(pd_desc21,30)
 ```
 
 ```{r,fig.width = 8, fig.height = 5}
-options(scipen=10000)
+most_crime <- intersect(pd_desc10_top$PD_DESC, pd_desc11_top$PD_DESC)  %>% intersect(pd_desc12_top$PD_DESC) %>% intersect(pd_desc13_top$PD_DESC)  %>% intersect(pd_desc14_top$PD_DESC) %>% intersect(pd_desc15_top$PD_DESC) %>% intersect(pd_desc16_top$PD_DESC) %>% intersect(pd_desc17_top$PD_DESC) %>% intersect(pd_desc18_top$PD_DESC) %>% intersect(pd_desc19_top$PD_DESC) %>% intersect(pd_desc20_top$PD_DESC) %>% intersect(pd_desc21_top$PD_DESC)
 
-crime_total <- count(nyc,ARREST_YEAR)
-crime_total$Total <- crime_total$n
-
-crime_total$ARREST_YEAR <- as.Date(ISOdate(crime_total$ARREST_YEAR, 1, 1))
-
-ggplot(crime_total,aes(x=ARREST_YEAR,y=Total)) + 
-  geom_bar(stat = "identity") +
-  scale_x_date(limits = c(as.Date("2005-01-01"), as.Date("2022-01-01")),date_breaks = "1 year", date_labels = "%y")
-```
-
-```{r,fig.width = 8, fig.height = 5}
-most_crime <- intersect(pd_desc11_top$PD_DESC, pd_desc12_top$PD_DESC)  %>% intersect(pd_desc13_top$PD_DESC)  %>% intersect(pd_desc14_top$PD_DESC) %>% intersect(pd_desc15_top$PD_DESC) %>% intersect(pd_desc16_top$PD_DESC) %>% intersect(pd_desc17_top$PD_DESC) %>% intersect(pd_desc18_top$PD_DESC) %>% intersect(pd_desc19_top$PD_DESC) %>% intersect(pd_desc20_top$PD_DESC)
-
-most_crime_nyc <- nyc %>% filter(!is.na(PD_DESC)) %>% filter(PD_DESC %in% most_crime) %>% group_by(PD_DESC,ARREST_YEAR) %>%summarise(Count = length(PD_DESC))
+most_crime_nyc <- nyc %>% filter(!is.na(PD_DESC)) %>% 
+                          filter(PD_DESC %in% most_crime) %>%
+                          group_by(PD_DESC,ARREST_YEAR) %>% 
+                          summarise(Count = length(PD_DESC))
 
 most_crime_nyc$ARREST_YEAR <- as.Date(ISOdate(most_crime_nyc$ARREST_YEAR, 1, 1))
 
 ggplot(most_crime_nyc, aes(ARREST_YEAR, Count, color = PD_DESC)) + geom_line() +
-    ggtitle("5 Most crimes in NYC") +
+    ggtitle("The 7 Most Numerous Crimes in NYC from 2006 to 2021") +
     theme_grey(16) +
     theme(legend.title = element_blank()) + 
     labs (x = "Year", y = "Count") + 
     theme(legend.key.size = unit(.5, 'cm'),  
           legend.key.width = unit(.5, 'cm'), legend.text = element_text(size=8)) +
-    scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2020-01-01")),date_breaks = "1 year", date_labels = "%y")
+    scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2021-01-01")),date_breaks = "1 year", date_labels = "%y")
 ```
 
-```{r,fig.width = 8, fig.height = 5}
+```{r,fig.width = 8, fig.height = 8}
 group_year <- most_crime_nyc %>% 
              group_by(ARREST_YEAR, PD_DESC)
 
 group_year$ARREST_YEAR <- year(group_year$ARREST_YEAR)
 
+
 ggplot(data = group_year) +
   geom_mosaic(aes(weight = Count, x = product(PD_DESC,ARREST_YEAR), fill=PD_DESC)) + 
   coord_flip() + 
-  theme(axis.text.x = element_text(angle = 45, vjust = 0.6, hjust=.5))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.6, hjust=.5)) + 
+  ggtitle("Percentage of Most Numerous Crimes over Years")
 
 ```
 
 
 ```{r}
-ggplot(pd_desc10_top,aes(x=n,y=reorder(PD_DESC,n)))+
-  geom_point(color = 'blue')+
-  ylab("Crime")+
-  xlab("Count")+
-  ggtitle("30 most frequent crimes before 2010")
+five_year1 <- nyc %>% filter(year(ARREST_DATE)<2011&year(ARREST_DATE)>=2006)
+five_year2 <- nyc %>% filter(year(ARREST_DATE)<2016&year(ARREST_DATE)>=2011)
+five_year3 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2016)
 
-ggplot(pd_desc15_top,aes(x=n,y=reorder(PD_DESC,n)))+
-  geom_point(color = 'blue')+
-  ylab("Crime")+
-  xlab("Count")+
-  ggtitle("30 most frequent crimes in 2015")
+five_year1 <- count(five_year1,PD_DESC)
+five_year1_top <- top_n(five_year1,30)
 
-ggplot(pd_desc20_top,aes(x=n,y=reorder(PD_DESC,n)))+
+five_year2 <- count(five_year2,PD_DESC)
+five_year2_top <- top_n(five_year2,30)
+
+five_year3 <- count(five_year3,PD_DESC)
+five_year3_top <- top_n(five_year3,30)
+
+ggplot(five_year1_top,aes(x=n,y=reorder(PD_DESC,n)))+
   geom_point(color = 'blue')+
   ylab("Crime")+
   xlab("Count")+
-  ggtitle("30 most frequent crimes in 2020")
+  ggtitle("30 Most Numerous Crimes From 2006 to 2010")
+
+ggplot(five_year2_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2011 to 2015")
+
+ggplot(five_year3_top,aes(x=n,y=reorder(PD_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2016 to 2020")
 
 ```
 
