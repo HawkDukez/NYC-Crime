@@ -24,7 +24,7 @@ library(broom)
 options(dplyr.summarise.inform=FALSE)
 ```
 
-# Arrest data analysis of NYC from 2006 to 2021
+## Arrest data analysis of NYC from 2006 to 2021
 
 ```{r }
 nyc<- read_csv('NYPD_Arrests_Data__Historic_.csv')
@@ -39,7 +39,7 @@ nyc<- nyc%>%mutate(ARREST_YEAR= year(nyc$ARREST_DATE))
 
 ```
 
-## Total Number of Crimes
+### Total Number of Crimes
 
 ```{r,fig.width = 8, fig.height = 5}
 options(scipen=10000)
@@ -55,8 +55,9 @@ ggplot(crime_total,aes(x=ARREST_YEAR,y=Total)) +
   theme_grey(16) + 
   ggtitle("Total number of Crimes in NYC over Years")
 ```
+From the above figure, we can see that from 2006 to 2010, the total number of crimes in New York City has been increasing every year, with the largest increase in 2007 and 2009, at about 25,000. The number of crimes has been declining every year since 2010, with the largest decrease in 2020 of approximately 75,000 compared to 2019.
 
-## Classification of Crimes
+### Classification of Crimes
 
 ```{r}
 data10 <- nyc %>% filter(year(ARREST_DATE)<2011)
@@ -72,8 +73,48 @@ data19 <- nyc %>% filter(year(ARREST_DATE)<2020&year(ARREST_DATE)>=2019)
 data20 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2020)
 data21 <- nyc %>% filter(year(ARREST_DATE)>=2021)
 ```
+In this data set provided by the NYPD, each arrested crime corresponds to two categories, **OFNS_DESC** and **PD_DESC**. **OFNS_DESC** is the description of internal classification which is more general. **PD_DESC** is the description of internal classification which is more granular than **OFNS_DESC**. We draw Mosaic chart, line chart and Cleveland dot plot for this two categories.
 
-### General Category(OFNS_DESC)
+#### General Category(OFNS_DESC)
+
+Due to the large number of types in **OFNS_DESC**, we only take the 30 most numerous types. We divide the 15-year data into three five-year data and draw a graph to see the changes in the distribution of **OFNS_DESC**.
+
+```{r,fig.width = 8, fig.height = 15}
+five_year1 <- nyc %>% filter(year(ARREST_DATE)<2011&year(ARREST_DATE)>=2006)
+five_year2 <- nyc %>% filter(year(ARREST_DATE)<2016&year(ARREST_DATE)>=2011)
+five_year3 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2016)
+
+five_year1 <- count(five_year1,OFNS_DESC)
+five_year1_top <- top_n(five_year1,30)
+
+five_year2 <- count(five_year2,OFNS_DESC)
+five_year2_top <- top_n(five_year2,30)
+
+five_year3 <- count(five_year3,OFNS_DESC)
+five_year3_top <- top_n(five_year3,30)
+
+f1<-ggplot(five_year1_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2006 to 2010")
+
+f2<-ggplot(five_year2_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2011 to 2015")
+
+f3<-ggplot(five_year3_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+  geom_point(color = 'blue')+
+  ylab("Crime")+
+  xlab("Count")+
+  ggtitle("30 Most Numerous Crimes From 2016 to 2020")
+
+plot_grid(f1,f2,f3, nrow = 3, ncol = 1, align = "hv",axis = 'l' )
+```
+
+From the three Cleveland Dot Plots above, we can find that although the total number of crimes has dropped, **DANGEROUS DRUGS**, **ASSAULT 3** are still the two types of most numerous crimes. But the difference between these two types is gradually decreasing. From 2006 to 2010, **CRIMINAL TRESPASS** was still a serious problem, but after 2010, the number of this crime decreased significantly. It’s worth noting that the third most numerous crime has changed from **CRIMINAL TRESPASS** to **THEFT** and then to **PETIT LARCENY**, which are similar but the severity of the accusation has lessened.
 
 ```{r}
 of_desc10 <- count(data10,OFNS_DESC)
@@ -113,6 +154,7 @@ of_desc21 <- count(data21,OFNS_DESC)
 of_desc21_top <- top_n(of_desc21,16)
 ```
 
+
 ```{r,fig.width = 8, fig.height = 5}
 most_crime2 <- intersect(of_desc10_top$OFNS_DESC, of_desc11_top$OFNS_DESC)  %>% intersect(of_desc12_top$OFNS_DESC) %>% intersect(of_desc13_top$OFNS_DESC)  %>% intersect(of_desc14_top$OFNS_DESC) %>% intersect(of_desc15_top$OFNS_DESC) %>% intersect(of_desc16_top$OFNS_DESC) %>% intersect(of_desc17_top$OFNS_DESC) %>% intersect(of_desc18_top$OFNS_DESC) %>% intersect(of_desc19_top$OFNS_DESC) %>% intersect(of_desc20_top$OFNS_DESC) %>% intersect(of_desc21_top$OFNS_DESC)
 
@@ -132,6 +174,8 @@ ggplot(most_crime_nyc2, aes(ARREST_YEAR, Count, color = OFNS_DESC)) + geom_line(
           legend.key.width = unit(.5, 'cm'), legend.text = element_text(size=8)) +
     scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2021-01-01")),date_breaks = "1 year", date_labels = "%y")
 ```
+Those most numerous crimes are what we should pay attention to, so we take the intersection of the 30 types of the most numerous types from each year, and obtain 6 **OFNS_DESC**, which are **ASSAULT 3**, **DANGEROUS DRUGS**, **DANGEROUS WEAPONS**, **FELONY ASSAULT**, **MISCELLANEOUS PENAL LAW** and **ROBBERY**. From this line chart, we can find that **DANGEROUS DRUGS** is the most numerous type from 2006 to 2017. At the most, it's almost three times the second highest crime , **ASSAULT 3**. But its number has been declining, until 2018 it is less than **ASSAULT 3**. And until 2020, it becomes less than **FELONY ASSAULT**. The number of **ASSAULT 3** is around 30000. It gradually decreases after 2019. After 2018, it has become the most numerous crime type. The numbers of the other four types of crimes are all declining since 2006.
+
 ```{r,fig.width = 8, fig.height = 8}
 group_year2 <- most_crime_nyc2 %>% 
              group_by(ARREST_YEAR, OFNS_DESC)
@@ -146,41 +190,48 @@ ggplot(data = group_year2) +
   ggtitle("Percentage of Most Numerous Crimes over Years")
 
 ```
-```{r}
+From the Mosaic chart, we can see that the proportion of **DANGEROUS DRUGS** is constantly decreasing, the proportion of **ASSAULT 3** is constantly increasing, and the proportion of the sum of them in the total is decreasing.
+
+#### Granular Category(PD_DESC)
+
+Similar to the **OFNS_DESC**, we also only take the 30 most numerous types in **PD_DESC** and divide the 15-year data into three five-year data. 
+
+```{r,fig.width = 10, fig.height = 15}
 five_year1 <- nyc %>% filter(year(ARREST_DATE)<2011&year(ARREST_DATE)>=2006)
 five_year2 <- nyc %>% filter(year(ARREST_DATE)<2016&year(ARREST_DATE)>=2011)
 five_year3 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2016)
 
-five_year1 <- count(five_year1,OFNS_DESC)
+five_year1 <- count(five_year1,PD_DESC)
 five_year1_top <- top_n(five_year1,30)
 
-five_year2 <- count(five_year2,OFNS_DESC)
+five_year2 <- count(five_year2,PD_DESC)
 five_year2_top <- top_n(five_year2,30)
 
-five_year3 <- count(five_year3,OFNS_DESC)
+five_year3 <- count(five_year3,PD_DESC)
 five_year3_top <- top_n(five_year3,30)
 
-ggplot(five_year1_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+f1<-ggplot(five_year1_top,aes(x=n,y=reorder(PD_DESC,n)))+
   geom_point(color = 'blue')+
   ylab("Crime")+
   xlab("Count")+
   ggtitle("30 Most Numerous Crimes From 2006 to 2010")
 
-ggplot(five_year2_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+f2<-ggplot(five_year2_top,aes(x=n,y=reorder(PD_DESC,n)))+
   geom_point(color = 'blue')+
   ylab("Crime")+
   xlab("Count")+
   ggtitle("30 Most Numerous Crimes From 2011 to 2015")
 
-ggplot(five_year3_top,aes(x=n,y=reorder(OFNS_DESC,n)))+
+f3<-ggplot(five_year3_top,aes(x=n,y=reorder(PD_DESC,n)))+
   geom_point(color = 'blue')+
   ylab("Crime")+
   xlab("Count")+
   ggtitle("30 Most Numerous Crimes From 2016 to 2020")
 
+plot_grid(f1,f2,f3, nrow = 3, ncol = 1, align = "hv",axis = 'l' )
 ```
 
-### Granual Category(PD_DESC)
+From the three Cleveland Dot Plots above, we can find that **MARIJUANA POSSESSION** has been most numerous crimes in 2006 to 2010 and 2011 to 2015. Similarly, **CONTROLLED SUBSTANCE** is also a problem during these two period. But from 2016 to 2020, the number of these two crimes has decreased.  **TRAFFIC** also decrease after 2010. **THEFT** was serious during 2011 to 2015, but the situation has improved after 2015. Although it has decreased, the number of **ASSAULT 3** is still high, and it has become the most numerous type of crime in the period of 2016 to 2020.
 
 ```{r}
 pd_desc10 <- count(data10,PD_DESC)
@@ -239,6 +290,7 @@ ggplot(most_crime_nyc, aes(ARREST_YEAR, Count, color = PD_DESC)) + geom_line() +
           legend.key.width = unit(.5, 'cm'), legend.text = element_text(size=8)) +
     scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2021-01-01")),date_breaks = "1 year", date_labels = "%y")
 ```
+We take the intersection of the 30 types of the most numerous types from each year. Unlike **OFNS_DESC**, we obtain 7 **PD_DESC** in common. The number of **MARIJUANA POSSESSION** has been greatly decreased after 2015, even fall out of top. Hence, it is not in the result of intersection. Among the remaining crimes, **ASSAULT 3** has always been the most numerous type. After 2018, its number has decreased drastically. Other types of crime are also gradually decreasing from 2006.
 
 ```{r,fig.width = 8, fig.height = 8}
 group_year <- most_crime_nyc %>% 
@@ -255,40 +307,46 @@ ggplot(data = group_year) +
 
 ```
 
+From the Mosaic chart, we can see that although the number of **ASSAULT 3** is decreasing, as the total number is also decreasing, the proportion of **ASSAULT 3** has increased slightly.
+
+### Level of Offense
+
+In this data set of arrest crimes in New York City, each crime corresponds one level of offense, including F(Felony), I(Infraction), M(Misdemeanor), and V(Violation).
 
 ```{r}
-five_year1 <- nyc %>% filter(year(ARREST_DATE)<2011&year(ARREST_DATE)>=2006)
-five_year2 <- nyc %>% filter(year(ARREST_DATE)<2016&year(ARREST_DATE)>=2011)
-five_year3 <- nyc %>% filter(year(ARREST_DATE)<2021&year(ARREST_DATE)>=2016)
+options(scipen=10000)
 
-five_year1 <- count(five_year1,PD_DESC)
-five_year1_top <- top_n(five_year1,30)
+level_off <- nyc %>% filter(!is.na(LAW_CAT_CD)) %>% group_by(ARREST_YEAR)%>% count(LAW_CAT_CD)
+level_off$Total <- level_off$n
+level_off$ARREST_YEAR <- as.Date(ISOdate(level_off$ARREST_YEAR, 1, 1))
 
-five_year2 <- count(five_year2,PD_DESC)
-five_year2_top <- top_n(five_year2,30)
-
-five_year3 <- count(five_year3,PD_DESC)
-five_year3_top <- top_n(five_year3,30)
-
-ggplot(five_year1_top,aes(x=n,y=reorder(PD_DESC,n)))+
-  geom_point(color = 'blue')+
-  ylab("Crime")+
-  xlab("Count")+
-  ggtitle("30 Most Numerous Crimes From 2006 to 2010")
-
-ggplot(five_year2_top,aes(x=n,y=reorder(PD_DESC,n)))+
-  geom_point(color = 'blue')+
-  ylab("Crime")+
-  xlab("Count")+
-  ggtitle("30 Most Numerous Crimes From 2011 to 2015")
-
-ggplot(five_year3_top,aes(x=n,y=reorder(PD_DESC,n)))+
-  geom_point(color = 'blue')+
-  ylab("Crime")+
-  xlab("Count")+
-  ggtitle("30 Most Numerous Crimes From 2016 to 2021")
+ggplot(level_off, aes(ARREST_YEAR, Total, color = LAW_CAT_CD)) + geom_line() +
+    ggtitle("The Level of Crimes in NYC over Years") +
+    theme_grey(16) +
+    theme(legend.title = element_blank()) + 
+    labs (x = "Year", y = "Total") + 
+    theme(legend.key.size = unit(.5, 'cm'),  
+          legend.key.width = unit(.5, 'cm'), legend.text = element_text(size=8)) +
+    scale_x_date(limits = c(as.Date("2006-01-01"), as.Date("2021-01-01")),date_breaks = "1 year", date_labels = "%y")
 
 ```
+
+From this line chart, we can find that The number of Misdemeanor has decreased significantly since 2010. The number of Infraction has always been a small percentage of all crimes, and since it has no significant impact on society, we did not draw a separate graph of it. Felony and Violation also gradually decrease.
+
+```{r}
+
+level_off$ARREST_YEAR <- year(level_off$ARREST_YEAR)
+
+ggplot(data = level_off) +
+  geom_mosaic(aes(weight = Total, x = product(LAW_CAT_CD,ARREST_YEAR), fill=LAW_CAT_CD)) + 
+  coord_flip() + 
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.6, hjust=.5)) + 
+  ggtitle("Percentage of Most Numerous Crimes over Years")
+```
+
+The number and proportion of Felony have an important impact on social security and should be of concern to us. We find that although the total number of crimes is decreasing, the proportion of felony crimes is increasing, which shows that the improvement of felony crimes has not played an important role in the reduction of the total number.
+
+### Missing Pattern
 
 ```{r}
 knitr::kable(data.frame(column = names(nyc), count = colSums(is.na(nyc)),row.names = NULL) %>% arrange(desc(count)) %>% filter(count>0), caption = "Missing values",align = "l",full_width = F,table.attr = "style='width:30%;'")
@@ -460,7 +518,7 @@ vcd::mosaic(PERP_SEX~AGE_GROUP, df1,
 From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.
 
 
-## Crime Geographical Analysis
+### Crime Geographical Analysis
 
 In our dataset, there are some columns includes information about geographic information: \n
 
@@ -471,7 +529,7 @@ In our dataset, there are some columns includes information about geographic inf
 3) Latitude + Longitude : coordinates for Global Coordinate System
 
 
-### Borough Level Analysis
+#### Borough Level Analysis
 
 ```{r}
 temp_tbl_0 <- nyc %>% 
@@ -507,7 +565,7 @@ vcd::mosaic(ARREST_BORO ~ ARREST_YEAR, temp_tbl_1,
 From the pie chart, we can know that the area with the most crime is Brooklyn, and Staten Island has least crime numbers. Besides, we draw mosaic maps reflecting the proportion of crimes in different regions in over years. We found that the proportion of crime in Queens and Staten Island is increasing, especially after 2015.
 
 
-### Precinct Level Analysis
+#### Precinct Level Analysis
 
 ```{r}
 temp_tbl_2 <- nyc %>% 
@@ -587,7 +645,7 @@ ggplot(temp_tbl_2[1:20,], aes(x = reorder(AREA_MIX, Freq), y = Freq)) +
 We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs. 
 
 
-### NYC crime maps
+#### NYC crime maps
 
 
 ```{r}

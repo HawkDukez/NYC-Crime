@@ -1,7 +1,7 @@
-tab:unnamed-chunk-29
-tab:unnamed-chunk-32
-tab:unnamed-chunk-36
-tab:unnamed-chunk-39
+tab:unnamed-chunk-31
+tab:unnamed-chunk-34
+tab:unnamed-chunk-38
+tab:unnamed-chunk-41
 introduction
 data-sources
 data-transformation
@@ -18,7 +18,9 @@ arrest-data-analysis-of-nyc-from-2006-to-2021
 total-number-of-crimes
 classification-of-crimes
 general-categoryofns_desc
-granual-categorypd_desc
+granular-categorypd_desc
+level-of-offense
+missing-pattern
 general-categoryjurisdiction_code
 general-categoryage_group
 general-categoryperp_sex
