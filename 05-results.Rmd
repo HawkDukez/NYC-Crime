@@ -21,6 +21,7 @@ library(rgdal)
 library(tigris)
 library(dplyr)
 library(broom)
+library(parcoords)
 options(dplyr.summarise.inform=FALSE)
 ```
 
@@ -50,14 +51,14 @@ crime_total$Total <- crime_total$n
 crime_total$ARREST_YEAR <- as.Date(ISOdate(crime_total$ARREST_YEAR, 1, 1))
 
 ggplot(crime_total,aes(x=ARREST_YEAR,y=Total)) + 
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity",fill='lightblue') +
   scale_x_date(limits = c(as.Date("2005-01-01"), as.Date("2022-01-01")),date_breaks = "1 year", date_labels = "%y") +
   theme_grey(16) + 
   ggtitle("Total number of Crimes in NYC over Years")
 ```
 From the above figure, we can see that from 2006 to 2010, the total number of crimes in New York City has been increasing every year, with the largest increase in 2007 and 2009, at about 25,000. The number of crimes has been declining every year since 2010, with the largest decrease in 2020 of approximately 75,000 compared to 2019.
 
-### More Time Related Analysis
+### Time Related Analysis
 ```{r}
 nyc_r <- nyc %>% 
         group_by(ARREST_DATE)%>%
@@ -424,7 +425,7 @@ The number and proportion of Felony have an important impact on social security 
 
 ### Jurisdiction Code
 ```{r}
-df1<-nyc%>%select(ARREST_YEAR,JURISDICTION_CODE,AGE_GROUP,PERP_SEX)
+df1<-nyc%>%select(ARREST_YEAR,JURISDICTION_CODE,AGE_GROUP,PERP_SEX,OFNS_DESC,ARREST_BORO)
 ```
 
 ```{r}
@@ -584,7 +585,54 @@ vcd::mosaic(PERP_SEX~AGE_GROUP, df1,
        highlighting_fill=c(alpha("cornflowerblue",0.5),'cornflowerblue'))
 ```
 
-From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.
+From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than myc2021adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.
+
+```{r}
+dfm<-df1%>%mutate(
+    type = case_when(
+      str_detect(OFNS_DESC,'ASSAUL') ~ "ASSAULT",
+      str_detect(OFNS_DESC,'BURGLARY') ~"BURGLARY",
+      str_detect(OFNS_DESC,'LARCENY') ~"LARCENY",
+      str_detect(OFNS_DESC,'ROBBERY') ~"ROBBERY",
+      str_detect(OFNS_DESC,'MURDER') ~"MURDER",
+      str_detect(OFNS_DESC,'DANGEROUS DRUGS') ~"DRUG",
+      str_detect(OFNS_DESC,'DANGEROUS WEAPONS') ~"WEAPON",
+      str_detect(OFNS_DESC,'SEX CRIMES') ~"SEX_CRIME",
+       str_detect(OFNS_DESC,'RAPE') ~"RAPE",
+      TRUE                      ~ "other"
+    )
+  )%>%
+  filter(type!='other')
+```
+
+```{r fig.height=15}
+dfm1<-dfm%>%
+  filter(type!='RAPE'&type!='MURDER'&type!='SEX_CRIME')
+vcd::mosaic(type~AGE_GROUP+PERP_SEX,dfm1,
+       direction = c("v","v","h"), 
+       highlighting_fill=brewer.pal(6,'Blues'))
+```
+```{r}
+dfn<- dfm%>%filter(ARREST_YEAR>=2020)%>%
+      select(ARREST_BORO,PERP_SEX,AGE_GROUP,type)%>%
+      group_by(ARREST_BORO,PERP_SEX,AGE_GROUP,type)%>%
+      mutate(count=n())%>%
+      ungroup()%>%
+      distinct()%>%
+      pivot_wider(names_from = "type", values_from = "count")
+```
+
+
+```{r}
+#dfn%>%
+#  parcoords(
+#   rownames = F,
+#   brushMode = '1D-axes',
+#   reorderable = T,
+#   queue = T,
+#   color = list(colorBy='PERP_SEX',colorScale = 'scaleOrdinal',colorScheme='schemeCategory10'),
+#   withD3 = TRUE )
+```
 
 
 ### Crime Geographical Analysis
@@ -816,12 +864,12 @@ p1<-ggplot(cdf1,aes(DATE_OF_INTEREST, y = count, group=type, color=type)) +
   scale_x_date(limits=as.Date(c("2020-03-01","2021-112-31")),date_breaks = "2 months", date_labels = "%b %Y") +
   theme(legend.position="bottom")+
   ggtitle('Numbers of Covid-19 related count')
-cdf1<-cdf%>%
+cdf2<-cdf%>%
   mutate(death_rate=DEATH_COUNT/CASE_COUNT)%>%
   mutate(hospitalized_rate=HOSPITALIZED_COUNT/CASE_COUNT)%>%
   select(DATE_OF_INTEREST,death_rate,hospitalized_rate)%>%
   pivot_longer(-DATE_OF_INTEREST, names_to = "category", values_to = "rate")
-p2<-ggplot(cdf1,aes(DATE_OF_INTEREST, y = rate, group=category, color=category)) +
+p2<-ggplot(cdf2,aes(DATE_OF_INTEREST, y = rate, group=category, color=category)) +
   geom_line() + xlab("") + ylab("") +
   theme(legend.title = element_blank())+
   scale_x_date(limits=as.Date(c("2020-04-01","2021-112-31")),date_breaks = "3 months", date_labels = "%b %Y") +
@@ -840,60 +888,175 @@ The hospitalized count and death count is quite less than case count. Considerin
 hate<-read_csv('NYPD_Hate_Crimes.csv')
 ```
 
+
+```{r}
+cdf1<-cdf%>%rename(Date=DATE_OF_INTEREST)%>%
+     select(Date,CASE_COUNT)
+```
+
 ```{r}
 hate<- hate%>%
   mutate(Record_Date=as.Date(hate$`Record Create Date` ,format='%m/%d/%Y'))%>%
   mutate(Date=paste0(`Complaint Year Number`, "-",`Month Number`,"-1"))%>%
   mutate(Date=as.Date(Date))
-  
+hate1<-hate%>%
+  group_by(`Date`)%>%
+  mutate(count=n())%>%
+  left_join(cdf1,by='Date')
+```
+```{r fig.width=12,warning=FALSE}
+ggplot(hate1)+
+  geom_line(aes(Date,scale(count,center=F),color="Hate Crimes"))+
+  scale_x_date(limits=as.Date(c("2019-01-01","2021-112-31")),date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Hate crime in recent 3 years in total Compared to Covid-19 Cases')+
+  geom_line(aes(x=Date,y=scale(CASE_COUNT,center=F),color='Covid-19 Cases'))+
+  scale_color_manual(values = c(
+    'Hate Crimes'='blue',
+    'Covid-19 Cases'='red')) +
+  labs(color = 'Y series')
 ```
 
-
+#### Offense Category
 ```{r}
 hate1<-hate%>%
   group_by(`Offense Category`)%>%
   mutate(count=n())
-p1<-ggplot(hate1,aes(fct_reorder(`Offense Category`,count),count))+
+ggplot(hate1,aes(fct_reorder(`Offense Category`,count),count))+
   geom_point()+
   coord_flip()+
   labs(x='Offense Category')+
   ggtitle('Popular offense category in recent 3 years')
-ggplot(hate1,  mapping=aes(x='Offense Category',y=count,fill=`Offense Category`)) +
-  geom_bar(stat="identity",width=0.5,position='stack',size=5)+
-  coord_polar("y", start=0)+
-  ggtitle("Crimes Percentage for Different Offense Category")+
-  scale_fill_brewer(palette="Blues")
+```
+```{r fig.height=6}
+hate19<-hate%>%filter(year(Date)==2019)%>%
+  group_by(year(Date),`Offense Category`)%>%
+  mutate(count=n())
+hate20<-hate%>%filter(year(Date)==2020)%>%
+  group_by(year(Date),`Offense Category`)%>%
+  mutate(count=n())
+hate21<-hate%>%filter(year(Date)==2021)%>%
+  group_by(year(Date),`Offense Category`)%>%
+  mutate(count=n())
+p1<-ggplot(hate19,aes(fct_reorder(`Offense Category`,count),count))+
+  geom_point()+
+  coord_flip()+
+  labs(x='Offense Category')+
+  ggtitle('Popular offense category in 2019')
+p2<-ggplot(hate20,aes(fct_reorder(`Offense Category`,count),count))+
+  geom_point()+
+  coord_flip()+
+  labs(x='Offense Category')+
+  ggtitle('Popular offense category in 2020')
+p3<-ggplot(hate21,aes(fct_reorder(`Offense Category`,count),count))+
+  geom_point()+
+  coord_flip()+
+  labs(x='Offense Category')+
+  ggtitle('Popular offense category in 2021')
+plot_grid(p1,p2,p3,ncol=1)
 ```
 
-```{r fig.width=12}
+```{r fig.width=10}
 hate%>%
   group_by(Date,`Offense Category`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Offense Category`))+
   geom_line(aes(group = `Offense Category`)) +
   geom_point(size=1)+
-  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y")+
-  ggtitle('Numbers of hate crime in different types over recent years')
-
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Numbers of hate crime in different types over months')
 ```
-```{r}
+
+
+```{r fig.width=10}
 hate%>%
   filter(`Offense Category`=='Race/Color')%>%
   group_by(Date,`Bias Motive Description`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Bias Motive Description`))+
-  geom_line(aes(group = `Bias Motive Description`)) +geom_point()+
-  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y") 
+  geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Race/Color hate crimes over months')
 ```
-```{r}
+```{r fig.width=10}
 hate%>%
   filter(`Offense Category`=="Religion/Religious Practice")%>%
   group_by(Date,`Bias Motive Description`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Bias Motive Description`))+
-  geom_line(aes(group = `Bias Motive Description`)) +geom_point()+
-  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y")
+  geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Religion/Religious hate crimes over months')
 ```
+
+```{r fig.width=10}
+hate%>%
+  filter(`Offense Category`=="Sexual Orientation")%>%
+  group_by(Date,`Bias Motive Description`)%>%
+  mutate(count=n())%>%
+  ggplot(aes(Date, count,color=`Bias Motive Description`))+
+  geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Sexual Orientation hate crimes over months')
+```
+
+#### Borough Level Analysis
+
+```{r fig.width=10}
+temp_tbl_0 <- hate %>% 
+  filter(!is.na(County)) %>%
+  group_by(County) %>%
+  summarise(Count = length(County)) %>%
+  mutate(perc = `Count` / sum(`Count`)) %>%
+  mutate(labels = scales::percent(perc)) 
+
+ggplot(temp_tbl_0, aes(x = "", y = perc, fill = County)) +
+  geom_col() +
+  coord_polar(theta = "y")+
+  geom_text(aes(label = labels), position = position_stack(vjust = 0.5)) +
+  ylab("Crimes Percentage") +
+  xlab("borough") +
+  ggtitle("Crimes Percentage for Different Boroughs") +
+  scale_fill_manual(values=c("#A9CCE3" , "#2471A3","#1A5276","#5499C7","#EAF2F8"))
+  
+```
+
+
+```{r,fig.width = 10}
+hate %>%group_by(Date, County) %>%
+    summarise(count = length(Date))%>%
+    ggplot(aes(Date, count,color=County))+
+  geom_line(aes(group = County)) +geom_point(size=1)+
+  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  ggtitle('Hate crimes in different boroughs')
+```
+
+
+```{r fig.width=12}
+hate%>%rename(Bias_type=`Bias Motive Description`)%>%
+    mutate(year=`Complaint Year Number`)%>%
+    filter(Bias_type%in%c("ANTI-ASIAN","ANTI-BLACK" ,"ANTI-WHITE","ANTI-JEWISH","ANTI-MUSLIM","ANTI-MALE HOMOSEXUAL (GAY)","ANTI-LGBT (MIXED GROUP)","ANTI-FEMALE HOMOSEXUAL (LESBIAN)" ))%>%
+      select(County,year,Bias_type)%>%
+      group_by(County,year,Bias_type)%>%
+      mutate(count=n())%>%
+      ungroup()%>%
+      distinct()%>%
+      pivot_wider(names_from = "Bias_type", values_from = "count",values_fill=0)%>%
+     rename(ANTI_GAY = `ANTI-MALE HOMOSEXUAL (GAY)`)%>%
+     rename(ANTI_LGBT=`ANTI-LGBT (MIXED GROUP)`)%>%
+     rename(ANTI_LES=`ANTI-FEMALE HOMOSEXUAL (LESBIAN)`)%>%
+    parcoords(
+    rownames = F,
+    brushMode = '1D-axes',
+    reorderable = T,
+    queue = T,
+    color = list(colorBy='year',colorScale = 'scaleOrdinal',colorScheme='schemeCategory10'),
+    withD3 = TRUE )
+```
+
+
+
+
+
 
 
 

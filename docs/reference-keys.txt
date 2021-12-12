@@ -1,8 +1,8 @@
-tab:unnamed-chunk-6
-tab:unnamed-chunk-15
-tab:unnamed-chunk-43
-tab:unnamed-chunk-47
-tab:unnamed-chunk-50
+tab:unnamed-chunk-7
+tab:unnamed-chunk-16
+tab:unnamed-chunk-44
+tab:unnamed-chunk-48
+tab:unnamed-chunk-51
 introduction
 data-sources
 data-transformation
@@ -17,7 +17,7 @@ data-3-mental-health-data
 results
 arrest-data-analysis-of-nyc-from-2006-to-2021
 total-number-of-crimes
-more-time-related-analysis
+time-related-analysis
 classification-of-crimes
 general-categoryofns_desc
 granular-categorypd_desc
@@ -33,6 +33,8 @@ nyc-crime-maps
 covid-19-vs-crime-in-nyc
 time-series-analysis-of-covid-19
 hate-crime
+offense-category
+borough-level-analysis-1
 interactive-component
 new-york-state-county-level-map
 conclusion
