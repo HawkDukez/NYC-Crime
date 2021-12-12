@@ -605,7 +605,7 @@ dfm<-df1%>%mutate(
   filter(type!='other')
 ```
 
-```{r fig.height=15}
+```{r fig.height=6}
 dfm1<-dfm%>%
   filter(type!='RAPE'&type!='MURDER'&type!='SEX_CRIME')
 vcd::mosaic(type~AGE_GROUP+PERP_SEX,dfm1,
@@ -623,15 +623,15 @@ dfn<- dfm%>%filter(ARREST_YEAR>=2020)%>%
 ```
 
 
-```{r}
-#dfn%>%
-#  parcoords(
-#   rownames = F,
-#   brushMode = '1D-axes',
-#   reorderable = T,
-#   queue = T,
-#   color = list(colorBy='PERP_SEX',colorScale = 'scaleOrdinal',colorScheme='schemeCategory10'),
-#   withD3 = TRUE )
+```{r fig.width=12}
+dfn%>%
+  parcoords(
+   rownames = F,
+   brushMode = '1D-axes',
+   reorderable = T,
+   queue = T,
+   color = list(colorBy='PERP_SEX',colorScale = 'scaleOrdinal',colorScheme='schemeCategory10'),
+   withD3 = TRUE )
 ```
 
 
