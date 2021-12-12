@@ -24,7 +24,7 @@
 <meta name="author" content="Pengyu Zou, Siyu Li, Nuanyu Shou" />
 
 
-<meta name="date" content="2021-12-11" />
+<meta name="date" content="2021-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -491,7 +491,9 @@
 </g>
 </svg>
 <script>
-  var x = 450;
+  var x = 435;
+  var x1 = 425;
+  var x2 = 475;
   var w = 250;
   var h = 475.573232;
 
@@ -507,9 +509,9 @@
   
   d3.select("svg")
     .append("text")
-    .attr("x",x)
+    .attr("x",x1)
     .attr("y", "300")
-    .text("Total")
+    .text("Total : ")
     .attr("fill", "black")
     .style("font-size", "25px")
     .attr("text-anchor", "middle");
@@ -517,7 +519,26 @@
   d3.select("svg")
     .append("text")
     .attr("id", "total")
-    .attr("x", x)
+    .attr("x", x2)
+    .attr("y", "300")
+    .text(0)
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("x", x1)
+    .attr("y", "350")
+    .text("Data1 : ")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("id", "disability")
+    .attr("x", x2)
     .attr("y", "350")
     .text(0)
     .attr("fill", "black")
@@ -526,28 +547,9 @@
     
   d3.select("svg")
     .append("text")
-    .attr("x", x)
+    .attr("x", x1)
     .attr("y", "400")
-    .text("Data1")
-    .attr("fill", "black")
-    .style("font-size", "25px")
-    .attr("text-anchor", "middle");
-    
-  d3.select("svg")
-    .append("text")
-    .attr("id", "disability")
-    .attr("x", x)
-    .attr("y", "450")
-    .text(0)
-    .attr("fill", "black")
-    .style("font-size", "20px")
-    .attr("text-anchor", "middle");
-    
-  d3.select("svg")
-    .append("text")
-    .attr("x", x)
-    .attr("y", "500")
-    .text("Data2")
+    .text("Data2 : ")
     .attr("fill", "black")
     .style("font-size", "25px")
     .attr("text-anchor", "middle");
@@ -555,8 +557,8 @@
   d3.select("svg")
     .append("text")
     .attr("id", "religion")
-    .attr("x", x)
-    .attr("y", "550")
+    .attr("x", x2)
+    .attr("y", "400")
     .text(0)
     .attr("fill", "black")
     .style("font-size", "20px")
@@ -564,9 +566,9 @@
     
   d3.select("svg")
     .append("text")
-    .attr("x", x)
-    .attr("y", "600")
-    .text("Data3")
+    .attr("x", x1)
+    .attr("y", "450")
+    .text("Data3 : ")
     .attr("fill", "black")
     .style("font-size", "25px")
     .attr("text-anchor", "middle");
@@ -574,8 +576,8 @@
   d3.select("svg")
     .append("text")
     .attr("id", "sexual")
-    .attr("x", x)
-    .attr("y", "650")
+    .attr("x", x2)
+    .attr("y", "450")
     .text(0)
     .attr("fill", "black")
     .style("font-size", "20px")
@@ -674,10 +676,10 @@
         d3.select(this).style("fill", "#326EA4");
         if (typeof(data) != 'undefined'){
           d3.select("#name").text(data[0]);
-          d3.select("#total").text(data[0]);
-          d3.select("#disability").text(data[0]);
-          d3.select("#religion").text(data[0]);
-          d3.select("#sexual").text(data[0]);
+          d3.select("#total").text(data[1]);
+          d3.select("#disability").text(data[1]);
+          d3.select("#religion").text(data[1]);
+          d3.select("#sexual").text(data[1]);
         }
       }
     })
