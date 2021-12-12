@@ -30,4 +30,5 @@ borough-level-analysis
 precinct-level-analysis
 nyc-crime-maps
 interactive-component
+new-york-state-county-level-map
 conclusion
