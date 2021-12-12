@@ -21,6 +21,9 @@ nyc<-read_csv('NYPD_Arrests_Data__Historic_.csv')
 
 nyc<-nyc%>%mutate(ARREST_DATE=as.Date(nyc$ARREST_DATE,format='%m/%d/%Y'))
 ```
+```{r}
+knitr::kable(data.frame(column = names(nyc), count = colSums(is.na(nyc)),row.names = NULL) %>% arrange(desc(count)) %>% filter(count>0), caption = "Missing values",align = "l",full_width = F,table.attr = "style='width:30%;'")
+```
 
 ### Missing patterns for year before 2010
 ```{r}
@@ -100,6 +103,9 @@ a) This is no missing value in this dataset so that we don't need to preprocess 
 ```{r fig.width=10,fig.height=12}
 mental <- read.csv("Mental_Health_Service_Finder_Data.csv")
 mental <- select(mental,-contains("flag"))
+```
+```{r}
+knitr::kable(data.frame(column = names(mental), count = colSums(is.na(mental)),row.names = NULL) %>% arrange(desc(count)) %>% filter(count>0), caption = "Missing values",align = "l",full_width = F,table.attr = "style='width:30%;'")
 ```
 
 ```{r}
