@@ -57,6 +57,80 @@ ggplot(crime_total,aes(x=ARREST_YEAR,y=Total)) +
 ```
 From the above figure, we can see that from 2006 to 2010, the total number of crimes in New York City has been increasing every year, with the largest increase in 2007 and 2009, at about 25,000. The number of crimes has been declining every year since 2010, with the largest decrease in 2020 of approximately 75,000 compared to 2019.
 
+### More Time Related Analysis
+```{r}
+nyc_r <- nyc %>% 
+        group_by(ARREST_DATE)%>%
+        summarise(count=n())%>%
+        ungroup()
+
+```
+
+
+```{r,results='hide'}
+Sys.setlocale('LC_TIME','English')
+```
+```{r fig.width=20}
+ggplot(nyc_r, aes(ARREST_DATE, count)) +
+  geom_line() +
+  ggtitle('Numbers of Crimes over days')
+```
+
+Data fluctuates greatly, which means no big relationship between adjacent days. 
+
+
+```{r}
+ggplot(nyc_r, aes(ARREST_DATE, count)) +
+  geom_line() +
+  facet_wrap(~wday(ARREST_DATE, label = TRUE), ncol = 1, strip.position="right")
+```
+
+In each facet, the trend of the lines decrease by years in general. And numbers of arrest in weekends is a bit less than in weekdays.
+
+```{r,fig.width=12}
+nyc_q<-nyc %>% 
+  mutate(quarter=as.factor(quarter(ARREST_DATE)))%>%
+  group_by(ARREST_YEAR,quarter)%>%
+  mutate(count=n())%>%
+  select(ARREST_YEAR,quarter,count)%>% 
+  distinct()%>%
+  mutate(year=as.factor(ARREST_YEAR))
+ggplot(nyc_q,aes(year,count,color=quarter))+
+  geom_line(aes(group=quarter))+ 
+  geom_point()+
+  ggtitle('Numbers of crimes in each quarters over years')
+
+```
+
+In general, crimes in every quarter decrease. Compared different quarters, before 2020 it seems that numbers of arrest in the forth quarter is less than other quarters. While in the second and third quarter in 2020 numbers of arrest decrease greatly  and in 2021 increase. The missing of data in the forth quarter in 2020 is due to the delay of the update of the data in NYDP. 
+
+```{r}
+nyc_m<-nyc %>% 
+  mutate(month=as.factor(month(ARREST_DATE)))%>%
+  group_by(ARREST_YEAR,month)%>%
+  mutate(count=n())%>%
+  select(ARREST_YEAR,month,count)%>% 
+  distinct()%>%
+  mutate(year=as.factor(ARREST_YEAR))
+```
+
+```{r}
+ggplot(nyc_m,aes(year,count,fill=month,color=month))+
+  geom_line(aes(group=month))+ 
+  geom_point(size=0.3)+
+  ggtitle('Numbers of crimes in each month over years')
+```
+
+
+```{r fig.width=20}
+ggplot(nyc_m,aes(year,count))+
+  geom_line(aes(group=month))+ 
+  geom_point()+
+  facet_wrap(~month,ncol=3)+
+  ggtitle('Numbers of crimes in each month facet over years')
+```
+In general, crimes in every month decrease. Compared different months, before 2020 it seems that numbers of arrest in December is less than other months. While in the mid year of 2020 numbers of arrest decrease greatly and in 2021 increase. 
+
 ### Classification of Crimes
 
 ```{r}
@@ -346,14 +420,9 @@ ggplot(data = level_off) +
 
 The number and proportion of Felony have an important impact on social security and should be of concern to us. We find that although the total number of crimes is decreasing, the proportion of felony crimes is increasing, which shows that the improvement of felony crimes has not played an important role in the reduction of the total number.
 
-### Missing Pattern
 
-```{r}
-knitr::kable(data.frame(column = names(nyc), count = colSums(is.na(nyc)),row.names = NULL) %>% arrange(desc(count)) %>% filter(count>0), caption = "Missing values",align = "l",full_width = F,table.attr = "style='width:30%;'")
 
-```
-
-### General Category(JURISDICTION_CODE)
+### Jurisdiction Code
 ```{r}
 df1<-nyc%>%select(ARREST_YEAR,JURISDICTION_CODE,AGE_GROUP,PERP_SEX)
 ```
@@ -411,7 +480,7 @@ From the left graph, we conclude that the proportion of JURISDICTin recent 5 yea
 From the right graph, generally number of each type of JURISDICTIOn_CODE except type 'other' decreases over years and numbers of JURISDICTION_CODE 0 which means 'patrol' decreases sharply since 2014.
 
 
-### General Category(AGE_GROUP)
+### Age Group
 ```{r}
 df1$AGE_GROUP<-as.factor(df1$AGE_GROUP)
 levels(df1$AGE_GROUP)[!(levels(df1$AGE_GROUP)%in% c("<18","18-24","25-44","45-64","65+"))] <- "unknown"
@@ -469,7 +538,7 @@ From the left graph, we conclude that the proportion of criminals younger than 1
 
 From the right graph, generally number of criminal in each age_group except '65+' decreases over years. As for '<18','18-24','25-44', each decreases significantly since 2014, while '45-64' decreases since 2010 smoothly.
 
-### General Category(PERP_SEX)
+### Sex 
 ```{r}
 df2<-df1%>%
    group_by(PERP_SEX) %>%
@@ -508,7 +577,7 @@ From the left graph, the proportion of sex seems to have no big difference over 
 
 From the right graph, generally numbers of criminal in both sex decrease since 2014, while the trend of female is more smooth than male.
 
-### Comprehensive analysis of catagories
+### Comprehensive analysis
 ```{r fig.width=10}
 vcd::mosaic(PERP_SEX~AGE_GROUP, df1, 
        direction = c("v","h"), 
@@ -621,7 +690,7 @@ b5 <- temp_tbl_2 %>% filter(ARREST_BORO == 'S') %>%
 ```{r,fig.width = 8, fig.height = 15}
 plot_grid(b1,b4,b3,b2,b5, nrow = 5, ncol = 1, align = "hv",axis = 'l' )
 ```
-\\
+
 
 
 ![alt text here](./NYC-Precint.png)
@@ -730,5 +799,104 @@ plot_grid(larceny18,larceny20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 
 
 From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
+
+## Covid-19 VS Crime in NYC
+### Time Series Analysis of Covid-19
+```{r}
+covid <- read_csv("COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths.csv")
+covid<- covid%>%
+  mutate(DATE_OF_INTEREST=as.Date(covid$DATE_OF_INTEREST,format='%m/%d/%Y'))
+cdf<-covid%>%select(DATE_OF_INTEREST,CASE_COUNT,HOSPITALIZED_COUNT,DEATH_COUNT)
+```
+```{r fig.width=16,warning=FALSE}
+cdf1<-cdf%>%pivot_longer(-DATE_OF_INTEREST, names_to = "type", values_to = "count")
+p1<-ggplot(cdf1,aes(DATE_OF_INTEREST, y = count, group=type, color=type)) +
+  geom_line() + xlab("") + ylab("") +
+  theme(legend.title = element_blank())+
+  scale_x_date(limits=as.Date(c("2020-03-01","2021-112-31")),date_breaks = "2 months", date_labels = "%b %Y") +
+  theme(legend.position="bottom")+
+  ggtitle('Numbers of Covid-19 related count')
+cdf1<-cdf%>%
+  mutate(death_rate=DEATH_COUNT/CASE_COUNT)%>%
+  mutate(hospitalized_rate=HOSPITALIZED_COUNT/CASE_COUNT)%>%
+  select(DATE_OF_INTEREST,death_rate,hospitalized_rate)%>%
+  pivot_longer(-DATE_OF_INTEREST, names_to = "category", values_to = "rate")
+p2<-ggplot(cdf1,aes(DATE_OF_INTEREST, y = rate, group=category, color=category)) +
+  geom_line() + xlab("") + ylab("") +
+  theme(legend.title = element_blank())+
+  scale_x_date(limits=as.Date(c("2020-04-01","2021-112-31")),date_breaks = "3 months", date_labels = "%b %Y") +
+  ylim(0,0.5)+
+  ggtitle('Death rate V.S hospitalized rate of Covid-19')+
+  theme(legend.position="bottom")
+gridExtra::grid.arrange(p1,p2,ncol=2)
+```
+
+Case count is greater than the other two. The first peak occurs around April 2020, the second peak occurs around the February 2021 maybe related to the cold temperature, then it decrease maybe due to the use of vaccine, while the third peak which maybe related to Delta occurs around September 2021. 
+
+The hospitalized count and death count is quite less than case count. Considering the rate, we conclude as first both death rate and hospitalized rate are high and then decrease in general.
+
+### Hate Crime
+```{r}
+hate<-read_csv('NYPD_Hate_Crimes.csv')
+```
+
+```{r}
+hate<- hate%>%
+  mutate(Record_Date=as.Date(hate$`Record Create Date` ,format='%m/%d/%Y'))%>%
+  mutate(Date=paste0(`Complaint Year Number`, "-",`Month Number`,"-1"))%>%
+  mutate(Date=as.Date(Date))
+  
+```
+
+
+```{r}
+hate1<-hate%>%
+  group_by(`Offense Category`)%>%
+  mutate(count=n())
+p1<-ggplot(hate1,aes(fct_reorder(`Offense Category`,count),count))+
+  geom_point()+
+  coord_flip()+
+  labs(x='Offense Category')+
+  ggtitle('Popular offense category in recent 3 years')
+ggplot(hate1,  mapping=aes(x='Offense Category',y=count,fill=`Offense Category`)) +
+  geom_bar(stat="identity",width=0.5,position='stack',size=5)+
+  coord_polar("y", start=0)+
+  ggtitle("Crimes Percentage for Different Offense Category")+
+  scale_fill_brewer(palette="Blues")
+```
+
+```{r fig.width=12}
+hate%>%
+  group_by(Date,`Offense Category`)%>%
+  mutate(count=n())%>%
+  ggplot(aes(Date, count,color=`Offense Category`))+
+  geom_line(aes(group = `Offense Category`)) +
+  geom_point(size=1)+
+  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y")+
+  ggtitle('Numbers of hate crime in different types over recent years')
+
+```
+```{r}
+hate%>%
+  filter(`Offense Category`=='Race/Color')%>%
+  group_by(Date,`Bias Motive Description`)%>%
+  mutate(count=n())%>%
+  ggplot(aes(Date, count,color=`Bias Motive Description`))+
+  geom_line(aes(group = `Bias Motive Description`)) +geom_point()+
+  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y") 
+```
+```{r}
+hate%>%
+  filter(`Offense Category`=="Religion/Religious Practice")%>%
+  group_by(Date,`Bias Motive Description`)%>%
+  mutate(count=n())%>%
+  ggplot(aes(Date, count,color=`Bias Motive Description`))+
+  geom_line(aes(group = `Bias Motive Description`)) +geom_point()+
+  scale_x_date(date_breaks = "4 months", date_labels = "%b %Y")
+```
+
+
+
+
 
 
