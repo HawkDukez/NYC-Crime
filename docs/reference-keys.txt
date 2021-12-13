@@ -36,5 +36,5 @@ hate-crime
 offense-category
 borough-level-analysis-1
 interactive-component
-new-york-city-precinct-map-of-crimes
+new-york-city-precinct-map-of-crimes-in-2020
 conclusion

@@ -114,7 +114,7 @@
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#new-york-city-precinct-map-of-crimes"><i class="fa fa-check"></i><b>6.1</b> New York City Precinct Map of Crimes</a></li>
+<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#new-york-city-precinct-map-of-crimes-in-2020"><i class="fa fa-check"></i><b>6.1</b> New York City Precinct Map of Crimes in 2020</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -138,9 +138,9 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Interactive component</h1>
-<div id="new-york-city-precinct-map-of-crimes" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> New York City Precinct Map of Crimes</h2>
-<p>This map contains hate crimes data of counties in New York State. Once you mouse over the region, it will show its statistics of hate crimes on the side, helping you understand hate crime situation in different counties in a more straight way. With an interative map, audiences are able to know which region is which county, which is hard to achieve in the static heatmap as we conducted in the previous questions. In the static heatmap, if we label all the counties, the heatmap will become messy and difficult to view due to its relatively small size. An interactive map has the advantanges to show geological locations and their corresponding information and statistical data at the same time. Therefore, audiences can have better understanding of various types of hate crimes in different regions.</p>
+<div id="new-york-city-precinct-map-of-crimes-in-2020" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> New York City Precinct Map of Crimes in 2020</h2>
+<p>This map contains hate crimes data of different precincts in New York City in 2020. In this interactive map, you can see 8 kinds of statistics, “TOTAL”, “ASSAULT”, “DRUGS”, “WEAPONS”, “FELONY”, “MPL”, “ROBBERY” and “HATE”. When mousing over the region of this precinct, these statistics of specific precinct will show up to help you quickly know the safety situation in this area. As discussed in <strong>5.1.3</strong>, we found 6 most numerous crimes from 2006 to 2021. In this map, ASSAULT denotes <strong><em>ASSAULT 3 &amp; RELATED OFFENSES</em></strong>. DRUGS denotes <strong><em>DANGEROUS DRUGS</em></strong>. WEAPONS denotes <strong><em>DANGEROUS WEAPONS</em></strong>. FELONY denotes <strong><em>FELONY ASSAULT</em></strong>. MPL denotes <strong><em>MISCELLANEOUS PENAL LAW</em></strong>. ROBBERY denotes <strong><em>ROBBERY</em></strong>. HATE denotes the number of hate crimes cases in NYPD_Hate_Crimes.csv.</p>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <div id="map">
 <svg xmlns="&amp;ns_svg;" xmlns:xlink="&amp;ns_xlink;" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" width="1586" height="1276" viewBox="200 200 2300 1700" style="overflow:visible;enable-background:new 0 0 1586 1276" xml:space="preserve">
@@ -515,7 +515,7 @@
     .append("text")
     .attr("x",x1)
     .attr("y", "300")
-    .text("Total : ")
+    .text("TOTAL : ")
     .attr("fill", "black")
     .style("font-size", "20px")
     .attr("text-anchor", "middle");
@@ -648,7 +648,7 @@
     .append("text")
     .attr("x", x1)
     .attr("y", "650")
-    .text("Hate : ")
+    .text("HATE : ")
     .attr("fill", "black")
     .style("font-size", "20px")
     .attr("text-anchor", "middle");
@@ -684,7 +684,7 @@
     "police_precincts_16": ["Precinct 23", 1938, 379,142,124,220,104,99,4],
     "police_precincts_17": ["Precinct 24", 1233, 219,66,22,110,70,71,4],
     "police_precincts_18": ["Precinct 25", 2789, 314,901,189,172,73,110,3],
-    "police_precincts_19": ["Precinct 26", 129,63,36,76,74,52,3],
+    "police_precincts_19": ["Precinct 26", 1016,63,36,76,74,52,3],
     "police_precincts_20": ["Precinct 28", 1429, 210,246,85,101,55,66,1],
     "police_precincts_21": ["Precinct 30", 1018, 198,99,53,100,59,87,5],
     "police_precincts_22": ["Precinct 32", 1852, 400,165,98,208,116,104,2],
