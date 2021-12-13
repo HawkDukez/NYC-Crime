@@ -703,7 +703,7 @@ temp_tbl_2 <- nyc %>%
              filter(!is.na(ARREST_BORO)) %>%
              group_by(ARREST_BORO, ARREST_PRECINCT) %>%
              summarise(Freq = length(ARREST_BORO)) %>%
-             filter(Freq > 50)
+             filter(Freq > 1000)
 temp_tbl_2$AREA_MIX <- paste(temp_tbl_2$ARREST_BORO,temp_tbl_2$ARREST_PRECINCT)
 temp_tbl_2$ARREST_PRECINCT_STR<-as.character(temp_tbl_2$ARREST_PRECINCT)
 temp_tbl_2 <- temp_tbl_2[order(temp_tbl_2$Freq, decreasing = TRUE), ]
@@ -755,11 +755,6 @@ plot_grid(b1,b4,b3,b2,b5, nrow = 5, ncol = 1, align = "hv",axis = 'l' )
 ```
 
 
-
-![alt text here](./NYC-Precint.png)
-
-
-
 From the histograms of boroughs and the precinct map in NYC, we can see the different pattern of crimes on different police precincts. In Manhattan, crime number of each precincts are relatively even (except for precinct 14), howeverr, Bronx has a distrubition with higher variance. Also, we can 
 
 
@@ -782,16 +777,13 @@ We pick out the top 20 precincts with the most criminal records and found that 9
 
 ```{r}
 nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
-r <- GET('http://data.beta.nyc//dataset/0ff93d2d-90ba-457c-9f7e-39e47bf2ac5f/resource/35dd04fb-81b3-479b-a074-a27a37888ce7/download/d085e2f8d0b54d4590b1e7d1f35594c1pediacitiesnycneighborhoods.geojson')
-nyc_neighborhoods <- readOGR(content(r,'text'), 'OGRGeoJSON', verbose = F)
-nyc_neighborhoods_df <- tidy(nyc_neighborhoods)
 
 ```
 
 
 ```{r}
-nyc_20_drugs <- nyc %>% 
-  filter(year(ARREST_DATE) == 2020) %>%
+nyc_21_drugs <- nyc %>% 
+  filter(year(ARREST_DATE) == 2021) %>%
   filter(OFNS_DESC %in% c('DANGEROUS DRUGS')) 
 
 nyc_18_drugs <- nyc %>% 
@@ -801,26 +793,24 @@ nyc_18_drugs <- nyc %>%
 ```
 
 ```{r}
-drug18 <- ggmap(nyc_map) + 
-  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
+drug18 <- ggmap(nyc_map) +
   geom_point(data=nyc_18_drugs, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,color = 'red') +
   ggtitle("DANGEROUS DRUGS in 2018")
 
-drug20 <- ggmap(nyc_map) + 
-  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_20_drugs, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,color = 'red') +
+drug21 <- ggmap(nyc_map) + 
+  geom_point(data=nyc_21_drugs, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,color = 'red') +
   ggtitle("DANGEROUS DRUGS in 2021")
 
 ```
 
 ```{r,fig.width = 18, fig.height = 6}
-plot_grid(drug18,drug20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+plot_grid(drug18,drug21, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 ```
 
 
 
 
-Comparing the drug crime situation in 2018 and 2020, we can find the following two points:
+Comparing the drug crime situation in 2018 and 2021, we can find the following two points:
 
 a) From 2018 to 2021, dangerous drug crimes have decreased a lot.
 
@@ -829,8 +819,8 @@ b) Drug crimes are clustered on the map, we can find that the southern part of B
 
 
 ```{r}
-nyc_20_larceny <- nyc %>% 
-  filter(year(ARREST_DATE) == 2020) %>%
+nyc_21_larceny <- nyc %>% 
+  filter(year(ARREST_DATE) == 2021) %>%
   filter(OFNS_DESC %in% c('PETIT LARCENY')) 
 
 nyc_18_larceny <- nyc %>% 
@@ -841,24 +831,22 @@ nyc_18_larceny <- nyc %>%
 
 ```{r}
 larceny18 <- ggmap(nyc_map) + 
-  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
   geom_point(data=nyc_18_larceny, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,,color='darkblue') +
   ggtitle("PETIT LARCENY in 2018")+
   theme(legend.title = element_blank())
 
-larceny20 <- ggmap(nyc_map) + 
-  geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_20_larceny, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,,color='darkblue') +
+larceny21 <- ggmap(nyc_map) + 
+  geom_point(data=nyc_21_larceny, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,,color='darkblue') +
   ggtitle("PETIT LARCENY in 2021")+
   theme(legend.title = element_blank())
 
 ```
 
 ```{r,fig.width = 18, fig.height = 6}
-plot_grid(larceny18,larceny20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+plot_grid(larceny18,larceny21, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 ```
 
-From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
+From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2021, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
 
 ## Covid-19 VS Hate Crime in NYC
 ### Time Series Analysis of Covid-19
@@ -1143,8 +1131,8 @@ According to some scientific researches, drug use and gun crime are related to m
 ```{r}
 nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
 
-nyc_20_drugs <- nyc %>% 
-  filter(year(ARREST_DATE) == 2020) %>%
+nyc_21_drugs <- nyc %>% 
+  filter(year(ARREST_DATE) == 2021) %>%
   filter(OFNS_DESC %in% c('DANGEROUS DRUGS')) 
 
 map1 <- ggmap(nyc_map) +
@@ -1152,7 +1140,7 @@ map1 <- ggmap(nyc_map) +
   ggtitle("Mental Health Center")
 
 map2 <- ggmap(nyc_map) +  
-  geom_point(data=nyc_20_drugs, aes(x=Longitude, y=Latitude), size=1, alpha=0.1) +
+  geom_point(data=nyc_21_drugs, aes(x=Longitude, y=Latitude), size=1, alpha=0.1) +
   ggtitle("DANGEROUS DRUGS in 2021")
 
 plot_grid(map1,map2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )

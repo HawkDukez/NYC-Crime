@@ -99,7 +99,21 @@ Insights:
 
 a) This is no missing value in this dataset so that we don't need to preprocess it.
 
-## DATA-3 Mental Health Data
+
+## DATA-3 Hate Crimes Data
+
+```{r fig.width=10,fig.height=10}
+hate<-read.csv('NYPD_Hate_Crimes.csv')
+plot_missing(hate, percent = TRUE,angle=90,hjust=1,title='Missing patterns for Hate Crimes in NYC')
+```
+
+
+Insights:
+
+a) This is no missing value in this dataset so that we don't need to preprocess it.
+
+
+## DATA-4 Mental Health Data
 ```{r fig.width=10,fig.height=12}
 mental <- read.csv("Mental_Health_Service_Finder_Data.csv")
 mental <- select(mental,-contains("flag"))

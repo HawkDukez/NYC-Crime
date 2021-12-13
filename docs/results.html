@@ -33,7 +33,7 @@
   
 <link rel="prev" href="missing-values.html"/>
 <link rel="next" href="interactive-component.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -90,7 +90,8 @@
 <li class="chapter" data-level="4.1.4" data-path="missing-values.html"><a href="missing-values.html#missing-patterns-for-year-after-2020"><i class="fa fa-check"></i><b>4.1.4</b> Missing patterns for year after 2020</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#data-2-covid-19-data"><i class="fa fa-check"></i><b>4.2</b> DATA-2 COVID-19 Data</a></li>
-<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#data-3-mental-health-data"><i class="fa fa-check"></i><b>4.3</b> DATA-3 Mental Health Data</a></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#data-3-hate-crimes-data"><i class="fa fa-check"></i><b>4.3</b> DATA-3 Hate Crimes Data</a></li>
+<li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#data-4-mental-health-data"><i class="fa fa-check"></i><b>4.4</b> DATA-4 Mental Health Data</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
@@ -147,19 +148,19 @@
 <h2><span class="header-section-number">5.1</span> Arrest data analysis of NYC from 2006 to 2021</h2>
 <div id="total-number-of-crimes" class="section level3" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Total Number of Crimes</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="768" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="768" />
 From the above figure, we can see that from 2006 to 2010, the total number of crimes in New York City has been increasing every year, with the largest increase in 2007 and 2009, at about 25,000. The number of crimes has been declining every year since 2010, with the largest decrease in 2020 of approximately 75,000 compared to 2019.</p>
 </div>
 <div id="time-related-analysis" class="section level3" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> Time Related Analysis</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="1920" /></p>
 <p>Data fluctuates greatly, which means no big relationship between adjacent days. And the general trend over years is similar to the histogram in 5.1.1.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>In each facet, the trend of the lines decrease by years in general. And numbers of arrest in weekends is a bit less than in weekdays.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-30-1.png" width="1152" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-31-1.png" width="1152" /></p>
 <p>In general, crimes in every quarter decrease. Compared different quarters, before 2020 it seems that numbers of arrest in the forth quarter is less than other quarters. While in the second and third quarter in 2020 numbers of arrest decrease greatly and in 2021 increase. The missing of data in the forth quarter in 2020 is due to the delay of the update of the data in NYDP.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-34-1.png" width="1920" /></p>
 <p>In general, crimes in every month decrease. Compared different months, before 2020 it seems that numbers of arrest in December is less than other months. While in the mid year of 2020 numbers of arrest decrease greatly and in 2021 increase.</p>
 </div>
 <div id="classification-of-crimes" class="section level3" number="5.1.3">
@@ -168,36 +169,36 @@ From the above figure, we can see that from 2006 to 2010, the total number of cr
 <div id="general-categoryofns_desc" class="section level4" number="5.1.3.1">
 <h4><span class="header-section-number">5.1.3.1</span> General Category(OFNS_DESC)</h4>
 <p>Due to the large number of types in <strong>OFNS_DESC</strong>, we only take the 30 most numerous types. We divide the 15-year data into three five-year data and draw a graph to see the changes in the distribution of <strong>OFNS_DESC</strong>.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-35-1.png" width="768" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-36-1.png" width="768" /></p>
 <p>From the three Cleveland Dot Plots above, we can find that although the total number of crimes has dropped, <strong>DANGEROUS DRUGS</strong>, <strong>ASSAULT 3</strong> are still the two types of most numerous crimes. But the difference between these two types is gradually decreasing. From 2006 to 2010, <strong>CRIMINAL TRESPASS</strong> was still a serious problem, but after 2010, the number of this crime decreased significantly. It’s worth noting that the third most numerous crime has changed from <strong>CRIMINAL TRESPASS</strong> to <strong>THEFT</strong> and then to <strong>PETIT LARCENY</strong>, which are similar but the severity of the accusation has lessened.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-37-1.png" width="768" />
-Those most numerous crimes are what we should pay attention to, so we take the intersection of the 30 types of the most numerous types from each year, and obtain 6 <strong>OFNS_DESC</strong>, which are <strong>ASSAULT 3</strong>, <strong>DANGEROUS DRUGS</strong>, <strong>DANGEROUS WEAPONS</strong>, <strong>FELONY ASSAULT</strong>, <strong>MISCELLANEOUS PENAL LAW</strong> and <strong>ROBBERY</strong>. From this line chart, we can find that <strong>DANGEROUS DRUGS</strong> is the most numerous type from 2006 to 2017. At the most, it’s almost three times the second highest crime , <strong>ASSAULT 3</strong>. But its number has been declining, until 2018 it is less than <strong>ASSAULT 3</strong>. And until 2020, it becomes less than <strong>FELONY ASSAULT</strong>. The number of <strong>ASSAULT 3</strong> is around 30000. It gradually decreases after 2019. After 2018, it has become the most numerous crime type. The numbers of the other four types of crimes are all declining since 2006.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-38-1.png" width="768" />
+Those most numerous crimes are what we should pay attention to, so we take the intersection of the 30 types of the most numerous types from each year, and obtain 6 <strong>OFNS_DESC</strong>, which are <strong>ASSAULT 3</strong>, <strong>DANGEROUS DRUGS</strong>, <strong>DANGEROUS WEAPONS</strong>, <strong>FELONY ASSAULT</strong>, <strong>MISCELLANEOUS PENAL LAW</strong> and <strong>ROBBERY</strong>. From this line chart, we can find that <strong>DANGEROUS DRUGS</strong> is the most numerous type from 2006 to 2017. At the most, it’s almost three times the second highest crime , <strong>ASSAULT 3</strong>. But its number has been declining, until 2018 it is less than <strong>ASSAULT 3</strong>. And until 2020, it becomes less than <strong>FELONY ASSAULT</strong>. The number of <strong>ASSAULT 3</strong> is around 30000. It gradually decreases after 2019. After 2018, it has become the most numerous crime type. The numbers of the other four types of crimes are all declining since 2006.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-39-1.png" width="768" />
 From the Mosaic chart, we can see that the proportion of <strong>DANGEROUS DRUGS</strong> is constantly decreasing, the proportion of <strong>ASSAULT 3</strong> is constantly increasing, and the proportion of the sum of them in the total is decreasing.</p>
 </div>
 <div id="granular-categorypd_desc" class="section level4" number="5.1.3.2">
 <h4><span class="header-section-number">5.1.3.2</span> Granular Category(PD_DESC)</h4>
 <p>Similar to the <strong>OFNS_DESC</strong>, we also only take the 30 most numerous types in <strong>PD_DESC</strong> and divide the 15-year data into three five-year data.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-39-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-40-1.png" width="960" /></p>
 <p>From the three Cleveland Dot Plots above, we can find that <strong>MARIJUANA POSSESSION</strong> has been most numerous crimes in 2006 to 2010 and 2011 to 2015. Similarly, <strong>CONTROLLED SUBSTANCE</strong> is also a problem during these two period. But from 2016 to 2020, the number of these two crimes has decreased. <strong>TRAFFIC</strong> also decrease after 2010. <strong>THEFT</strong> was serious during 2011 to 2015, but the situation has improved after 2015. Although it has decreased, the number of <strong>ASSAULT 3</strong> is still high, and it has become the most numerous type of crime in the period of 2016 to 2020.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-41-1.png" width="768" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-42-1.png" width="768" />
 We take the intersection of the 30 types of the most numerous types from each year. Unlike <strong>OFNS_DESC</strong>, we obtain 7 <strong>PD_DESC</strong> in common. The number of <strong>MARIJUANA POSSESSION</strong> has been greatly decreased after 2015, even fall out of top. Hence, it is not in the result of intersection. Among the remaining crimes, <strong>ASSAULT 3</strong> has always been the most numerous type. After 2018, its number has decreased drastically. Other types of crime are also gradually decreasing from 2006.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-42-1.png" width="768" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-43-1.png" width="768" /></p>
 <p>From the Mosaic chart, we can see that although the number of <strong>ASSAULT 3</strong> is decreasing, as the total number is also decreasing, the proportion of <strong>ASSAULT 3</strong> has increased slightly.</p>
 </div>
 </div>
 <div id="level-of-offense" class="section level3" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Level of Offense</h3>
 <p>In this data set of arrest crimes in New York City, each crime corresponds one level of offense, including F(Felony), I(Infraction), M(Misdemeanor), and V(Violation).</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
-<p>From this line chart, we can find that The number of Misdemeanor has decreased significantly since 2010. The number of Infraction has always been a small percentage of all crimes, and since it has no significant impact on society, we did not draw a separate graph of it. Felony and Violation also gradually decrease.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p>From this line chart, we can find that The number of Misdemeanor has decreased significantly since 2010. The number of Infraction has always been a small percentage of all crimes, and since it has no significant impact on society, we did not draw a separate graph of it. Felony and Violation also gradually decrease.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>The number and proportion of Felony have an important impact on social security and should be of concern to us. We find that although the total number of crimes is decreasing, the proportion of felony crimes is increasing, which shows that the improvement of felony crimes has not played an important role in the reduction of the total number.</p>
 </div>
 <div id="jurisdiction-code" class="section level3" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> Jurisdiction Code</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-47">Table 5.1: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-48">Table 5.1: </span>JURISDICTION_CODE of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">JURISDICTION_CODE</th>
@@ -233,17 +234,17 @@ We take the intersection of the 30 types of the most numerous types from each ye
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p><strong>JURISDICTION_CODE</strong> responsibles for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD while other represents non NYPD jurisdictions. 
 From the histogram, we can see majority of the criminals were arrested by <strong>Patrol</strong>.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-49-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-50-1.png" width="1920" /></p>
 <p>From the left graph, we conclude that the proportion of <strong>JURISDICTION_CODE</strong> 0 which means ‘patrol’ increases over years, while <strong>JURISDICTION_CODE</strong> 1 which means <strong>Transit</strong> decreases these years.</p>
 <p>From the right graph, generally number of each type of <strong>JURISDICTION_CODE</strong> except type ‘other’ decreases over years and numbers of <strong>JURISDICTION_CODE</strong> 0 which means <strong>Patrol</strong> decreases sharply since 2014.</p>
 </div>
 <div id="age-group" class="section level3" number="5.1.6">
 <h3><span class="header-section-number">5.1.6</span> Age Group</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-51">Table 5.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-52">Table 5.2: </span>JURISDICTION_CODE of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">AGE_GROUP</th>
@@ -289,16 +290,16 @@ From the histogram, we can see majority of the criminals were arrested by <stron
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>The majority of criminals’ <strong>AGE_GROUP</strong> is <strong>25-44</strong>, followed by <strong>18-24</strong>,<strong>45-64</strong>,<strong>&lt;18</strong>, while the minority is <strong>65+</strong>. This is rational as the olds and underages are less stronger and they are less likely to commit crime.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-53-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-54-1.png" width="1920" /></p>
 <p>From the left graph, we conclude that the proportion of <strong>&lt;18</strong> decreases over years, while criminals between <strong>25-44</strong> increases.</p>
 <p>From the right graph, generally number of criminal in each age_group except <strong>65+</strong> decreases over years. As for <strong>&lt;18</strong>,<strong>18-24</strong>,<strong>25-44</strong>, each decreases significantly since 2014, while <strong>45-64</strong> decreases since 2010 smoothly.</p>
 </div>
 <div id="category-of-sex" class="section level3" number="5.1.7">
 <h3><span class="header-section-number">5.1.7</span> Category of Sex</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-54">Table 5.3: </span>JURISDICTION_CODE of NYC-Crime</caption>
+<caption><span id="tab:unnamed-chunk-55">Table 5.3: </span>JURISDICTION_CODE of NYC-Crime</caption>
 <thead>
 <tr class="header">
 <th align="left">PERP_SEX</th>
@@ -320,19 +321,19 @@ From the histogram, we can see majority of the criminals were arrested by <stron
 </tbody>
 </table>
 <p>Numbers of male is about four times bigger than female. According to some research, due to physiological factors (primitive gender differences), Male and female body structures are different, and naturally there will be some differences in various aspects. In terms of endocrine, men will have more eandrogens, which makes men stronger and more aggressive.Women have more estrogen in their bodies, making them less aggressive than men. Of course, because women are generally less physically powerful than men, they are more difficult to commit crimes, which will also affect the crime rate.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-55-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-56-1.png" width="1920" /></p>
 <p>From the left graph, the proportion of <strong>PREP_SEX</strong> seems to have no big difference over years.</p>
 <p>From the right graph, generally numbers of criminal in both categories decrease since 2014, while the trend of female is more smooth than male.</p>
 </div>
 <div id="comprehensive-analysis" class="section level3" number="5.1.8">
 <h3><span class="header-section-number">5.1.8</span> Comprehensive analysis</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-56-1.png" width="960" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-57-1.png" width="960" /></p>
 <p>From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-58-1.png" width="768" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-59-1.png" width="768" /></p>
 <p>As the classfication of <strong>OFNS_DESC</strong> is a bit trivial, We combine some categories of <strong>OFNS_DESC</strong>, such as combine different kinds of assualt into new type <strong>ASSAULT</strong>, different kinds of larceny into <strong>Larceny</strong>. We select several popular types that we have shown in 5.1.3 to make mosaic plot.</p>
 <p>From the mosaic, it seems that in general the differences of proportion of different types(except <strong>BURGLARY</strong>) between each <strong>PREP_SEX</strong> decrease as <strong>AGE_GROUP</strong> increase. The proportion of <strong>ASSAULT</strong> as well as <strong>LARCENY</strong> is bigger in female compared to male obviously, while proportion of <strong>Drug</strong> as well as <strong>Weapon</strong> is bigger in male.</p>
-<div class="parcoords html-widget" height="480" id="htmlwidget-ba4ae20e2ca94fbed8f3" style="width:1152px;height:480px; position:relative; overflow-x:auto; overflow-y:hidden; max-width:100%;" width="1152"></div>
-<script type="application/json" data-for="htmlwidget-ba4ae20e2ca94fbed8f3">{"x":{"data":{"names":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],"ARREST_BORO":["B","B","K","K","K","K","M","M","K","B","Q","Q","Q","M","B","M","M","M","S","B","M","B","S","K","S","Q","K","Q","S","B","Q","M","M","B","K","M","Q","S","Q","Q","S","B","K","S","Q","B","K","S","S","S"],"PERP_SEX":["M","M","M","F","M","M","M","M","M","F","M","M","M","M","M","M","F","F","M","M","F","F","M","F","F","M","F","F","F","F","F","M","F","F","F","F","M","F","F","F","M","M","M","M","F","F","F","F","M","F"],"AGE_GROUP":["25-44","45-64","18-24","25-44","25-44","45-64","25-44","45-64","<18","18-24","25-44","18-24","45-64","65+","18-24","18-24","25-44","18-24","25-44","<18","45-64","25-44","18-24","18-24","18-24","<18","45-64","45-64","45-64","45-64","18-24","<18","65+","<18","<18","<18","65+","25-44","25-44","<18","45-64","65+","65+","<18","65+","65+","65+","<18","65+","65+"],"SEX_CRIME":[513,189,135,164,660,233,525,177,70,34,811,151,295,29,110,127,109,20,72,65,21,151,20,33,2,32,29,41,3,23,36,26,1,5,7,5,43,22,218,3,35,23,42,6,3,1,4,null,8,null],"RAPE":[158,61,70,2,145,52,102,26,10,1,145,44,43,1,58,26,null,1,27,16,null,3,7,1,null,7,null,null,null,null,null,2,null,null,null,null,3,1,1,null,4,5,1,4,null,null,null,null,null,null],"LARCENY":[2308,915,1124,862,3338,1706,5537,3065,364,180,2548,1009,1359,110,764,1241,1439,395,457,264,479,586,205,247,76,307,349,314,63,235,219,229,27,30,62,54,58,202,624,33,281,31,77,52,25,12,24,10,5,6],"ROBBERY":[1395,294,926,204,1534,368,1379,437,566,107,1063,663,210,25,876,678,216,105,126,534,56,212,69,125,11,310,45,22,5,38,84,427,1,83,68,94,6,24,110,32,32,6,6,69,null,null,1,10,2,null],"ASSAULT":[8166,2711,2259,2488,7989,2689,5818,2040,442,1131,7049,1945,2575,247,2433,1555,1946,712,1076,422,522,2812,364,978,123,279,789,596,110,763,767,244,59,193,185,117,267,355,2073,128,395,259,273,55,56,51,50,20,36,3],"DRUG":[2609,1256,590,317,2318,1057,2649,1648,34,67,1477,469,519,95,755,572,346,50,500,49,170,273,96,81,19,36,165,78,50,183,93,44,4,4,2,6,28,113,249,3,223,69,52,4,1,2,9,null,16,2],"BURGLARY":[651,258,259,146,1236,724,1668,1175,77,27,638,198,407,22,207,497,271,69,84,78,41,59,27,47,6,64,46,20,4,19,21,244,null,9,11,14,8,18,72,6,68,11,30,14,3,2,2,2,3,null],"WEAPON":[1147,188,1551,206,1969,328,865,236,309,95,898,670,264,23,1043,541,116,60,192,225,24,132,106,149,11,102,32,43,8,33,98,110,3,19,31,11,27,20,135,13,54,15,24,29,2,3,4,1,4,1],"MURDER":[330,64,206,15,265,40,239,42,41,17,184,142,29,2,259,140,16,8,35,71,4,18,27,8,null,34,3,2,null,1,9,57,null,1,2,1,1,2,7,null,5,4,7,6,2,null,null,null,1,null]},"options":{"rownames":false,"color":{"colorBy":"PERP_SEX","colorScale":"scaleOrdinal","colorScheme":"schemeCategory10"},"brushMode":"1D-axes","brushPredicate":"AND","reorderable":true,"margin":{"top":50,"bottom":50,"left":100,"right":50},"mode":"queue","bundlingStrength":0.5,"smoothness":0},"autoresize":false,"tasks":null},"evals":[],"jsHooks":[]}</script>
+<div class="parcoords html-widget" height="480" id="htmlwidget-c9b5acde668c6496c8a2" style="width:1152px;height:480px; position:relative; overflow-x:auto; overflow-y:hidden; max-width:100%;" width="1152"></div>
+<script type="application/json" data-for="htmlwidget-c9b5acde668c6496c8a2">{"x":{"data":{"names":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],"ARREST_BORO":["B","B","K","K","K","K","M","M","K","B","Q","Q","Q","M","B","M","M","M","S","B","M","B","S","K","S","Q","K","Q","S","B","Q","M","M","B","K","M","Q","S","Q","Q","S","B","K","S","Q","B","K","S","S","S"],"PERP_SEX":["M","M","M","F","M","M","M","M","M","F","M","M","M","M","M","M","F","F","M","M","F","F","M","F","F","M","F","F","F","F","F","M","F","F","F","F","M","F","F","F","M","M","M","M","F","F","F","F","M","F"],"AGE_GROUP":["25-44","45-64","18-24","25-44","25-44","45-64","25-44","45-64","<18","18-24","25-44","18-24","45-64","65+","18-24","18-24","25-44","18-24","25-44","<18","45-64","25-44","18-24","18-24","18-24","<18","45-64","45-64","45-64","45-64","18-24","<18","65+","<18","<18","<18","65+","25-44","25-44","<18","45-64","65+","65+","<18","65+","65+","65+","<18","65+","65+"],"SEX_CRIME":[513,189,135,164,660,233,525,177,70,34,811,151,295,29,110,127,109,20,72,65,21,151,20,33,2,32,29,41,3,23,36,26,1,5,7,5,43,22,218,3,35,23,42,6,3,1,4,null,8,null],"RAPE":[158,61,70,2,145,52,102,26,10,1,145,44,43,1,58,26,null,1,27,16,null,3,7,1,null,7,null,null,null,null,null,2,null,null,null,null,3,1,1,null,4,5,1,4,null,null,null,null,null,null],"LARCENY":[2308,915,1124,862,3338,1706,5537,3065,364,180,2548,1009,1359,110,764,1241,1439,395,457,264,479,586,205,247,76,307,349,314,63,235,219,229,27,30,62,54,58,202,624,33,281,31,77,52,25,12,24,10,5,6],"ROBBERY":[1395,294,926,204,1534,368,1379,437,566,107,1063,663,210,25,876,678,216,105,126,534,56,212,69,125,11,310,45,22,5,38,84,427,1,83,68,94,6,24,110,32,32,6,6,69,null,null,1,10,2,null],"ASSAULT":[8166,2711,2259,2488,7989,2689,5818,2040,442,1131,7049,1945,2575,247,2433,1555,1946,712,1076,422,522,2812,364,978,123,279,789,596,110,763,767,244,59,193,185,117,267,355,2073,128,395,259,273,55,56,51,50,20,36,3],"DRUG":[2609,1256,590,317,2318,1057,2649,1648,34,67,1477,469,519,95,755,572,346,50,500,49,170,273,96,81,19,36,165,78,50,183,93,44,4,4,2,6,28,113,249,3,223,69,52,4,1,2,9,null,16,2],"BURGLARY":[651,258,259,146,1236,724,1668,1175,77,27,638,198,407,22,207,497,271,69,84,78,41,59,27,47,6,64,46,20,4,19,21,244,null,9,11,14,8,18,72,6,68,11,30,14,3,2,2,2,3,null],"WEAPON":[1147,188,1551,206,1969,328,865,236,309,95,898,670,264,23,1043,541,116,60,192,225,24,132,106,149,11,102,32,43,8,33,98,110,3,19,31,11,27,20,135,13,54,15,24,29,2,3,4,1,4,1],"MURDER":[330,64,206,15,265,40,239,42,41,17,184,142,29,2,259,140,16,8,35,71,4,18,27,8,null,34,3,2,null,1,9,57,null,1,2,1,1,2,7,null,5,4,7,6,2,null,null,null,1,null]},"options":{"rownames":false,"color":{"colorBy":"PERP_SEX","colorScale":"scaleOrdinal","colorScheme":"schemeCategory10"},"brushMode":"1D-axes","brushPredicate":"AND","reorderable":true,"margin":{"top":50,"bottom":50,"left":100,"right":50},"mode":"queue","bundlingStrength":0.5,"smoothness":0},"autoresize":false,"tasks":null},"evals":[],"jsHooks":[]}</script>
 <p>We make an interactive graph including <strong>ARREST_BORO</strong>，<strong>AGE_GROUP</strong>, <strong>PREP_SEX</strong>, <strong>type</strong> to gain more information about crimes in NYC after 2020. The color identify different sex.</p>
 <p>1.Outliers: Considering <strong>AGE_GROUP</strong>, <strong>25-44</strong> is higher than other ages consistent to the results in 5.1.6. Considering <strong>ARREST_BORO</strong>, the numbers of crimes of each category in Staten Island is less than other boroughs obviously. Queens has highest number in <em>Sex Crime</em>, followed by Kings, Brooklyn; Brooklyn has highest number in <strong>Rape</strong>, followed by Kings and Queens; Kings has highest number in <strong>Weapon</strong>; Manhattan has large number in <strong>Larceny</strong>, <strong>Robbery</strong>, <strong>Burglary</strong> and <strong>Drug</strong>; Both Kings and Brooklyn has large number in <strong>Drug</strong>, <strong>Assault</strong>, <strong>Robbery</strong> and <strong>Murder</strong>.</p>
 <p>2.Clusters: In general, the number of criminals in male is bigger than female, consistent to the result in 5.1.7.</p>
@@ -348,31 +349,27 @@ From the histogram, we can see majority of the criminals were arrested by <stron
 </ol>
 <div id="borough-level-analysis" class="section level4" number="5.1.9.1">
 <h4><span class="header-section-number">5.1.9.1</span> Borough Level Analysis</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-62-1.png" width="1440" />
+<p><img src="finalproj_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-63-1.png" width="1440" />
 From the pie chart, we can know that the area with the most crime is Brooklyn, and Staten Island has least crime numbers. Besides, we draw mosaic maps reflecting the proportion of crimes in different regions in over years. We found that the proportion of crime in Queens and Staten Island is increasing, especially after 2015.</p>
 </div>
 <div id="precinct-level-analysis" class="section level4" number="5.1.9.2">
 <h4><span class="header-section-number">5.1.9.2</span> Precinct Level Analysis</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-65-1.png" width="768" /></p>
-<div class="figure">
-<img src="NYC-Precint.png" alt="" />
-<p class="caption">alt text here</p>
-</div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-66-1.png" width="768" /></p>
 <p>From the histograms of boroughs and the precinct map in NYC, we can see the different pattern of crimes on different police precincts. In Manhattan, crime number of each precincts are relatively even (except for precinct 14), howeverr, Bronx has a distrubition with higher variance. Also, we can</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <p>We pick out the top 20 precincts with the most criminal records and found that 9 of them (almost 50%) are in Bronx, which is the most among 5 boroughs.</p>
 </div>
 <div id="nyc-crime-maps" class="section level4" number="5.1.9.3">
 <h4><span class="header-section-number">5.1.9.3</span> NYC crime maps</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-70-1.png" width="1728" /></p>
-<p>Comparing the drug crime situation in 2018 and 2020, we can find the following two points:</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-71-1.png" width="1728" /></p>
+<p>Comparing the drug crime situation in 2018 and 2021, we can find the following two points:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>From 2018 to 2021, dangerous drug crimes have decreased a lot.</p></li>
 <li><p>Drug crimes are clustered on the map, we can find that the southern part of Bronx is an area with more serious drug crimes.</p></li>
 </ol>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-73-1.png" width="1728" /></p>
-<p>From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-74-1.png" width="1728" /></p>
+<p>From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2021, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.</p>
 </div>
 </div>
 </div>
@@ -380,43 +377,43 @@ From the pie chart, we can know that the area with the most crime is Brooklyn, a
 <h2><span class="header-section-number">5.2</span> Covid-19 VS Hate Crime in NYC</h2>
 <div id="time-series-analysis-of-covid-19" class="section level3" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> Time Series Analysis of Covid-19</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-75-1.png" width="1536" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-76-1.png" width="1536" /></p>
 <p>Case count is greater than the other two. The first peak occurs around April 2020, the second peak occurs around the February 2021 maybe related to the cold temperature, then it decrease maybe due to the use of vaccine, while the third peak which maybe related to Delta occurs around September 2021.</p>
 <p>The hospitalized count and death count is quite less than case count. Considering the rate, we conclude as first both death rate and hospitalized rate are high and then decrease in general.</p>
 </div>
 <div id="hate-crime-analysis" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Hate Crime Analysis</h3>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-79-1.png" width="1152" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-80-1.png" width="1152" /></p>
 <p>Combining numbers of hate crimes with Covid-19 cases, it seems to have a positive relationship after Feburary 2021. The trend of numbers of hate crime is lagging behind the trend of numbers of Covid-19 cases by about 2 months at first.</p>
 <p>The numbers of hate crimes increase greatly as Covid-19 cases increase greatly after Feburary 2021, then it decrease greatly as Covid-19 cases decrease greatly, then it bounce a little as the Covid-19 cases increase a bit, then it decrease greatly as Covid-19 cases decrease since Semptember 2021.</p>
 <div id="general-categoryoffense-category" class="section level4" number="5.2.2.1">
 <h4><span class="header-section-number">5.2.2.1</span> General Category(Offense Category)</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
-<p>In total, numbers of <strong>Religion/Religious Practice</strong> hate crimes is highest, followed by <strong>Race/Color</strong>, <strong>Sex Orientation</strong>.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p>In total, numbers of <strong>Religion/Religious Practice</strong> hate crimes is highest, followed by <strong>Race/Color</strong>, <strong>Sex Orientation</strong>.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p>The rank of numbers of different <strong>offense category</strong> does not change much over years, except for <strong>Gender</strong> moves up by one position on 2020.</p>
 <p>In 2020, numbers of <strong>Religion/Religious Practice</strong> as well as <strong>Sex Orientation</strong> hate crimes decrease greatly than(about half) than 2019, while <strong>Race/Color</strong> increase a bit.</p>
 <p>In 2021, the top three categories of hate crimes all increase, especially for <strong>Race/Color</strong> which increase by almost one time.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-82-1.png" width="1152" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-83-1.png" width="1152" /></p>
 <p>The numbers of hate crimes of category <strong>Religion/Religious Practice</strong>, <strong>Race/Color</strong> and <strong>Sexual Orientation</strong> increase greatly around the start of 2021, maybe has some relationship with Covid-19.</p>
 </div>
 <div id="granular-categorybias-type" class="section level4" number="5.2.2.2">
 <h4><span class="header-section-number">5.2.2.2</span> Granular Category(Bias Type)</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-83-1.png" width="1152" /></p>
-<p>Considering types in <strong>Race/Color</strong> hate crimes, <strong>ANTI-ASIAN</strong> has a peak in the start of 2020, and another peak occurs around the first half of the year and then decrease.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-84-1.png" width="1152" /></p>
-<p>Considering types in <strong>Religion/Religious Practice</strong> hate crimes, the majority is <strong>ANTI-JEWISH</strong> hate crime whose number decreases since the start of 2020 but then increase greatly on the start of 2021.</p>
+<p>Considering types in <strong>Race/Color</strong> hate crimes, <strong>ANTI-ASIAN</strong> has a peak in the start of 2020, and another peak occurs around the first half of the year and then decrease.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-85-1.png" width="1152" /></p>
+<p>Considering types in <strong>Religion/Religious Practice</strong> hate crimes, the majority is <strong>ANTI-JEWISH</strong> hate crime whose number decreases since the start of 2020 but then increase greatly on the start of 2021.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-86-1.png" width="1152" /></p>
 <p>Considering types in <strong>Sexual Orientation</strong> hate crimes, the majority is <strong>ANTI-MALE HOMOSEXUAL(GAY)</strong> hate crime whose number increases greatly since March 2021. There is almost none <strong>ANTI-FEMALEHOMOSEXUAL(LESBIAN)</strong> as well as <strong>ANTI_LGBT(MIXED GROUP)</strong> hate crimes in 2021.</p>
 </div>
 <div id="county-level-analysis" class="section level4" number="5.2.2.3">
 <h4><span class="header-section-number">5.2.2.3</span> County Level Analysis</h4>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-86-1.png" width="960" /></p>
-<p>In total, numbers of hate crimes in <strong>New York</strong> county ranks first, followed by <strong>Kings</strong>, while <strong>Richmond</strong> has the least number of hate crime, followed by <strong>BRONX</strong>.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-87-1.png" width="960" /></p>
+<p>In total, numbers of hate crimes in <strong>New York</strong> county ranks first, followed by <strong>Kings</strong>, while <strong>Richmond</strong> has the least number of hate crime, followed by <strong>BRONX</strong>.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-88-1.png" width="960" /></p>
 <p>In generally, number of hate crimes in each county increases since Feb 2021, then decreases after May 2021. And <strong>New York</strong> increases the most and reaches the highest number on May 2021.</p>
-<div class="parcoords html-widget" height="480" id="htmlwidget-80360fc830277c34a614" style="width:1152px;height:480px; position:relative; overflow-x:auto; overflow-y:hidden; max-width:100%;" width="1152"></div>
-<script type="application/json" data-for="htmlwidget-80360fc830277c34a614">{"x":{"data":{"names":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],"County":["BRONX","KINGS","BRONX","BRONX","KINGS","KINGS","NEW YORK","NEW YORK","NEW YORK","QUEENS","QUEENS","QUEENS","RICHMOND","RICHMOND","RICHMOND"],"year":[2019,2019,2020,2021,2020,2021,2019,2020,2021,2019,2020,2021,2020,2021,2019],"ANTI_GAY":[2,19,5,4,4,18,19,11,30,11,7,9,2,0,1],"ANTI-WHITE":[5,4,0,1,4,2,18,3,5,1,0,3,3,0,0],"ANTI-MUSLIM":[5,5,1,0,1,2,2,0,0,3,3,6,0,1,0],"ANTI-JEWISH":[13,128,8,24,66,40,65,28,63,42,18,26,6,5,4],"ANTI-ASIAN":[0,1,5,2,7,26,0,17,74,0,3,26,1,2,0],"ANTI-BLACK":[3,12,3,2,6,9,13,10,9,6,11,6,6,9,3],"ANTI_LES":[0,1,3,0,0,0,5,2,3,0,0,0,0,0,0],"ANTI_LGBT":[0,2,1,0,0,0,4,2,1,1,0,0,0,0,0]},"options":{"rownames":false,"color":{"colorBy":"year","colorScale":"scaleOrdinal","colorScheme":"schemeCategory10"},"brushMode":"1D-axes","brushPredicate":"AND","reorderable":true,"margin":{"top":50,"bottom":50,"left":100,"right":50},"mode":"queue","bundlingStrength":0.5,"smoothness":0},"autoresize":false,"tasks":null},"evals":[],"jsHooks":[]}</script>
+<div class="parcoords html-widget" height="480" id="htmlwidget-2dd86e57a080fa6172e0" style="width:1152px;height:480px; position:relative; overflow-x:auto; overflow-y:hidden; max-width:100%;" width="1152"></div>
+<script type="application/json" data-for="htmlwidget-2dd86e57a080fa6172e0">{"x":{"data":{"names":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],"County":["BRONX","KINGS","BRONX","BRONX","KINGS","KINGS","NEW YORK","NEW YORK","NEW YORK","QUEENS","QUEENS","QUEENS","RICHMOND","RICHMOND","RICHMOND"],"year":[2019,2019,2020,2021,2020,2021,2019,2020,2021,2019,2020,2021,2020,2021,2019],"ANTI_GAY":[2,19,5,4,4,18,19,11,30,11,7,9,2,0,1],"ANTI-WHITE":[5,4,0,1,4,2,18,3,5,1,0,3,3,0,0],"ANTI-MUSLIM":[5,5,1,0,1,2,2,0,0,3,3,6,0,1,0],"ANTI-JEWISH":[13,128,8,24,66,40,65,28,63,42,18,26,6,5,4],"ANTI-ASIAN":[0,1,5,2,7,26,0,17,74,0,3,26,1,2,0],"ANTI-BLACK":[3,12,3,2,6,9,13,10,9,6,11,6,6,9,3],"ANTI_LES":[0,1,3,0,0,0,5,2,3,0,0,0,0,0,0],"ANTI_LGBT":[0,2,1,0,0,0,4,2,1,1,0,0,0,0,0]},"options":{"rownames":false,"color":{"colorBy":"year","colorScale":"scaleOrdinal","colorScheme":"schemeCategory10"},"brushMode":"1D-axes","brushPredicate":"AND","reorderable":true,"margin":{"top":50,"bottom":50,"left":100,"right":50},"mode":"queue","bundlingStrength":0.5,"smoothness":0},"autoresize":false,"tasks":null},"evals":[],"jsHooks":[]}</script>
 <p>We make an interactive graph including <strong>County</strong>，<strong>Year</strong>, <strong>Bias type</strong> to gain more information about hate crimes in NYC in recent 3 years. The color identify different year.</p>
 <p>In 2021, <strong>New York</strong> county has the largest number of hate crimes in both ANTI-GAY and ANTI-ASIAN obviously, <strong>Queens</strong> has the largest number in ANTI-MUSLIM. You can find more interested information by yourself.</p>
 </div>
@@ -428,7 +425,7 @@ From the pie chart, we can know that the area with the most crime is Brooklyn, a
 <div id="mental-health-center-in-boroughs" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Mental Health Center in Boroughs</h3>
 <table>
-<caption><span id="tab:unnamed-chunk-90">Table 5.4: </span>Mental Service Center Counts in NYC</caption>
+<caption><span id="tab:unnamed-chunk-91">Table 5.4: </span>Mental Service Center Counts in NYC</caption>
 <thead>
 <tr class="header">
 <th align="left">Borough</th>
@@ -462,14 +459,14 @@ From the pie chart, we can know that the area with the most crime is Brooklyn, a
 </tr>
 </tbody>
 </table>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 <p>This is a scatter plot between Mental Health Service Finder Count VS Crime Count. Even if we just have 5 borough, we can find there is a rough positive relation between two counts. It means that now there are more mental health centers in boroughs with more crimes. Manhattan has relatively more mental centers and Brooklyn &amp; Bronx can build more Mental Health Center.</p>
 </div>
 <div id="geographical-analysis" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> Geographical Analysis</h3>
 <p>According to some scientific researches, drug use and gun crime are related to mental health to a certain extent. So we explore the geographic distribution of these two crimes and compared them with the distribution of mental health centers.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <p>From these for maps, we can find that the location of the mental health center is very consistent with the distribution of drug crime and weapon crime’s sites, which reflects that New York’s mental health construction is very complete and supportive. Besides, there is still room for improvement such as adding mental health service center in Rockway Beach and in the eastern area of Brooklyn.</p>
 
 </div>

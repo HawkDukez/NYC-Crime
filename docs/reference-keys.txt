@@ -1,9 +1,9 @@
 tab:unnamed-chunk-10
-tab:unnamed-chunk-19
-tab:unnamed-chunk-47
-tab:unnamed-chunk-51
-tab:unnamed-chunk-54
-tab:unnamed-chunk-90
+tab:unnamed-chunk-20
+tab:unnamed-chunk-48
+tab:unnamed-chunk-52
+tab:unnamed-chunk-55
+tab:unnamed-chunk-91
 introduction
 data-sources
 data-transformation
@@ -14,7 +14,8 @@ missing-patterns-for-year-between-2010-2014
 missing-patterns-for-year-between-2015-2019
 missing-patterns-for-year-after-2020
 data-2-covid-19-data
-data-3-mental-health-data
+data-3-hate-crimes-data
+data-4-mental-health-data
 results
 arrest-data-analysis-of-nyc-from-2006-to-2021
 total-number-of-crimes
