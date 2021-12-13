@@ -262,7 +262,7 @@ group_year2$ARREST_YEAR <- year(group_year2$ARREST_YEAR)
 ggplot(data = group_year2) +
   geom_mosaic(aes(weight = Count, x = product(OFNS_DESC,ARREST_YEAR), fill=OFNS_DESC)) + 
   coord_flip() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.6, hjust=.5)) + 
+  theme(axis.text.x=element_blank()) + 
   ggtitle("Percentage of Most Numerous Crimes over Years")
 
 ```
@@ -378,7 +378,7 @@ group_year$ARREST_YEAR <- year(group_year$ARREST_YEAR)
 ggplot(data = group_year) +
   geom_mosaic(aes(weight = Count, x = product(PD_DESC,ARREST_YEAR), fill=PD_DESC)) + 
   coord_flip() + 
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.6, hjust=.5)) + 
+  theme(axis.text.x=element_blank()) + 
   ggtitle("Percentage of Most Numerous Crimes over Years")
 
 ```
@@ -755,7 +755,7 @@ plot_grid(b1,b4,b3,b2,b5, nrow = 5, ncol = 1, align = "hv",axis = 'l' )
 ```
 
 
-From the histograms of boroughs and the precinct map in NYC, we can see the different pattern of crimes on different police precincts. In Manhattan, crime number of each precincts are relatively even (except for precinct 14), howeverr, Bronx has a distrubition with higher variance. Also, we can 
+From the histograms of boroughs and the precinct map in NYC, we can see the different pattern of crimes on different police precincts. In Manhattan, crime number of each precincts are relatively even (except for precinct 14), however, Bronx has a distribution with higher variance.
 
 
 
@@ -1120,12 +1120,12 @@ ggplot(df_mental_arrest, aes(n, Count)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-This is a scatter plot between Mental Health Service Finder Count VS Crime Count. Even if we just have 5 borough, we can find there is a rough positive relation between two counts. It means that now there are more mental health centers in boroughs with more crimes. Manhattan has relatively more mental centers and Brooklyn & Bronx can build more Mental Health Center.
+This is a scatter plot between Mental Health Service Finder Count VS Crime Count. Even if we just have 5 borough, we can find there is a rough positive relation between two counts. It means that now there are more mental health centers in boroughs with more crimes. Manhattan has relatively more mental centers. Hence, we can build more Mental Health Centers in Brooklyn & Bronx.
 
 
 ### Geographical Analysis
 
-According to some scientific researches, drug use and gun crime are related to mental health to a certain extent. So we explore the geographic distribution of these two crimes and compared them with the distribution of mental health centers.
+According to some scientific researches, drug abuse and weapons crime are related to mental health to a certain extent. So we explore the geographic distribution of these two crimes and compared them with the distribution of mental health centers.
 
 
 ```{r}

@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-sources.html"/>
 <link rel="next" href="missing-values.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -146,7 +146,7 @@
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
 <p>In this project, we use 5 datasets, NYPD_Arrest_Data__Historic.csv, NYPD_Arrest_Data__Year_to_Date.csv, NYPD_Hate_Crimes.csv, COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths.csv, zicode-borough.csv and Mental_Health_Service_Finder_Data.csv.</p>
 <p>We concentrate NYPD_Arrest_Data__Historic and NYPD_Arrest_Data__Year_to_Date to include most updated data in 2021. We convert <em>ARREST_DATE</em> to Date object and add 3 new columns <em>ARREST_YEAR</em>, <em>quarter</em> and <em>month</em> to display different statistics. In addition, <em>JURISDICTION_CODE</em> and <em>AGE_GROUP</em> are converted to factor. Values in <em>OFNS_DESC</em> are merged according to types and mutated as the new column.</p>
-<pre><code>## # A tibble: 6 × 6
+<pre><code>## # A tibble: 6 x 6
 ##   ARREST_YEAR JURISDICTION_CODE AGE_GROUP PERP_SEX OFNS_DESC         ARREST_BORO
 ##         &lt;dbl&gt; &lt;fct&gt;             &lt;fct&gt;     &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;      
 ## 1        2007 1                 18-24     M        DANGEROUS DRUGS   Q          
@@ -156,9 +156,9 @@
 ## 5        2018 0                 25-44     M        RAPE              K          
 ## 6        2006 2                 45-64     M        CRIMINAL TRESPASS K</code></pre>
 <p>In <em>NYPD_Hate_Crimes</em>, <em>DATE_OF_INTEREST</em> is renamed as <em>Date</em>. <em>ARREST_DATE</em> is converted to Date object. <em>NYPD_Hate_Crimes</em> is left outer joined by COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths.</p>
-<pre><code>## # A tibble: 6 × 18
+<pre><code>## # A tibble: 6 x 18
 ## # Groups:   Date [3]
-##   `Full Complaint ID` `Complaint Year Number` `Month Number` `Record Create Dat…
+##   `Full Complaint ID` `Complaint Year Number` `Month Number` `Record Create Dat~
 ##                 &lt;dbl&gt;                   &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;              
 ## 1             2.02e14                    2019              2 02/08/2019         
 ## 2             2.02e14                    2019              3 03/09/2019         
@@ -166,7 +166,7 @@
 ## 4             2.02e14                    2019              3 03/10/2019         
 ## 5             2.02e14                    2019              5 05/11/2019         
 ## 6             2.02e14                    2019              5 05/11/2019         
-## # … with 14 more variables: Complaint Precinct Code &lt;dbl&gt;,
+## # ... with 14 more variables: Complaint Precinct Code &lt;dbl&gt;,
 ## #   Patrol Borough Name &lt;chr&gt;, County &lt;chr&gt;,
 ## #   Law Code Category Description &lt;chr&gt;, Offense Description &lt;chr&gt;,
 ## #   PD Code Description &lt;chr&gt;, Bias Motive Description &lt;chr&gt;,
