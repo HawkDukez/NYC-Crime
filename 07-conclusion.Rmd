@@ -2,7 +2,12 @@
 
 In our project, we comprehensively analyze and visualize crime incidents in New York City from 2013 to 2021 from multiple perspectives such as magnitude, time, type, age, sex, position and so on. Besides, we also try to explore the connection between crime and other social factors such as COVID-19 VS hate crimes and Mental Health Service VS Drugs&Gun Crimes. Here are some conclusions and further suggestions:
 
-In terms of the overall crime situation in New York, the total number of crimes in New York City has been declining sharply every year from 2011-2021. Among all types, the proportion of DANGEROUS DRUGS is constantly decreasing, the proportion of ASSAULT 3 is constantly increasing. Among 5 boroughs, proportion of crime in Queens and Staten Island is increasing especially after 2015 so we should pay more attention on it.
+In terms of the overall crime situation in New York, the total number of crimes in New York City has been declining sharply every year from 2011-2021. 
+
+a) Among all types, the proportion of DANGEROUS DRUGS is constantly decreasing, the proportion of ASSAULT 3 is constantly increasing. 
+b)
+ 
+b) Among 5 boroughs, proportion of crime in Queens and Staten Island is increasing especially after 2015 so we should pay more attention on it.
 
 
 
