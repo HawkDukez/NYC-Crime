@@ -12,6 +12,10 @@ This dataset includes daily counts of NYC residents who tested positive, who wer
 hospitalized with COVID-19, and deaths among COVID-19 patients, which can provide
 us with information about COVID-19 and can be related with data of crime.
 
+[NYPD Hate Crimes](https://data.cityofnewyork.us/Public-Safety/NYPD-Hate-Crimes/bqiq-cu78)
+
+This dataset includes confirmed hate crime incidents in NYC, which can be used to analyze the relationship between crime condition and COVID-19.
+
 [Mental-Health-Service-Finder-Data](https://data.cityofnewyork.us/Health/Mental-Health-Service-Finder-Data/8nqg-ia7v)
 
 This dataset includes the distribution of mental-health-service in NYC, which may be
