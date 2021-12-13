@@ -40,5 +40,5 @@ mental-health-center-vs-crime-in-nyc
 mental-health-center-in-boroughs
 geographical-analysis
 interactive-component
-new-york-state-county-level-map
+new-york-city-precinct-map-of-crimes-in-2020
 conclusion

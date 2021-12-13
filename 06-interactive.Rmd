@@ -1,9 +1,9 @@
 
 # Interactive component
 
-## New York State County-level Map
+## New York City Precinct Map of Crimes in 2020
 
-This map contains hate crimes data of counties in New York State. Once you mouse over the region, it will show its statistics of hate crimes on the side, helping you understand hate crime situation in different counties in a more straight way. With an interative map, audiences are able to know which region is which county, which is hard to achieve in the static heatmap as we conducted in the previous questions. In the static heatmap, if we label all the counties, the heatmap will become messy and difficult to view due to its relatively small size. An interactive map has the advantanges to show geological locations and their corresponding information and statistical data at the same time. Therefore, audiences can have better understanding of various types of hate crimes in different regions. 
+This map contains hate crimes data of different precincts in New York City in 2020. In this interactive map, you can see 8 kinds of statistics, "TOTAL", "ASSAULT",  "DRUGS", "WEAPONS", "FELONY", "MPL", "ROBBERY" and "HATE". When mousing over the region of this precinct, these statistics of specific precinct will show up to help you quickly know the safety situation in this area. As discussed in **5.1.3**, we found 6 most numerous crimes from 2006 to 2021. In this map, ASSAULT denotes ***ASSAULT 3 & RELATED OFFENSES***. DRUGS denotes ***DANGEROUS DRUGS***. WEAPONS denotes ***DANGEROUS WEAPONS***. FELONY denotes ***FELONY ASSAULT***. MPL denotes ***MISCELLANEOUS PENAL LAW***. ROBBERY denotes ***ROBBERY***. HATE denotes the number of hate crimes cases in NYPD_Hate_Crimes.csv.
 
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <div id="map">
@@ -361,8 +361,8 @@ This map contains hate crimes data of counties in New York State. Once you mouse
 
 <script>
   var x = 435;
-  var x1 = 425;
-  var x2 = 475;
+  var x1 = 415;
+  var x2 = 485;
   var w = 250;
   var h = 475.573232;
 
@@ -380,9 +380,9 @@ This map contains hate crimes data of counties in New York State. Once you mouse
     .append("text")
     .attr("x",x1)
     .attr("y", "300")
-    .text("Total : ")
+    .text("TOTAL : ")
     .attr("fill", "black")
-    .style("font-size", "25px")
+    .style("font-size", "20px")
     .attr("text-anchor", "middle");
     
   d3.select("svg")
@@ -399,14 +399,14 @@ This map contains hate crimes data of counties in New York State. Once you mouse
     .append("text")
     .attr("x", x1)
     .attr("y", "350")
-    .text("Data1 : ")
+    .text("ASSAULT : ")
     .attr("fill", "black")
-    .style("font-size", "25px")
+    .style("font-size", "20px")
     .attr("text-anchor", "middle");
     
   d3.select("svg")
     .append("text")
-    .attr("id", "disability")
+    .attr("id", "as3")
     .attr("x", x2)
     .attr("y", "350")
     .text(0)
@@ -418,14 +418,14 @@ This map contains hate crimes data of counties in New York State. Once you mouse
     .append("text")
     .attr("x", x1)
     .attr("y", "400")
-    .text("Data2 : ")
+    .text("DRUGS : ")
     .attr("fill", "black")
-    .style("font-size", "25px")
+    .style("font-size", "20px")
     .attr("text-anchor", "middle");
     
   d3.select("svg")
     .append("text")
-    .attr("id", "religion")
+    .attr("id", "drug")
     .attr("x", x2)
     .attr("y", "400")
     .text(0)
@@ -437,16 +437,92 @@ This map contains hate crimes data of counties in New York State. Once you mouse
     .append("text")
     .attr("x", x1)
     .attr("y", "450")
-    .text("Data3 : ")
+    .text("WEAPONS : ")
     .attr("fill", "black")
-    .style("font-size", "25px")
+    .style("font-size", "20px")
     .attr("text-anchor", "middle");
     
   d3.select("svg")
     .append("text")
-    .attr("id", "sexual")
+    .attr("id", "weapons")
     .attr("x", x2)
     .attr("y", "450")
+    .text(0)
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+
+  d3.select("svg")
+    .append("text")
+    .attr("x", x1)
+    .attr("y", "500")
+    .text("FELONY : ")
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("id", "felony")
+    .attr("x", x2)
+    .attr("y", "500")
+    .text(0)
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("x", x1)
+    .attr("y", "550")
+    .text("MPL : ")
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("id", "mpl")
+    .attr("x", x2)
+    .attr("y", "550")
+    .text(0)
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+
+  d3.select("svg")
+    .append("text")
+    .attr("x", x1)
+    .attr("y", "600")
+    .text("ROBBERY : ")
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("id", "robbery")
+    .attr("x", x2)
+    .attr("y", "600")
+    .text(0)
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("x", x1)
+    .attr("y", "650")
+    .text("HATE : ")
+    .attr("fill", "black")
+    .style("font-size", "20px")
+    .attr("text-anchor", "middle");
+    
+  d3.select("svg")
+    .append("text")
+    .attr("id", "race")
+    .attr("x", x2)
+    .attr("y", "650")
     .text(0)
     .attr("fill", "black")
     .style("font-size", "20px")
@@ -455,83 +531,83 @@ This map contains hate crimes data of counties in New York State. Once you mouse
 
   var data_dict = new Object();
   data_dict = {
-    "police_precincts_1": ["Precinct 1", 1, 0, 124, 21],
-    "police_precincts_2": ["Precinct 5", 12, 0, 124, 21],
-    "police_precincts_3": ["Precinct 6", 1, 0, 124, 21],
-    "police_precincts_4": ["Precinct 71", 12, 0, 124, 21],
-    "police_precincts_5": ["Precinct 72", 1, 0, 124, 21],
-    "police_precincts_6": ["Precinct 7", 12, 0, 124, 21],
-    "police_precincts_7": ["Precinct 9", 1, 0, 124, 21],
-    "police_precincts_8": ["Precinct 22", 12, 0, 124, 21],
-    "police_precincts_9": ["Precinct 10", 1, 0, 124, 21],
-    "police_precincts_10": ["Precinct 13", 12, 0, 124, 21],
-    "police_precincts_11": ["Precinct 14", 1, 0, 124, 21],
-    "police_precincts_12": ["Precinct 17", 12, 0, 124, 21],
-    "police_precincts_13": ["Precinct 20", 1, 0, 124, 21],
-    "police_precincts_14": ["Precinct 18", 12, 0, 124, 21],
-    "police_precincts_15": ["Precinct 19", 1, 0, 124, 21],
-    "police_precincts_16": ["Precinct 23", 12, 0, 124, 21],
-    "police_precincts_17": ["Precinct 24", 1, 0, 124, 21],
-    "police_precincts_18": ["Precinct 25", 12, 0, 124, 21],
-    "police_precincts_19": ["Precinct 26", 1, 0, 124, 21],
-    "police_precincts_20": ["Precinct 28", 12, 0, 124, 21],
-    "police_precincts_21": ["Precinct 30", 1, 0, 124, 21],
-    "police_precincts_22": ["Precinct 32", 12, 0, 124, 21],
-    "police_precincts_23": ["Precinct 33", 1, 0, 124, 21],
-    "police_precincts_24": ["Precinct 34", 12, 0, 124, 21],
-    "police_precincts_25": ["Precinct 40", 1, 0, 124, 21],
-    "police_precincts_26": ["Precinct 41", 12, 0, 124, 21],
-    "police_precincts_27": ["Precinct 42", 1, 0, 124, 21],
-    "police_precincts_28": ["Precinct 43", 12, 0, 124, 21],
-    "police_precincts_29": ["Precinct 48", 1, 0, 124, 21],
-    "police_precincts_30": ["Precinct 44", 12, 0, 124, 21],
-    "police_precincts_31": ["Precinct 45", 1, 0, 124, 21],
-    "police_precincts_32": ["Precinct 46", 12, 0, 124, 21],
-    "police_precincts_33": ["Precinct 47", 1, 0, 124, 21],
-    "police_precincts_34": ["Precinct 49", 12, 0, 124, 21],
-    "police_precincts_35": ["Precinct 50", 1, 0, 124, 21],
-    "police_precincts_36": ["Precinct 67", 12, 0, 124, 21],
-    "police_precincts_37": ["Precinct 52", 1, 0, 124, 21],
-    "police_precincts_38": ["Precinct 60", 12, 0, 124, 21],
-    "police_precincts_39": ["Precinct 61", 1, 0, 124, 21],
-    "police_precincts_40": ["Precinct 62", 12, 0, 124, 21],
-    "police_precincts_41": ["Precinct 63", 1, 0, 124, 21],
-    "police_precincts_42": ["Precinct 66", 12, 0, 124, 21],
-    "police_precincts_43": ["Precinct 68", 1, 0, 124, 21],
-    "police_precincts_44": ["Precinct 69", 12, 0, 124, 21],
-    "police_precincts_45": ["Precinct 70", 1, 0, 124, 21],
-    "police_precincts_46": ["Precinct 73", 12, 0, 124, 21],
-    "police_precincts_47": ["Precinct 75", 1, 0, 124, 21],
-    "police_precincts_48": ["Precinct 77", 12, 0, 124, 21],
-    "police_precincts_49": ["Precinct 76", 1, 0, 124, 21],
-    "police_precincts_50": ["Precinct 78", 12, 0, 124, 21],
-    "police_precincts_51": ["Precinct 79", 1, 0, 124, 21],
-    "police_precincts_52": ["Precinct 81", 12, 0, 124, 21],
-    "police_precincts_53": ["Precinct 83", 1, 0, 124, 21],
-    "police_precincts_54": ["Precinct 84", 12, 0, 124, 21],
-    "police_precincts_55": ["Precinct 88", 1, 0, 124, 21],
-    "police_precincts_56": ["Precinct 90", 12, 0, 124, 21],
-    "police_precincts_57": ["Precinct 94", 1, 0, 124, 21],
-    "police_precincts_58": ["Precinct 100", 12, 0, 124, 21],
-    "police_precincts_59": ["Precinct 101", 12, 0, 124, 21],
-    "police_precincts_60": ["Precinct 102", 12, 0, 124, 21],
-    "police_precincts_61": ["Precinct 103", 12, 0, 124, 21],
-    "police_precincts_62": ["Precinct 104", 12, 0, 124, 21],
-    "police_precincts_63": ["Precinct 105", 12, 0, 124, 21],
-    "police_precincts_64": ["Precinct 106", 12, 0, 124, 21],
-    "police_precincts_65": ["Precinct 107", 12, 0, 124, 21],
-    "police_precincts_66": ["Precinct 108", 12, 0, 124, 21],
-    "police_precincts_67": ["Precinct 109", 12, 0, 124, 21],
-    "police_precincts_68": ["Precinct 110", 12, 0, 124, 21],
-    "police_precincts_69": ["Precinct 111", 1, 0, 124, 21],
-    "police_precincts_70": ["Precinct 112", 12, 0, 124, 21],
-    "police_precincts_71": ["Precinct 113", 1, 0, 124, 21],
-    "police_precincts_72": ["Precinct 114", 12, 0, 124, 21],
-    "police_precincts_73": ["Precinct 115", 1, 0, 124, 21],
-    "police_precincts_74": ["Precinct 120", 12, 0, 124, 21],
-    "police_precincts_75": ["Precinct 121", 1, 0, 124, 21],
-    "police_precincts_76": ["Precinct 122", 12, 0, 124, 21],
-    "police_precincts_77": ["Precinct 123", 12, 0, 124, 21]
+    "police_precincts_1": ["Precinct 1", 1407, 119,17,16,56,26,86,4],
+    "police_precincts_2": ["Precinct 5", 2199, 163,67,43,128,100,91,5],
+    "police_precincts_3": ["Precinct 6", 1807, 171,146,38,106,40,211,6],
+    "police_precincts_4": ["Precinct 71", 1468, 256,99,104,170,117,52,3],
+    "police_precincts_5": ["Precinct 72", 2027, 355,103,18,164,159,107,5],
+    "police_precincts_6": ["Precinct 7", 1267, 225,59,22,83,60,70,5],
+    "police_precincts_7": ["Precinct 9", 1277, 179,123,43,130,38,62,2],
+    "police_precincts_8": ["Precinct 22", 50, 14, 0, 0, 4, 4,0,1],
+    "police_precincts_9": ["Precinct 10", 1175, 116,63,20,74,31,69,15],
+    "police_precincts_10": ["Precinct 13", 1751, 251,54,23,155,34,134,7],
+    "police_precincts_11": ["Precinct 14", 3047, 290,276,53,149,64,101,3],
+    "police_precincts_12": ["Precinct 17", 869, 91,10,22,38,9,41,3],
+    "police_precincts_13": ["Precinct 20", 748, 80,48,11,28,17,47,3],
+    "police_precincts_14": ["Precinct 18", 1896, 172,39,27,108,36,109,4],
+    "police_precincts_15": ["Precinct 19", 1490, 186,9,9,73,47,104,4],
+    "police_precincts_16": ["Precinct 23", 1938, 379,142,124,220,104,99,4],
+    "police_precincts_17": ["Precinct 24", 1233, 219,66,22,110,70,71,4],
+    "police_precincts_18": ["Precinct 25", 2789, 314,901,189,172,73,110,3],
+    "police_precincts_19": ["Precinct 26", 1016,63,36,76,74,52,3],
+    "police_precincts_20": ["Precinct 28", 1429, 210,246,85,101,55,66,1],
+    "police_precincts_21": ["Precinct 30", 1018, 198,99,53,100,59,87,5],
+    "police_precincts_22": ["Precinct 32", 1852, 400,165,98,208,116,104,2],
+    "police_precincts_23": ["Precinct 33", 1495, 226,177,43,137,49,86,0],
+    "police_precincts_24": ["Precinct 34", 1469, 256,198,69,112,47,92,4],
+    "police_precincts_25": ["Precinct 40", 4379, 914,678,274,431,144,229,8],
+    "police_precincts_26": ["Precinct 41", 2287, 290,205,107,165,81,279,0],
+    "police_precincts_27": ["Precinct 42", 2517, 652,171,136,318,107,136,0],
+    "police_precincts_28": ["Precinct 43", 3164, 751,247,157,436,110,215,1],
+    "police_precincts_29": ["Precinct 48", 2490, 623,240,163,262,105,143,1],
+    "police_precincts_30": ["Precinct 44", 3808, 767,349,226,429,108,222,9],
+    "police_precincts_31": ["Precinct 45", 1444, 362,73,43,141,40,84,3],
+    "police_precincts_32": ["Precinct 46", 3371, 683,549,159,387,110,201,0],
+    "police_precincts_33": ["Precinct 47", 3140, 814,188,154,406,92,168,0],
+    "police_precincts_34": ["Precinct 49", 1819, 375,70,45,182,102,152,1],
+    "police_precincts_35": ["Precinct 50", 1109, 259,41,32,110,23,47,2],
+    "police_precincts_36": ["Precinct 67", 2612, 423,161,253,346,271,127,3],
+    "police_precincts_37": ["Precinct 52", 3196, 619,466,146,308,106,192,1],
+    "police_precincts_38": ["Precinct 60", 2219, 283,290,144,187,167,135,8],
+    "police_precincts_39": ["Precinct 61", 1395, 206,70,42,161,144,74,3],
+    "police_precincts_40": ["Precinct 62", 1163, 250,67,16,95,126,68,0],
+    "police_precincts_41": ["Precinct 63", 11357,183,26,76,110,87,71,2],
+    "police_precincts_42": ["Precinct 66", 972, 185,18,15,109,68,62,9],
+    "police_precincts_43": ["Precinct 68", 1353, 151,204,105,87,119,29,2],
+    "police_precincts_44": ["Precinct 69", 1034,217,47,101,123,94,46,0],
+    "police_precincts_45": ["Precinct 70", 1935, 348,163,85,222,163,112,17],
+    "police_precincts_46": ["Precinct 73", 2276, 453,223,433,303,227,160,2],
+    "police_precincts_47": ["Precinct 75", 3793, 516,249,363,521,343,360,3],
+    "police_precincts_48": ["Precinct 77", 2113, 349,151,165,183,178,230,3],
+    "police_precincts_49": ["Precinct 76", 762, 88,72,40,56,70,37,1],
+    "police_precincts_50": ["Precinct 78", 791, 97,53,18,48,21,26,2],
+    "police_precincts_51": ["Precinct 79", 2523, 332,232,276,219,217,116,6],
+    "police_precincts_52": ["Precinct 81", 1281, 191,92,107,155,103,97,0],
+    "police_precincts_53": ["Precinct 83", 1875, 332,162,55,227,159,133,1],
+    "police_precincts_54": ["Precinct 84", 1748, 156,61,30,150,103,82,6],
+    "police_precincts_55": ["Precinct 88", 984,167,81,68,130,103,58,7],
+    "police_precincts_56": ["Precinct 90", 1455,184,135,70,149,143,76,19],
+    "police_precincts_57": ["Precinct 94", 623, 90,14,11,59,51,34,3],
+    "police_precincts_58": ["Precinct 100", 177,33,28,124,148,36,7],
+    "police_precincts_59": ["Precinct 101", 1560, 282,103,117,203,272,66,4],
+    "police_precincts_60": ["Precinct 102", 1934, 370,88,69,221,260,65,0],
+    "police_precincts_61": ["Precinct 103", 2993, 445,437,150,290,217,207,0],
+    "police_precincts_62": ["Precinct 104", 1901, 418,106,33,198,139,89,0],
+    "police_precincts_63": ["Precinct 105", 2082, 439,59,88,285,211,103,0],
+    "police_precincts_64": ["Precinct 106", 1735, 361,54,76,215,205,103,1],
+    "police_precincts_65": ["Precinct 107", 1334, 283,43,37,122,131,100,9],
+    "police_precincts_66": ["Precinct 108", 997, 240,46,11,108,104,45,0],
+    "police_precincts_67": ["Precinct 109", 2240, 403,138,34,192,202,161,1],
+    "police_precincts_68": ["Precinct 110", 2183, 458,84,47,244,152,136,5],
+    "police_precincts_69": ["Precinct 111", 578, 122,13,8,59,51,9,7],
+    "police_precincts_70": ["Precinct 112", 1063, 98,13,13,66,33,29,8],
+    "police_precincts_71": ["Precinct 113", 3317, 494,198,214,267,252,84,1],
+    "police_precincts_72": ["Precinct 114", 2659, 472,205,128,238,264,125,3],
+    "police_precincts_73": ["Precinct 115", 2556, 472,145,151,229,206,113,3],
+    "police_precincts_74": ["Precinct 120", 2379, 349,264,102,205,322,150,14],
+    "police_precincts_75": ["Precinct 121", 1870, 234,123,70,152,224,51,1],
+    "police_precincts_76": ["Precinct 122", 1227, 172,87,32,91,176,21,2],
+    "police_precincts_77": ["Precinct 123", 719, 133,32,19,49,50,3,1]
 
 };
 
@@ -546,9 +622,13 @@ This map contains hate crimes data of counties in New York State. Once you mouse
         if (typeof(data) != 'undefined'){
           d3.select("#name").text(data[0]);
           d3.select("#total").text(data[1]);
-          d3.select("#disability").text(data[1]);
-          d3.select("#religion").text(data[1]);
-          d3.select("#sexual").text(data[1]);
+          d3.select("#as3").text(data[2]);
+          d3.select("#drug").text(data[3]);
+          d3.select("#weapons").text(data[4]);
+          d3.select("#felony").text(data[5]);
+          d3.select("#mpl").text(data[6]);
+          d3.select("#robbery").text(data[7]);
+          d3.select("#race").text(data[8]);
         }
       }
     })
