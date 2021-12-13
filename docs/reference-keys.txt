@@ -25,7 +25,7 @@ granular-categorypd_desc
 level-of-offense
 jurisdiction-code
 age-group
-sex
+category-of-sex
 comprehensive-analysis
 crime-geographical-analysis
 borough-level-analysis
@@ -33,9 +33,10 @@ precinct-level-analysis
 nyc-crime-maps
 covid-19-vs-crime-in-nyc
 time-series-analysis-of-covid-19
-hate-crime
-offense-category
-borough-level-analysis-1
+hate-crime-analysis
+general-categoryoffense-category
+granular-categorybias-type
+county-level-analysis
 mental-health-center-vs-crime-in-nyc
 mental-health-center-in-boroughs
 geographical-analysis

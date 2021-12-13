@@ -77,7 +77,7 @@ ggplot(nyc_r, aes(ARREST_DATE, count)) +
   ggtitle('Numbers of Crimes over days')
 ```
 
-Data fluctuates greatly, which means no big relationship between adjacent days. 
+Data fluctuates greatly, which means no big relationship between adjacent days. And the general trend over years is similar to the histogram in 5.1.1. 
 
 
 ```{r}
@@ -130,6 +130,7 @@ ggplot(nyc_m,aes(year,count))+
   facet_wrap(~month,ncol=3)+
   ggtitle('Numbers of crimes in each month facet over years')
 ```
+
 In general, crimes in every month decrease. Compared different months, before 2020 it seems that numbers of arrest in December is less than other months. While in the mid year of 2020 numbers of arrest decrease greatly and in 2021 increase. 
 
 ### Classification of Crimes
@@ -450,8 +451,8 @@ ggplot(df2,aes(as.factor(JURISDICTION_CODE),percentage))+
 ```
 
 
-Jurisdiction responsible for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD while other represents non NYPD jurisdictions. \n
-From the histogram, we can see majority of the criminals were arrested by Patrol. 
+**JURISDICTION_CODE** responsibles for arrest. Jurisdiction codes 0(Patrol), 1(Transit) and 2(Housing) represent NYPD while other represents non NYPD jurisdictions. \n
+From the histogram, we can see majority of the criminals were arrested by **Patrol**. 
 
 ```{r fig.width=20,fig.height=12}
 df1<-df1%>%filter(!is.na(JURISDICTION_CODE))
@@ -476,9 +477,9 @@ p2<-df1%>%
 plot_grid(p1,p2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 ```
 
-From the left graph, we conclude that the proportion of JURISDICTin recent 5 yearsION_CODE 0 which means 'patrol' increases over years, while JURISDICTION_CODE 1 which means 'Transit' decreases these years.
+From the left graph, we conclude that the proportion of **JURISDICTION_CODE** 0 which means 'patrol' increases over years, while **JURISDICTION_CODE** 1 which means **Transit** decreases these years.
 
-From the right graph, generally number of each type of JURISDICTIOn_CODE except type 'other' decreases over years and numbers of JURISDICTION_CODE 0 which means 'patrol' decreases sharply since 2014.
+From the right graph, generally number of each type of **JURISDICTION_CODE** except type 'other' decreases over years and numbers of **JURISDICTION_CODE** 0 which means **Patrol** decreases sharply since 2014.
 
 
 ### Age Group
@@ -505,7 +506,7 @@ ggplot(df2,aes(as.factor(AGE_GROUP),percentage))+
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-The majority of criminals' age_group is 25-44, followed by 18-24,45-64,<18, while the minority is 65+. This is rational as the olds and underages are less stronger and they are less likely to commit crime.
+The majority of criminals' **AGE_GROUP** is **25-44**, followed by **18-24**,**45-64**,**<18**, while the minority is **65+**. This is rational as the olds and underages are less stronger and they are less likely to commit crime.
 
 
 
@@ -535,11 +536,11 @@ p2<-df1%>%
 plot_grid(p1,p2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 ```
 
-From the left graph, we conclude that the proportion of criminals younger than 18 decreases over years, while criminals between 25-44 increases. 
+From the left graph, we conclude that the proportion of  **<18** decreases over years, while criminals between **25-44** increases. 
 
-From the right graph, generally number of criminal in each age_group except '65+' decreases over years. As for '<18','18-24','25-44', each decreases significantly since 2014, while '45-64' decreases since 2010 smoothly.
+From the right graph, generally number of criminal in each age_group except **65+** decreases over years. As for **<18**,**18-24**,**25-44**, each decreases significantly since 2014, while **45-64** decreases since 2010 smoothly.
 
-### Sex 
+### Category of Sex
 ```{r}
 df2<-df1%>%
    group_by(PERP_SEX) %>%
@@ -574,9 +575,9 @@ plot_grid(p1,p2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 
 ```
 
-From the left graph, the proportion of sex seems to have no big difference over years. 
+From the left graph, the proportion of **PREP_SEX** seems to have no big difference over years. 
 
-From the right graph, generally numbers of criminal in both sex decrease since 2014, while the trend of female is more smooth than male.
+From the right graph, generally numbers of criminal in both categories decrease since 2014, while the trend of female is more smooth than male.
 
 ### Comprehensive analysis
 ```{r fig.width=10}
@@ -585,7 +586,7 @@ vcd::mosaic(PERP_SEX~AGE_GROUP, df1,
        highlighting_fill=c(alpha("cornflowerblue",0.5),'cornflowerblue'))
 ```
 
-From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than myc2021adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.
+From the mosaic, it seems that the proportion of female criminals in the under-ages is greater than adults. This maybe because the primitive gender differences are not so big in under-ages than in adults.
 
 ```{r}
 dfm<-df1%>%mutate(
@@ -605,13 +606,19 @@ dfm<-df1%>%mutate(
   filter(type!='other')
 ```
 
-```{r fig.height=6}
+```{r fig.height=8,fig.width=8}
 dfm1<-dfm%>%
-  filter(type!='RAPE'&type!='MURDER'&type!='SEX_CRIME')
+  filter(type!='RAPE'&type!='MURDER'&type!='SEX_CRIME')%>%
+  mutate(type=substr(type,1,3))
 vcd::mosaic(type~AGE_GROUP+PERP_SEX,dfm1,
        direction = c("v","v","h"), 
        highlighting_fill=brewer.pal(6,'Blues'))
 ```
+
+As the classfication of **OFNS_DESC** is a bit trivial, We combine some categories of **OFNS_DESC**, such as combine different kinds of assualt into new type **ASSAULT**, different kinds of larceny into **Larceny**. We select several popular types that we have shown in 5.1.3 to make mosaic plot. 
+
+From the mosaic, it seems that in general the differences of proportion of different types(except **BURGLARY**) between each **PREP_SEX** decrease as **AGE_GROUP** increase. The proportion of **ASSAULT** as well as **LARCENY** is bigger in female compared to male obviously, while proportion of **Drug** as well as **Weapon** is bigger in male.
+
 ```{r}
 dfn<- dfm%>%filter(ARREST_YEAR>=2020)%>%
       select(ARREST_BORO,PERP_SEX,AGE_GROUP,type)%>%
@@ -634,6 +641,13 @@ dfn%>%
    withD3 = TRUE )
 ```
 
+We make an interactive graph including **ARREST_BORO**，**AGE_GROUP**, **PREP_SEX**, **type** to gain more information about crimes in NYC after 2020. The color identify different sex.
+
+1.Outliers: Considering **AGE_GROUP**, **25-44** is higher than other ages consistent to the results in 5.1.6. Considering **ARREST_BORO**, the numbers of crimes of each category in Staten Island is less than other boroughs obviously. Queens has highest number in *Sex Crime*, followed by Kings, Brooklyn; Brooklyn has highest number in **Rape**, followed by Kings and Queens; Kings has highest number in **Weapon**; Manhattan has large number in **Larceny**, **Robbery**, **Burglary** and **Drug**; Both Kings and Brooklyn  has large number in **Drug**, **Assault**, **Robbery** and **Murder**.
+
+2.Clusters: In general, the number of criminals in male is bigger than female, consistent to the result in 5.1.7.
+
+3.Correlation：Note if the lines between two categories twist, then we consider the categories have negative correlation, otherwise positive.   By changing the order of the categories in the interactive graph, we seem to find no evidence to  convince there exists obvious twist(negative correlation) between any two category. Maybe if one kind of crimes occurs frequently, it means the borough is not safe maybe due to poor public security there, thus other kinds of crimes is unlikely to occur less.
 
 ### Crime Geographical Analysis
 
@@ -844,9 +858,6 @@ larceny20 <- ggmap(nyc_map) +
 plot_grid(larceny18,larceny20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 ```
 
-
-
-
 From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
 
 ## Covid-19 VS Crime in NYC
@@ -884,7 +895,7 @@ Case count is greater than the other two. The first peak occurs around April 202
 
 The hospitalized count and death count is quite less than case count. Considering the rate, we conclude as first both death rate and hospitalized rate are high and then decrease in general.
 
-### Hate Crime
+### Hate Crime Analysis
 ```{r}
 hate<-read_csv('NYPD_Hate_Crimes.csv')
 ```
@@ -895,7 +906,7 @@ cdf1<-cdf%>%rename(Date=DATE_OF_INTEREST)%>%
      select(Date,CASE_COUNT)
 ```
 
-```{r}
+```{r fig.width=12}
 hate<- hate%>%
   mutate(Record_Date=as.Date(hate$`Record Create Date` ,format='%m/%d/%Y'))%>%
   mutate(Date=paste0(`Complaint Year Number`, "-",`Month Number`,"-1"))%>%
@@ -908,16 +919,22 @@ hate1<-hate%>%
 ```{r fig.width=12,warning=FALSE}
 ggplot(hate1)+
   geom_line(aes(Date,scale(count,center=F),color="Hate Crimes"))+
-  scale_x_date(limits=as.Date(c("2019-01-01","2021-112-31")),date_breaks = "3 months", date_labels = "%b %Y")+
+  scale_x_date(limits=as.Date(c("2019-01-01","2021-12-31")),date_breaks = "2 months", date_labels = "%b %Y")+
   ggtitle('Hate crime in recent 3 years in total Compared to Covid-19 Cases')+
   geom_line(aes(x=Date,y=scale(CASE_COUNT,center=F),color='Covid-19 Cases'))+
   scale_color_manual(values = c(
     'Hate Crimes'='blue',
     'Covid-19 Cases'='red')) +
-  labs(color = 'Y series')
+  labs(color = 'Y series')+
+  theme(legend.position="bottom")
 ```
 
-#### Offense Category
+Combining numbers of hate crimes with Covid-19 cases, it seems to have a positive relationship after Feburary 2021. The trend of numbers of hate crime is lagging behind the trend of  numbers of Covid-19 cases by about 2 months at first.
+
+The numbers of hate crimes increase greatly as Covid-19 cases increase greatly after Feburary 2021, then it decrease greatly as Covid-19 cases decrease greatly, then it bounce a little as the Covid-19 cases increase a bit, then it decrease greatly as Covid-19 cases decrease since Semptember 2021.
+
+
+#### General Category(Offense Category)
 ```{r}
 hate1<-hate%>%
   group_by(`Offense Category`)%>%
@@ -926,8 +943,11 @@ ggplot(hate1,aes(fct_reorder(`Offense Category`,count),count))+
   geom_point()+
   coord_flip()+
   labs(x='Offense Category')+
-  ggtitle('Popular offense category in recent 3 years')
+  ggtitle('Top offense category in recent 3 years')
 ```
+
+In total, numbers of **Religion/Religious Practice** hate crimes is highest, followed by **Race/Color**, **Sex Orientation**.
+
 ```{r fig.height=6}
 hate19<-hate%>%filter(year(Date)==2019)%>%
   group_by(year(Date),`Offense Category`)%>%
@@ -942,65 +962,87 @@ p1<-ggplot(hate19,aes(fct_reorder(`Offense Category`,count),count))+
   geom_point()+
   coord_flip()+
   labs(x='Offense Category')+
-  ggtitle('Popular offense category in 2019')
+  ylim(0,300)+
+  ggtitle('Top offense category in 2019')
 p2<-ggplot(hate20,aes(fct_reorder(`Offense Category`,count),count))+
   geom_point()+
   coord_flip()+
   labs(x='Offense Category')+
-  ggtitle('Popular offense category in 2020')
+  ylim(0,300)+
+  ggtitle('Top offense category in 2020')
 p3<-ggplot(hate21,aes(fct_reorder(`Offense Category`,count),count))+
   geom_point()+
   coord_flip()+
   labs(x='Offense Category')+
-  ggtitle('Popular offense category in 2021')
+  ylim(0,300)+
+  ggtitle('Top offense category in 2021')
 plot_grid(p1,p2,p3,ncol=1)
 ```
 
-```{r fig.width=10}
+The rank of numbers of different **offense category** does not change much over years, except for **Gender** moves up by one position on 2020. 
+
+In 2020, numbers of **Religion/Religious Practice** as well as **Sex Orientation** hate crimes decrease greatly than(about half) than 2019, while **Race/Color** increase a bit.
+
+In 2021, the top three categories of hate crimes all increase, especially for  **Race/Color** which increase by almost one time.
+
+```{r fig.width=12}
 hate%>%
   group_by(Date,`Offense Category`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Offense Category`))+
   geom_line(aes(group = `Offense Category`)) +
   geom_point(size=1)+
-  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  theme(legend.position="bottom")+
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y")+
   ggtitle('Numbers of hate crime in different types over months')
 ```
 
+The numbers of hate crimes of category **Religion/Religious Practice**, **Race/Color** and **Sexual Orientation** increase greatly around the start of 2021, maybe has some relationship with Covid-19.
 
-```{r fig.width=10}
+#### Granular Category(Bias Type)
+```{r fig.width=12}
 hate%>%
   filter(`Offense Category`=='Race/Color')%>%
   group_by(Date,`Bias Motive Description`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Bias Motive Description`))+
   geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
-  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  theme(legend.position="bottom")+
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y")+
   ggtitle('Race/Color hate crimes over months')
 ```
-```{r fig.width=10}
+
+Considering types in **Race/Color** hate crimes, **ANTI-ASIAN** has a peak in the start of 2020, and another peak occurs around the first half of the year and then decrease.
+
+```{r fig.width=12}
 hate%>%
   filter(`Offense Category`=="Religion/Religious Practice")%>%
   group_by(Date,`Bias Motive Description`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Bias Motive Description`))+
   geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
-  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  theme(legend.position="bottom")+
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y")+
   ggtitle('Religion/Religious hate crimes over months')
 ```
 
-```{r fig.width=10}
+Considering types in **Religion/Religious Practice** hate crimes, the majority is **ANTI-JEWISH** hate crime whose number decreases since the start of 2020 but then increase greatly on the start of 2021.
+
+```{r fig.width=12}
 hate%>%
   filter(`Offense Category`=="Sexual Orientation")%>%
   group_by(Date,`Bias Motive Description`)%>%
   mutate(count=n())%>%
   ggplot(aes(Date, count,color=`Bias Motive Description`))+
   geom_line(aes(group = `Bias Motive Description`)) +geom_point(size=1)+
-  scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
+  theme(legend.position="bottom")+
+  scale_x_date(date_breaks = "2 months", date_labels = "%b %Y")+
   ggtitle('Sexual Orientation hate crimes over months')
 ```
 
-#### Borough Level Analysis
+Considering types in **Sexual Orientation**  hate crimes, the majority is **ANTI-MALE HOMOSEXUAL(GAY)** hate crime whose number increases greatly since March 2021. There is almost none **ANTI-FEMALEHOMOSEXUAL(LESBIAN)** as well as **ANTI_LGBT(MIXED GROUP)** hate crimes in 2021.
+
+#### County Level Analysis
 
 ```{r fig.width=10}
 temp_tbl_0 <- hate %>% 
@@ -1016,11 +1058,12 @@ ggplot(temp_tbl_0, aes(x = "", y = perc, fill = County)) +
   geom_text(aes(label = labels), position = position_stack(vjust = 0.5)) +
   ylab("Crimes Percentage") +
   xlab("borough") +
-  ggtitle("Crimes Percentage for Different Boroughs") +
+  ggtitle("Crimes Percentage for Different Counties") +
   scale_fill_manual(values=c("#A9CCE3" , "#2471A3","#1A5276","#5499C7","#EAF2F8"))
   
 ```
 
+In total, numbers of hate crimes in **New York** county ranks first, followed by **Kings**, while **Richmond** has the least number of hate crime, followed by **BRONX**.
 
 ```{r,fig.width = 10}
 hate %>%group_by(Date, County) %>%
@@ -1028,13 +1071,14 @@ hate %>%group_by(Date, County) %>%
     ggplot(aes(Date, count,color=County))+
   geom_line(aes(group = County)) +geom_point(size=1)+
   scale_x_date(date_breaks = "3 months", date_labels = "%b %Y")+
-  ggtitle('Hate crimes in different boroughs')
+  ggtitle('Hate crimes in different counties')
 ```
 
+In generally, number of hate crimes in each county increases since Feb 2021, then decreases after May 2021. And **New York** increases the most and reaches the highest number on May 2021.
 
 ```{r fig.width=12}
 hate%>%rename(Bias_type=`Bias Motive Description`)%>%
-    mutate(year=`Complaint Year Number`)%>%
+    mutate(year=year(Date))%>%
     filter(Bias_type%in%c("ANTI-ASIAN","ANTI-BLACK" ,"ANTI-WHITE","ANTI-JEWISH","ANTI-MUSLIM","ANTI-MALE HOMOSEXUAL (GAY)","ANTI-LGBT (MIXED GROUP)","ANTI-FEMALE HOMOSEXUAL (LESBIAN)" ))%>%
       select(County,year,Bias_type)%>%
       group_by(County,year,Bias_type)%>%
@@ -1054,13 +1098,18 @@ hate%>%rename(Bias_type=`Bias Motive Description`)%>%
     withD3 = TRUE )
 ```
 
+We make an interactive graph including **County**，**Year**, **Bias type** to gain more information about hate crimes in NYC in recent 3 years. The color identify different year.
 
+<<<<<<< HEAD
+In 2021, **New York** county has the largest number of hate crimes in both ANTI-GAY and ANTI-ASIAN obviously, **Queens** has the largest number in ANTI-MUSLIM. You can find more interested information by yourself.
+=======
 
 ## Mental Health Center VS Crime in NYC
 
 Here we have the data about the distribution of mental-health-service in NYC, so we want to explore if mental health center is related to the crime distribution, or is there any advice about mental health center construction that we can come up with.
 
 ### Mental Health Center in Boroughs
+>>>>>>> 36be2064dc14feaf5b4dd0ad4acb3a232edfecb0
 
 ```{r}
 mental_data <- read_csv('Mental_Health_Service_Finder_Data.csv')
