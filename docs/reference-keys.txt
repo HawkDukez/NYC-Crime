@@ -3,6 +3,7 @@ tab:unnamed-chunk-15
 tab:unnamed-chunk-43
 tab:unnamed-chunk-47
 tab:unnamed-chunk-50
+tab:unnamed-chunk-86
 introduction
 data-sources
 data-transformation
@@ -35,6 +36,9 @@ time-series-analysis-of-covid-19
 hate-crime
 offense-category
 borough-level-analysis-1
+mental-health-center-vs-crime-in-nyc
+mental-health-center-in-boroughs
+geographical-analysis
 interactive-component
 new-york-state-county-level-map
 conclusion

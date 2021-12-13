@@ -688,7 +688,8 @@ From the pie chart, we can know that the area with the most crime is Brooklyn, a
 temp_tbl_2 <- nyc %>% 
              filter(!is.na(ARREST_BORO)) %>%
              group_by(ARREST_BORO, ARREST_PRECINCT) %>%
-             summarise(Freq = length(ARREST_BORO))
+             summarise(Freq = length(ARREST_BORO)) %>%
+             filter(Freq > 50)
 temp_tbl_2$AREA_MIX <- paste(temp_tbl_2$ARREST_BORO,temp_tbl_2$ARREST_PRECINCT)
 temp_tbl_2$ARREST_PRECINCT_STR<-as.character(temp_tbl_2$ARREST_PRECINCT)
 temp_tbl_2 <- temp_tbl_2[order(temp_tbl_2$Freq, decreasing = TRUE), ]
@@ -745,7 +746,7 @@ plot_grid(b1,b4,b3,b2,b5, nrow = 5, ncol = 1, align = "hv",axis = 'l' )
 
 
 
-From the histogram of boroughs and precinct map in NYC, we can find that crime will be concentrated in a few adjacent precinct especially in Bronx and Queens. For example, crime is concentrated in areas 40-52 in queens, which is. This performance not only accords with geographical continuity, but also provides reasonable suggestions for arranging police force in the future.
+From the histograms of boroughs and the precinct map in NYC, we can see the different pattern of crimes on different police precincts. In Manhattan, crime number of each precincts are relatively even (except for precinct 14), howeverr, Bronx has a distrubition with higher variance. Also, we can 
 
 
 
@@ -788,12 +789,12 @@ nyc_18_drugs <- nyc %>%
 ```{r}
 drug18 <- ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_18_drugs, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  geom_point(data=nyc_18_drugs, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,color = 'red') +
   ggtitle("DANGEROUS DRUGS in 2018")
 
 drug20 <- ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_20_drugs, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  geom_point(data=nyc_20_drugs, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,color = 'red') +
   ggtitle("DANGEROUS DRUGS in 2021")
 
 ```
@@ -827,13 +828,13 @@ nyc_18_larceny <- nyc %>%
 ```{r}
 larceny18 <- ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_18_larceny, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  geom_point(data=nyc_18_larceny, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,,color='darkblue') +
   ggtitle("PETIT LARCENY in 2018")+
   theme(legend.title = element_blank())
 
 larceny20 <- ggmap(nyc_map) + 
   geom_polygon(data=nyc_neighborhoods_df, aes(x=long, y=lat, group=group), color="white", fill=NA)+
-  geom_point(data=nyc_20_larceny, aes(x=Longitude,y=Latitude,color=OFNS_DESC),size=.15,alpha=.3) +
+  geom_point(data=nyc_20_larceny, aes(x=Longitude,y=Latitude),size=.5,alpha=.3,,color='darkblue') +
   ggtitle("PETIT LARCENY in 2021")+
   theme(legend.title = element_blank())
 
@@ -1055,11 +1056,81 @@ hate%>%rename(Bias_type=`Bias Motive Description`)%>%
 
 
 
+## Mental Health Center VS Crime in NYC
+
+Here we have the data about the distribution of mental-health-service in NYC, so we want to explore if mental health center is related to the crime distribution, or is there any advice about mental health center construction that we can come up with.
+
+### Mental Health Center in Boroughs
+
+```{r}
+mental_data <- read_csv('Mental_Health_Service_Finder_Data.csv')
+zipcode <- read_csv('zipcode-borough.csv')
+df_merge = merge(x = mental_data, y = zipcode, by = "zip", all.x = TRUE)
+df_mental_health = count(df_merge, Borough)
+```
+
+```{r}
+df_mental_health%>%knitr::kable(caption = "Mental Service Center Counts in NYC",align = "l",full_width = F,table.attr = "style='width:30%;'")
+```
+```{r}
+df_arrest_boro <- nyc %>% 
+  filter(!is.na(ARREST_BORO)) %>%
+  group_by(ARREST_BORO) %>%
+  summarise(Count = length(ARREST_BORO)) 
+df_mental_arrest = merge(x=df_mental_health, y=df_arrest_boro, by.x="Borough", by.y = "ARREST_BORO", all.y=TRUE)
+
+ggplot(df_mental_arrest, aes(n, Count)) +
+  geom_point() +
+  labs(x = "Mental Health Service Finder Count", y = "Crime Count") + 
+  geom_text(aes(label = Borough),hjust = 0.4, vjust = 1.5) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+This is a scatter plot between Mental Health Service Finder Count VS Crime Count. Even if we just have 5 borough, we can find there is a rough positive relation between two counts. It means that now there are more mental health centers in boroughs with more crimes. Manhattan has relatively more mental centers and Brooklyn & Bronx can build more Mental Health Center.
+
+
+### Geographical Analysis
+
+According to some scientific researches, drug use and gun crime are related to mental health to a certain extent. So we explore the geographic distribution of these two crimes and compared them with the distribution of mental health centers.
+
+
+```{r}
+nyc_map <- get_map(location = c(lon = -74.00, lat = 40.71), maptype = "terrain", zoom = 11)
+
+nyc_20_drugs <- nyc %>% 
+  filter(year(ARREST_DATE) == 2020) %>%
+  filter(OFNS_DESC %in% c('DANGEROUS DRUGS')) 
+
+map1 <- ggmap(nyc_map) +
+  geom_point(data=mental_data, aes(x=longitude, y=latitude), size=1, alpha=.3,color = 'purple') +
+  ggtitle("Mental Health Center")
+
+map2 <- ggmap(nyc_map) +  
+  geom_point(data=nyc_20_drugs, aes(x=Longitude, y=Latitude), size=1, alpha=0.1) +
+  ggtitle("DANGEROUS DRUGS in 2021")
+
+plot_grid(map1,map2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+```
+
+
+```{r}
+
+nyc_20_weapon <- nyc %>% 
+  filter(year(ARREST_DATE) == 2020) %>%
+  filter(OFNS_DESC %in% c('DANGEROUS WEAPONS')) 
+
+map1 <- ggmap(nyc_map) +
+  geom_point(data=mental_data, aes(x=longitude,y=latitude), size=1, alpha=.3,color = 'purple') + 
+  ggtitle("Mental Health Center")
+
+map2 <- ggmap(nyc_map) +  
+  geom_point(data=nyc_20_weapon, aes(x=Longitude,y=Latitude),size=0.5,alpha=0.1) 
+
+plot_grid(map1,map2, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
+
+```
 
 
 
-
-
-
-
+From these for maps, we can find that the location of the mental health center is very consistent with the distribution of drug crime and weapon crime's sites, which reflects that New York’s mental health construction is very complete and supportive. Besides, there is still room for improvement such as adding mental health service center in Rockway Beach and the area around EAST NEW YORK in Brooklyn.
 
