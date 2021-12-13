@@ -860,7 +860,7 @@ plot_grid(larceny18,larceny20, nrow = 1, ncol = 2, align = "hv",axis = 'l' )
 
 From this two plot, we can find that larceny crimes are concentrated on the midtown and downtown, which around the central park. From 2018 to 2020, the larceny crimes on Manhattan decrease a lot however the number of PETIT LARCENY in other areas has no big difference.
 
-## Covid-19 VS Crime in NYC
+## Covid-19 VS Hate Crime in NYC
 ### Time Series Analysis of Covid-19
 ```{r}
 covid <- read_csv("COVID-19_Daily_Counts_of_Cases__Hospitalizations__and_Deaths.csv")
@@ -1100,16 +1100,13 @@ hate%>%rename(Bias_type=`Bias Motive Description`)%>%
 
 We make an interactive graph including **County**，**Year**, **Bias type** to gain more information about hate crimes in NYC in recent 3 years. The color identify different year.
 
-<<<<<<< HEAD
 In 2021, **New York** county has the largest number of hate crimes in both ANTI-GAY and ANTI-ASIAN obviously, **Queens** has the largest number in ANTI-MUSLIM. You can find more interested information by yourself.
-=======
 
 ## Mental Health Center VS Crime in NYC
 
 Here we have the data about the distribution of mental-health-service in NYC, so we want to explore if mental health center is related to the crime distribution, or is there any advice about mental health center construction that we can come up with.
 
 ### Mental Health Center in Boroughs
->>>>>>> 36be2064dc14feaf5b4dd0ad4acb3a232edfecb0
 
 ```{r}
 mental_data <- read_csv('Mental_Health_Service_Finder_Data.csv')

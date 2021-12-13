@@ -31,7 +31,7 @@ crime-geographical-analysis
 borough-level-analysis
 precinct-level-analysis
 nyc-crime-maps
-covid-19-vs-crime-in-nyc
+covid-19-vs-hate-crime-in-nyc
 time-series-analysis-of-covid-19
 hate-crime-analysis
 general-categoryoffense-category
